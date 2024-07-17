@@ -42,7 +42,7 @@ def merge_ingredients_with_prices(ingredients_df, prices_df, key1, key2, thresho
 
 if __name__ == "__main__":
     ingredients_file_path = "./datasets/ingredients.csv"
-    ingredient_prices_file_path = "./datasets/ingredient_prices.csv"
+    ingredient_prices_file_path = "./datasets/ingredient_prices/ingredient_prices.csv"
 
     df_ingredients = pd.read_csv(ingredients_file_path)
 
