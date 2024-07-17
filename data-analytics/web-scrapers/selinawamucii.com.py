@@ -24,7 +24,6 @@ def scrape_urls(html_content):
     urls = []
     if html_content:
         soup = BeautifulSoup(html_content, "html.parser")
-        # Assuming all URLs are in <a> tags with href attributes
         for link in soup.find_all("a", href=True):
             if "sri-lanka" in link["href"]:
                 urls.append(link["href"])
@@ -34,7 +33,6 @@ def scrape_urls(html_content):
 def scrape_price(html_content):
     if html_content:
         soup = BeautifulSoup(html_content, "html.parser")
-        # Assuming all URLs are in <a> tags with href attributes
         title = (
             soup.select_one(".entry-title")
             .get_text()
@@ -90,7 +88,7 @@ if __name__ == "__main__":
         scraped_urls = scrape_urls(html_content)
         scraped_urls.sort()
         print(f'Ingredients found from selinawamucii.com : ${len(scraped_urls)}')
-        with open("datasets/selinawamucii.com.csv", mode="w", newline="") as file:
+        with open("datasets/ingredients/selinawamucii.com.csv", mode="w", newline="") as file:
             writer = csv.writer(file)
             header = [
                 "commodity",
