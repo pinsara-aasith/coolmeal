@@ -4,6 +4,7 @@ from rapidfuzz import process, fuzz
 
 pd.options.mode.copy_on_write = True
 
+
 def read_and_retrieve_only_latest_prices(df):
     df["date"] = pd.to_datetime(df["date"], errors="coerce", format="%Y-%m-%d")
     df = df.dropna(subset=["date"])
@@ -34,8 +35,12 @@ def merge_ingredients_with_prices(ingredients_df, prices_df, key1, key2, thresho
             return best_match[0]
         return None
 
-    ingredients_df["best_match"] = ingredients_df.apply(match_key, axis=1, choices=choices)
-    merged_df = pd.merge(ingredients_df, prices_df, left_on="best_match", right_on=key2, how="left")
+    ingredients_df["best_match"] = ingredients_df.apply(
+        match_key, axis=1, choices=choices
+    )
+    merged_df = pd.merge(
+        ingredients_df, prices_df, left_on="best_match", right_on=key2, how="left"
+    )
 
     return merged_df
 
@@ -49,6 +54,8 @@ if __name__ == "__main__":
     df_ingredient_prices = pd.read_csv(ingredient_prices_file_path)
     df_ingredient_prices = read_and_retrieve_only_latest_prices(df_ingredient_prices)
 
-    df_ingredient_prices.to_csv('./datasets/latest_ingredient_prices.csv')
-    merged_df = merge_ingredients_with_prices(df_ingredients, df_ingredient_prices, "Food Name", "commodity")
+    df_ingredient_prices.to_csv("./datasets/latest_ingredient_prices.csv")
+    merged_df = merge_ingredients_with_prices(
+        df_ingredients, df_ingredient_prices, "Food Name", "commodity"
+    )
     # print(merged_df.head())

@@ -5,8 +5,11 @@ from bs4 import BeautifulSoup
 import os
 from datetime import date
 
+# Get today's date as a string
 today = f"{date.today()}"
 
+
+# Function to fetch HTML content from a URL
 def fetch_html(url):
     try:
         response = requests.get(url)
@@ -20,6 +23,7 @@ def fetch_html(url):
         return None
 
 
+# Function to scrape URLs containing "sri-lanka" from the HTML content
 def scrape_urls(html_content):
     urls = []
     if html_content:
@@ -30,6 +34,7 @@ def scrape_urls(html_content):
     return urls
 
 
+# Function to scrape price information from the HTML content of a specific URL
 def scrape_price(html_content):
     if html_content:
         soup = BeautifulSoup(html_content, "html.parser")
@@ -88,7 +93,7 @@ if __name__ == "__main__":
         scraped_urls = scrape_urls(html_content)
         scraped_urls.sort()
         print(f'Ingredients found from selinawamucii.com : ${len(scraped_urls)}')
-        with open("datasets/ingredients/selinawamucii.com.csv", mode="w", newline="") as file:
+        with open("datasets/ingredient_prices/selinawamucii.com.csv", mode="w", newline="") as file:
             writer = csv.writer(file)
             header = [
                 "commodity",
@@ -113,8 +118,7 @@ if __name__ == "__main__":
                     print(e)
                     failed_urls.append(scraped_url)
                     print(f"Failed to get the prices for {scraped_url}")
-            
-                    
-        print(f'Failed urls: {len(failed_urls)}')
+
+        print(f"Failed urls: {len(failed_urls)}")
         for u in failed_urls:
             print(u)
