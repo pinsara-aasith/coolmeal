@@ -15,39 +15,37 @@ class _StartingpageState extends State<Startingpage> {
         child: Column(
           children: [
             // Top Image covering top part of the screen
-            Container(
-              height: MediaQuery.of(context).size.height *
-                  0.4, // Covering top 40% of the screen height
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/family_meal.jpeg'), // Replace with the correct path to your image
-                  fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(30), // Adjust the radius as needed
+                bottomRight: Radius.circular(30), // Adjust the radius as needed
+              ),
+              child: Container(
+                height: MediaQuery.of(context).size.height *
+                    0.4, // Covering top 40% of the screen height
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/images/family_meal.jpeg'), // Replace with the correct path to your image
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
+
             // Content below the image
             Expanded(
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // CoolMeal Image  and Subtitle
+                  // CoolMeal Text and Subtitle
                   const SizedBox(height: 40),
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft:
-                          Radius.circular(30), // Adjust the radius as needed
-                      bottomRight:
-                          Radius.circular(30), // Adjust the radius as needed
-                    ),
-                    child: Image.asset(
-                      'assets/images/Logo.png',
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
 
+                  Image.asset(
+                    'assets/images/Logo.png',
+                    height: 150,
+                  ),
                   Text(
                     'Ready to Eat Healthy and Feel Great?',
                     style: TextStyle(
