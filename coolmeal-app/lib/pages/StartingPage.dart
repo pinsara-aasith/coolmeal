@@ -13,28 +13,31 @@ class _StartingpageState extends State<Startingpage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Top Image covering top part of the screen
+            Container(
+              height: MediaQuery.of(context).size.height *
+                  0.4, // Covering top 40% of the screen height
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/images/family_meal.jpeg'), // Replace with the correct path to your image
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            // Content below the image
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Top Image
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Image.asset(
-                      'assets/images/family_meal.jpeg', // Replace with the correct path to your image
-                      height: 200, // Adjust the height as needed
-                    ),
-                  ),
                   // CoolMeal Text and Subtitle
-                  Text(
-                    'COOLMEAL',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green[800],
-                    ),
+                  const SizedBox(height: 40),
+
+                  Image.asset(
+                    'assets/images/Logo.png',
+                    height: 150,
                   ),
                   Text(
                     'Ready to Eat Healthy and Feel Great?',
