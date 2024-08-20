@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Loadingpage extends StatefulWidget {
   const Loadingpage({super.key});
@@ -21,13 +22,16 @@ class _LoadingpageState extends State<Loadingpage> {
               height: 200,
             ),
             const SizedBox(height: 20),
-            const SizedBox(height: 10),
-            const Text(
+            Text(
               'Welcome to a Healthier You!',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
+              style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+                  color: Colors.lightGreen,
+                  fontSize: 20,
+                ),
               ),
+
+              // ),
             ),
           ],
         ),
