@@ -32,13 +32,22 @@ class _StartingpageState extends State<Startingpage> {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // CoolMeal Text and Subtitle
+                  // CoolMeal Image  and Subtitle
                   const SizedBox(height: 40),
-
-                  Image.asset(
-                    'assets/images/Logo.png',
-                    height: 150,
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft:
+                          Radius.circular(30), // Adjust the radius as needed
+                      bottomRight:
+                          Radius.circular(30), // Adjust the radius as needed
+                    ),
+                    child: Image.asset(
+                      'assets/images/Logo.png',
+                      height: 150,
+                      fit: BoxFit.cover,
+                    ),
                   ),
+
                   Text(
                     'Ready to Eat Healthy and Feel Great?',
                     style: TextStyle(
