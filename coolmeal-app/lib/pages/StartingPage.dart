@@ -27,7 +27,7 @@ class _StartingpageState extends State<Startingpage> {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/family_meal.jpeg'), // Replace with the correct path to your image
+                        'assets/images/family.png'), // Replace with the correct path to your image
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -50,7 +50,7 @@ class _StartingpageState extends State<Startingpage> {
                     'Ready to Eat Healthy and Feel Great?',
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.green[600],
+                      color: Colors.green[800],
                     ),
                   ),
                 ],
@@ -58,10 +58,11 @@ class _StartingpageState extends State<Startingpage> {
             ),
             // Bottom Button
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 25.0),
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button press
+                  print("Button Touched ---------");
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
