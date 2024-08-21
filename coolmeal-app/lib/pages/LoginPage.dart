@@ -26,31 +26,34 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const BackButtonWidget(),
-              const WelcomeTextWidget(),
-              const SizedBox(height: 50),
-              EmailInputWidget(controller: _emailController),
-              const SizedBox(height: 20),
-              PasswordInputWidget(controller: _passwordController),
-              const SizedBox(height: 10),
-              const ForgotPasswordWidget(),
-              const SizedBox(height: 40),
-              LoginButtonWidget(formKey: _formKey),
-              const SizedBox(height: 20),
-              const OrDividerWidget(),
-              const SizedBox(height: 20),
-              const GoogleSignInButtonWidget(),
-              const SizedBox(height: 20),
-              const SignUpTextWidget(),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 50),
+                const BackButtonWidget(),
+                const WelcomeTextWidget(),
+                const SizedBox(height: 50),
+                EmailInputWidget(controller: _emailController),
+                const SizedBox(height: 20),
+                PasswordInputWidget(controller: _passwordController),
+                const SizedBox(height: 10),
+                const ForgotPasswordWidget(),
+                const SizedBox(height: 40),
+                LoginButtonWidget(formKey: _formKey),
+                const SizedBox(height: 20),
+                const OrDividerWidget(),
+                const SizedBox(height: 20),
+                const GoogleSignInButtonWidget(),
+                const SizedBox(height: 20),
+                const SignUpTextWidget(),
+              ],
+            ),
           ),
         ),
       ),
