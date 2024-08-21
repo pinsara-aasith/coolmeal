@@ -1,3 +1,4 @@
+import 'package:coolmeal/widgets/PasswordRequirements.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -119,41 +120,41 @@ class _SignUpPageState extends State<SignUpPage> {
                     hasUpperCase: _hasUpperCase,
                     isPasswordLengthValid: _isPasswordLengthValid,
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         // Perform sign up logic
                       }
                     },
-                    child: Text('Sign Up'),
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
+                    child: const Text('Sign Up'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text('or', style: TextStyle(color: Colors.grey[700])),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: () {},
                     icon: Image.asset('assets/images/google.png', height: 24),
-                    label: Text('Sign up with Google'),
+                    label: const Text('Sign up with Google'),
                     style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
+                      minimumSize: const Size(double.infinity, 50),
                       side: BorderSide(color: Colors.grey[300]!),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   RichText(
                     text: TextSpan(
                       style: TextStyle(color: Colors.grey[700]),
-                      children: [
+                      children: const [
                         TextSpan(text: 'Already have an account? '),
                         TextSpan(
                           text: 'Login',
@@ -171,69 +172,6 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class PasswordRequirements extends StatelessWidget {
-  final bool hasSpecialCharacter;
-  final bool hasNumber;
-  final bool hasUpperCase;
-  final bool isPasswordLengthValid;
-
-  PasswordRequirements({
-    required this.hasSpecialCharacter,
-    required this.hasNumber,
-    required this.hasUpperCase,
-    required this.isPasswordLengthValid,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Your password should contain'),
-        SizedBox(height: 8),
-        RequirementItem(
-          text: '1 or more special characters',
-          isValid: hasSpecialCharacter,
-        ),
-        RequirementItem(
-          text: '1 or more numbers',
-          isValid: hasNumber,
-        ),
-        RequirementItem(
-          text: '1 upper case letter',
-          isValid: hasUpperCase,
-        ),
-        RequirementItem(
-          text: 'Between 8 and 20 characters',
-          isValid: isPasswordLengthValid,
-        ),
-      ],
-    );
-  }
-}
-
-class RequirementItem extends StatelessWidget {
-  final String text;
-  final bool isValid;
-
-  RequirementItem({required this.text, required this.isValid});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          isValid ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-          color: isValid ? Colors.green : Colors.grey,
-          size: 20,
-        ),
-        SizedBox(width: 8),
-        Text(text),
-      ],
     );
   }
 }
