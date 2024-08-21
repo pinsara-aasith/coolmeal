@@ -20,7 +20,7 @@ class _WelcomepageState extends State<Welcomepage> {
               Column(
                 children: [
                   // Top Logo and Welcome Text
-                  const SizedBox(height: 40), // Spacing from top
+                  const SizedBox(height: 60), // Spacing from top
                   Image.asset(
                     'assets/images/Logo.png', // Replace with your logo image
                     height: 60,
@@ -48,7 +48,7 @@ class _WelcomepageState extends State<Welcomepage> {
               // Illustration Image
               Image.asset(
                 'assets/images/conversation.png', // Replace with your illustration image
-                height: 200,
+                height: 300,
               ),
               // Sign Up and Login Buttons
               Column(

@@ -1,3 +1,4 @@
+import 'package:coolmeal/pages/WelcomePage.dart';
 import 'package:flutter/material.dart';
 
 class Startingpage extends StatefulWidget {
@@ -8,6 +9,13 @@ class Startingpage extends StatefulWidget {
 }
 
 class _StartingpageState extends State<Startingpage> {
+  // create flutter function to handle button press
+  void handleButtonPress() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const Welcomepage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +68,7 @@ class _StartingpageState extends State<Startingpage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle button press
-                  print("Button Touched ---------");
-                },
+                onPressed: handleButtonPress,
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
