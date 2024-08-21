@@ -1,5 +1,6 @@
 import 'package:coolmeal/widgets/PasswordRequirements.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -27,6 +28,15 @@ class _SignUpPageState extends State<SignUpPage> {
       _hasUpperCase = value.contains(RegExp(r'[A-Z]'));
       _isPasswordLengthValid = value.length >= 8 && value.length <= 20;
     });
+  }
+
+  //login handle function
+  void _handleLogin(BuildContext context) {
+    // Navigate to Login page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPage()),
+    );
   }
 
   @override
@@ -154,14 +164,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   RichText(
                     text: TextSpan(
                       style: TextStyle(color: Colors.grey[700]),
-                      children: const [
-                        TextSpan(text: 'Already have an account? '),
+                      children: [
+                        const TextSpan(text: 'Already have an account? '),
                         TextSpan(
                           text: 'Login',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                           ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              _handleLogin(context); // Handle the login tap
+                            },
                         ),
                       ],
                     ),
