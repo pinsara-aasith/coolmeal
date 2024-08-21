@@ -1,5 +1,6 @@
 import 'package:coolmeal/pages/LoadingPage.dart';
 import 'package:coolmeal/pages/LoginPage.dart';
+import 'package:coolmeal/pages/SignUpPage.dart';
 import 'package:coolmeal/pages/StartingPage.dart';
 import 'package:coolmeal/pages/WelcomePage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: SignUpPage(),
     );
   }
 }
