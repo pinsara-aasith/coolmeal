@@ -6,9 +6,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  // Form state and controllers----
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  // Password validation state and password requirements----
 
   bool _isPasswordVisible = false;
   bool _hasSpecialCharacter = false;
@@ -44,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'Create New Account and Begin Your Healthy Eating Journey',
                     style: TextStyle(
@@ -53,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -66,13 +69,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your email';
                       }
+                      // Validate Email using RegExp ------------
                       if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         return 'Please enter a valid email';
                       }
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
@@ -108,7 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       _validatePassword(value);
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   PasswordRequirements(
                     hasSpecialCharacter: _hasSpecialCharacter,
                     hasNumber: _hasNumber,
@@ -135,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(height: 16),
                   OutlinedButton.icon(
                     onPressed: () {},
-                    icon: Image.asset('assets/google.png', height: 24),
+                    icon: Image.asset('assets/images/google.png', height: 24),
                     label: Text('Sign up with Google'),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
@@ -223,7 +227,7 @@ class RequirementItem extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          isValid ? Icons.check_circle : Icons.radio_button_unchecked,
+          isValid ? Icons.radio_button_checked : Icons.radio_button_unchecked,
           color: isValid ? Colors.green : Colors.grey,
           size: 20,
         ),
