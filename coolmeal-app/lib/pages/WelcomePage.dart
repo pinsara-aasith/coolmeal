@@ -1,3 +1,5 @@
+import 'package:coolmeal/pages/LoginPage.dart';
+import 'package:coolmeal/pages/SignUpPage.dart';
 import 'package:flutter/material.dart';
 
 class Welcomepage extends StatefulWidget {
@@ -8,6 +10,24 @@ class Welcomepage extends StatefulWidget {
 }
 
 class _WelcomepageState extends State<Welcomepage> {
+  // Add method to handle Sign Up
+  void handleSignUp() {
+    // Navigate to Sign Up page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPage()),
+    );
+  }
+
+  //add method to handle Login
+  void handleLogin() {
+    // Navigate to Login page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,13 +70,12 @@ class _WelcomepageState extends State<Welcomepage> {
                 'assets/images/conversation.png', // Replace with your illustration image
                 height: 300,
               ),
+
               // Sign Up and Login Buttons
               Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Handle Sign Up action
-                    },
+                    onPressed: handleSignUp,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       backgroundColor: Colors.green,
@@ -76,9 +95,7 @@ class _WelcomepageState extends State<Welcomepage> {
                   ),
                   const SizedBox(height: 10),
                   OutlinedButton(
-                    onPressed: () {
-                      // Handle Login action
-                    },
+                    onPressed: handleLogin,
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       side: const BorderSide(color: Colors.green, width: 2),
