@@ -96,7 +96,7 @@ def get_selected_weight(html_content):
 
     return ""
 
-with open("../datasets/salescom.csv", mode="w", newline="") as file:
+with open("../datasets/ingredient_prices/salescom.lk.csv", mode="w", newline="") as file:
     # create csv file ---- 
     writer = csv.writer(file)
     header = [
