@@ -1,3 +1,4 @@
+import 'package:coolmeal/pages/LoginPage.dart';
 import 'package:coolmeal/widgets/PasswordRequirements.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -35,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
     // Navigate to Login page
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -51,6 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 50),
                   const Text(
                     'Create New Account',
                     style: TextStyle(
@@ -62,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Text(
                     'Create New Account and Begin Your Healthy Eating Journey',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       color: Colors.grey[700],
                     ),
                     textAlign: TextAlign.center,
