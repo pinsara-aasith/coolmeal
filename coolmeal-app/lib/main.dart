@@ -1,3 +1,4 @@
+import 'package:coolmeal/pages/CompleteProfilePage.dart';
 import 'package:coolmeal/pages/LoadingPage.dart';
 import 'package:coolmeal/pages/LoginPage.dart';
 import 'package:coolmeal/pages/SignUpPage.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Loadingpage(),
+      home: CompleteProfilePage(),
     );
   }
 }
