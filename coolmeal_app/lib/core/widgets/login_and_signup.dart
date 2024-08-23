@@ -1,16 +1,15 @@
+import 'package:coolmeal/widgets/password_requirements.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rive/rive.dart';
 
 import '../../../helpers/app_regex.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
 import '../../helpers/extensions.dart';
-import '../../helpers/rive_controller.dart';
 import '../../logic/cubit/auth_cubit.dart';
 import 'app_text_button.dart';
 import 'app_text_form_field.dart';
@@ -39,16 +38,27 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   bool isObscureText = true;
   bool hasMinLength = false;
 
+  bool _hasSpecialCharacter = false;
+  bool _hasNumber = false;
+  bool _hasUpperCase = false;
+  bool _isPasswordLengthValid = false;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmationController =
       TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
+  void _validatePassword(String value) {
+    setState(() {
+      _hasSpecialCharacter = value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+      _hasNumber = value.contains(RegExp(r'\d'));
+      _hasUpperCase = value.contains(RegExp(r'[A-Z]'));
+      _isPasswordLengthValid = value.length >= 8 && value.length <= 20;
+    });
+  }
 
-  final RiveAnimationControllerHelper riveHelper =
-      RiveAnimationControllerHelper();
+  final formKey = GlobalKey<FormState>();
 
   final passwordFocuseNode = FocusNode();
   final passwordConfirmationFocuseNode = FocusNode();
@@ -59,50 +69,23 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       key: formKey,
       child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 5,
-            child: riveHelper.riveArtboard != null
-                ? Rive(
-                    fit: BoxFit.cover,
-                    artboard: riveHelper.riveArtboard!,
-                  )
-                : const SizedBox.shrink(),
-          ),
-          nameField(),
           emailField(),
-          passwordField(),
-          Gap(18.h),
-          passwordConfirmationField(),
-          forgetPasswordTextButton(),
           Gap(10.h),
-          PasswordValidations(
-            hasMinLength: hasMinLength,
+          passwordField(),
+          Gap(10.h),
+          if (widget.isSignUpPage == true) passwordConfirmationField(),
+          if (widget.isSignUpPage != true) forgetPasswordTextButton(),
+          if (widget.isSignUpPage == true) PasswordRequirements(
+            hasSpecialCharacter: _hasSpecialCharacter,
+            hasNumber: _hasNumber,
+            hasUpperCase: _hasUpperCase,
+            isPasswordLengthValid: _isPasswordLengthValid,
           ),
-          Gap(20.h),
+          Gap(24.h),
           loginOrSignUpOrPasswordButton(context),
         ],
       ),
     );
-  }
-
-  void checkForPasswordConfirmationFocused() {
-    passwordConfirmationFocuseNode.addListener(() {
-      if (passwordConfirmationFocuseNode.hasFocus && isObscureText) {
-        riveHelper.addHandsUpController();
-      } else if (!passwordConfirmationFocuseNode.hasFocus && isObscureText) {
-        riveHelper.addHandsDownController();
-      }
-    });
-  }
-
-  void checkForPasswordFocused() {
-    passwordFocuseNode.addListener(() {
-      if (passwordFocuseNode.hasFocus && isObscureText) {
-        riveHelper.addHandsUpController();
-      } else if (!passwordFocuseNode.hasFocus && isObscureText) {
-        riveHelper.addHandsDownController();
-      }
-    });
   }
 
   @override
@@ -122,37 +105,20 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         children: [
           AppTextFormField(
             hint: 'Email',
-            onChanged: (value) {
-              if (value.isNotEmpty &&
-                  value.length <= 13 &&
-                  !riveHelper.isLookingLeft) {
-                riveHelper.addDownLeftController();
-              } else if (value.isNotEmpty &&
-                  value.length > 13 &&
-                  !riveHelper.isLookingRight) {
-                riveHelper.addDownRightController();
-              } else if (value.isEmpty) {
-                riveHelper.addDownLeftController();
-              }
-            },
             validator: (value) {
               String email = (value ?? '').trim();
-
               emailController.text = email;
 
               if (email.isEmpty) {
-                riveHelper.addFailController();
                 return 'Please enter an email address';
               }
 
               if (!AppRegex.isEmailValid(email)) {
-                riveHelper.addFailController();
                 return 'Please enter a valid email address';
               }
             },
             controller: emailController,
           ),
-          Gap(18.h),
         ],
       );
     }
@@ -160,7 +126,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   }
 
   Widget forgetPasswordTextButton() {
-    if (widget.isSignUpPage == null && widget.isPasswordPage == null) {
+    if (widget.isSignUpPage != true && widget.isPasswordPage != true) {
       return TextButton(
         onPressed: () {
           context.pushNamed(Routes.forgetScreen);
@@ -168,7 +134,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         child: Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'forget password?',
+            'Forget password?',
             style: TextStyles.font14Blue400Weight,
           ),
         ),
@@ -181,12 +147,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   @override
   void initState() {
     super.initState();
-    riveHelper.loadRiveFile('assets/animation/headless_bear.riv').then((_) {
-      setState(() {});
-    });
     setupPasswordControllerListener();
-    checkForPasswordFocused();
-    checkForPasswordConfirmationFocused();
   }
 
   AppTextButton loginButton(BuildContext context) {
@@ -212,43 +173,10 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
     if (widget.isSignUpPage == null && widget.isPasswordPage == null) {
       return loginButton(context);
     }
+
     if (widget.isPasswordPage == true) {
       return passwordButton(context);
     }
-  }
-
-  Widget nameField() {
-    if (widget.isSignUpPage == true) {
-      return Column(
-        children: [
-          AppTextFormField(
-            hint: 'Name',
-            onChanged: (value) {
-              if (value.isNotEmpty &&
-                  value.length <= 13 &&
-                  riveHelper.isLookingLeft) {
-                riveHelper.addDownLeftController();
-              } else if (value.isNotEmpty &&
-                  value.length > 13 &&
-                  riveHelper.isLookingRight) {
-                riveHelper.addDownRightController();
-              }
-            },
-            validator: (value) {
-              String name = (value ?? '').trim();
-              nameController.text = name;
-              if (name.isEmpty) {
-                riveHelper.addFailController();
-                return 'Please enter a valid name';
-              }
-            },
-            controller: nameController,
-          ),
-          Gap(18.h),
-        ],
-      );
-    }
-    return const SizedBox.shrink();
   }
 
   AppTextButton passwordButton(BuildContext context) {
@@ -282,9 +210,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
             setState(() {
               if (isObscureText) {
                 isObscureText = false;
-                riveHelper.addHandsDownController();
               } else {
-                riveHelper.addHandsUpController();
                 isObscureText = true;
               }
             });
@@ -297,13 +223,11 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         ),
         validator: (value) {
           if (value != passwordController.text) {
-            riveHelper.addFailController();
             return 'Enter a matched passwords';
           }
           if (value == null ||
               value.isEmpty ||
               !AppRegex.isPasswordValid(value)) {
-            riveHelper.addFailController();
             return 'Please enter a valid password';
           }
         },
@@ -323,9 +247,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           setState(() {
             if (isObscureText) {
               isObscureText = false;
-              riveHelper.addHandsDownController();
             } else {
-              riveHelper.addHandsUpController();
               isObscureText = true;
             }
           });
@@ -337,12 +259,14 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         ),
       ),
       validator: (value) {
-        if (value == null ||
-            value.isEmpty ||
-            !AppRegex.isPasswordValid(value)) {
-          riveHelper.addFailController();
+        _validatePassword(value!);
+        if (!_hasSpecialCharacter ||
+            !_hasNumber ||
+            !_hasUpperCase ||
+            !_isPasswordLengthValid) {
           return 'Please enter a valid password';
         }
+        return null;
       },
     );
   }

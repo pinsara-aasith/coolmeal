@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:coolmeal/core/widgets/unified_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -6,13 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-import '../../../core/widgets/login_and_signup_animated_form.dart';
+import '../../../core/widgets/login_and_signup.dart';
 import '../../../core/widgets/no_internet.dart';
 import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/sign_in_with_google_text.dart';
-import '../../../core/widgets/terms_and_conditions_text.dart';
 import '../../../helpers/extensions.dart';
-import '../../../helpers/rive_controller.dart';
 import '../../../logic/cubit/auth_cubit.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/colors.dart';
@@ -27,8 +26,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final RiveAnimationControllerHelper riveHelper =
-      RiveAnimationControllerHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         child: const Center(
           child: CircularProgressIndicator(
-            color: ColorsManager.mainBlue,
+            color: ColorsManager.mainGreen,
           ),
         ),
       ),
@@ -58,9 +55,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   SafeArea _loginPage(BuildContext context) {
     return SafeArea(
+        child: Container(
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: welcomeGradient,
+      ),
       child: Padding(
         padding:
-            EdgeInsets.only(left: 30.w, right: 30.w, bottom: 15.h, top: 5.h),
+            EdgeInsets.only(left: 15.w, right: 15.w, bottom: 10.h, top: 5.h),
         child: SingleChildScrollView(
           child: BlocConsumer<AuthCubit, AuthState>(
             buildWhen: (previous, current) => previous != current,
@@ -70,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ProgressIndicaror.showProgressIndicator(context);
               } else if (state is AuthError) {
                 context.pop();
-                riveHelper.addFailController();
+
                 AwesomeDialog(
                   context: context,
                   dialogType: DialogType.error,
@@ -79,16 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   desc: state.message,
                 ).show();
               } else if (state is UserSignIn) {
-                riveHelper.addSuccessController();
                 await Future.delayed(const Duration(seconds: 2));
-                riveHelper.dispose();
+
                 if (!context.mounted) return;
                 context.pushNamedAndRemoveUntil(
                   Routes.homeScreen,
                   predicate: (route) => false,
                 );
               } else if (state is UserNotVerified) {
-                riveHelper.addFailController();
                 AwesomeDialog(
                   context: context,
                   dialogType: DialogType.info,
@@ -113,18 +113,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Login',
-                          style: TextStyles.font24Blue700Weight,
+                        UnifiedBackButton(onPressed: () {
+                          Navigator.of(context).pop();
+                        }),
+                        Gap(13.h),
+                        const Text(
+                          'Welcome Back',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black,
+                          ),
                         ),
-                        Gap(10.h),
-                        Text(
-                          "Login To Continue Using The App",
-                          style: TextStyles.font14Grey400Weight,
+                        const Text(
+                          'Welcome Back! Continue Your Journey to Healthier Meals',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w100,
+                          ),
                         ),
                       ],
                     ),
                   ),
+                  Gap(10.h),
                   EmailAndPassword(),
                   Gap(10.h),
                   const SigninWithGoogleText(),
@@ -140,7 +151,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 40.h,
                     ),
                   ),
-                  const TermsAndConditionsText(),
                   Gap(15.h),
                   const DoNotHaveAccountText(),
                 ],
@@ -149,6 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

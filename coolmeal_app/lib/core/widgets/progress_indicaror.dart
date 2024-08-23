@@ -10,7 +10,7 @@ class ProgressIndicaror {
       builder: (context) {
         return const Center(
           child: CircularProgressIndicator(
-            color: ColorsManager.mainBlue,
+            color: ColorsManager.mainGreen,
           ),
         );
       },

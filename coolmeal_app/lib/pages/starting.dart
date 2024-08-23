@@ -1,4 +1,4 @@
-import 'package:coolmeal/pages/welcome.dart';
+import 'package:coolmeal/screens/welcome/ui/welcome.dart';
 import 'package:flutter/material.dart';
 
 class Startingpage extends StatefulWidget {
@@ -39,25 +39,7 @@ class _StartingpageState extends State<Startingpage> {
                 ),
               ),
             ),
-            Expanded(
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 40),
-                  Image.asset(
-                    'assets/images/Logo.png',
-                    height: 150,
-                  ),
-                  Text(
-                    'Ready to Eat Healthy and Feel Great?',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.green[800],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            
             // Bottom Button
             Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
