@@ -26,7 +26,7 @@ class CompleteProfilePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Color.fromARGB(255, 157, 123, 123),
               ),
             ),
             const SizedBox(height: 20),
