@@ -19,7 +19,7 @@ class SigninWithGoogleText extends StatelessWidget {
         BuildDivider.buildDivider(),
         Gap(5.w),
         Text(
-          'or Sign in with',
+          'or sign in with',
           style: TextStyles.font13Grey400Weight,
         ),
         Gap(5.w),

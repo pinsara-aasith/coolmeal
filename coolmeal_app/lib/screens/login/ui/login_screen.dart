@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Gap(10.h),
                   EmailAndPassword(),
-                  Gap(10.h),
+                  Gap(20.h),
                   const SigninWithGoogleText(),
                   Gap(5.h),
                   InkWell(
@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 40.h,
                     ),
                   ),
-                  Gap(15.h),
+                  Gap(25.h),
                   const DoNotHaveAccountText(),
                 ],
               );

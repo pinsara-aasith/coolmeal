@@ -75,12 +75,14 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           Gap(10.h),
           if (widget.isSignUpPage == true) passwordConfirmationField(),
           if (widget.isSignUpPage != true) forgetPasswordTextButton(),
-          if (widget.isSignUpPage == true) PasswordRequirements(
-            hasSpecialCharacter: _hasSpecialCharacter,
-            hasNumber: _hasNumber,
-            hasUpperCase: _hasUpperCase,
-            isPasswordLengthValid: _isPasswordLengthValid,
-          ),
+          Gap(10.h),
+          if (widget.isSignUpPage == true)
+            PasswordRequirements(
+              hasSpecialCharacter: _hasSpecialCharacter,
+              hasNumber: _hasNumber,
+              hasUpperCase: _hasUpperCase,
+              isPasswordLengthValid: _isPasswordLengthValid,
+            ),
           Gap(24.h),
           loginOrSignUpOrPasswordButton(context),
         ],
@@ -105,6 +107,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         children: [
           AppTextFormField(
             hint: 'Email',
+            labelText: 'Your Email',
             validator: (value) {
               String email = (value ?? '').trim();
               emailController.text = email;
@@ -204,6 +207,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         focusNode: passwordConfirmationFocuseNode,
         controller: passwordConfirmationController,
         hint: 'Password Confirmation',
+        labelText: 'Confirm your password',
         isObscureText: isObscureText,
         suffixIcon: GestureDetector(
           onTap: () {
@@ -241,6 +245,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       focusNode: passwordFocuseNode,
       controller: passwordController,
       hint: 'Password',
+      labelText: 'Your password',
       isObscureText: isObscureText,
       suffixIcon: GestureDetector(
         onTap: () {

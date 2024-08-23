@@ -67,3 +67,24 @@ class TextStyles {
     color: ColorsManager.mediumLightShadeOfGray,
   );
 }
+
+class TextDecorations {
+  static InputDecoration getLabellessTextFieldDecoration(
+      {required String placeholder, required BuildContext context}) {
+    return InputDecoration(
+      contentPadding: const EdgeInsets.all(15),
+      hintText: placeholder,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      fillColor: ColorsManager.textFieldFillColor,
+      filled: true,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 0.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.black38, width: 0.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+}

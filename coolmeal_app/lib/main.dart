@@ -25,7 +25,8 @@ Future<void> main() async {
   FirebaseAuth.instance.authStateChanges().listen(
     (user) {
       if (user == null || !user.emailVerified) {
-        initialRoute = Routes.letsStart;
+        // initialRoute = Routes.letsStart;
+        initialRoute = Routes.profileCompletion;
       } else {
         initialRoute = Routes.homeScreen;
       }

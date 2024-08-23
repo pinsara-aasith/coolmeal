@@ -7,7 +7,7 @@ class PasswordRequirements extends StatelessWidget {
   final bool hasUpperCase;
   final bool isPasswordLengthValid;
 
-  PasswordRequirements({
+  const PasswordRequirements({super.key, 
     required this.hasSpecialCharacter,
     required this.hasNumber,
     required this.hasUpperCase,

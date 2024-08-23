@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/extensions.dart';
 import '../../routing/routes.dart';
-import '../../theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AlreadyHaveAccountText extends StatelessWidget {
