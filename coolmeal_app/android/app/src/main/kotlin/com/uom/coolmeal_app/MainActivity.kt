@@ -1,4 +1,4 @@
-package com.example.coolmeal_app
+package com.uom.coolmeal_app
 
 import io.flutter.embedding.android.FlutterActivity
 
