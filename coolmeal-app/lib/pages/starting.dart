@@ -1,4 +1,4 @@
-import 'package:coolmeal/pages/WelcomePage.dart';
+import 'package:coolmeal/pages/welcome.dart';
 import 'package:flutter/material.dart';
 
 class Startingpage extends StatefulWidget {
@@ -12,7 +12,7 @@ class _StartingpageState extends State<Startingpage> {
   // create flutter function to handle button press
   void handleButtonPress() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const Welcomepage()),
+      MaterialPageRoute(builder: (context) => const WelcomePage()),
     );
   }
 
