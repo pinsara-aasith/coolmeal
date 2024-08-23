@@ -1,15 +1,15 @@
-import 'package:coolmeal/pages/LoginPage.dart';
-import 'package:coolmeal/pages/SignUpPage.dart';
+import 'package:coolmeal/pages/login.dart';
+import 'package:coolmeal/pages/signup.dart';
 import 'package:flutter/material.dart';
 
-class Welcomepage extends StatefulWidget {
-  const Welcomepage({super.key});
+class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
 
   @override
-  State<Welcomepage> createState() => _WelcomepageState();
+  State<WelcomePage> createState() => _WelcomepageState();
 }
 
-class _WelcomepageState extends State<Welcomepage> {
+class _WelcomepageState extends State<WelcomePage> {
   // Add method to handle Sign Up
   void handleSignUp() {
     // Navigate to Sign Up page

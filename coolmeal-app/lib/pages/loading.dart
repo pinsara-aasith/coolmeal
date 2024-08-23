@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:coolmeal/pages/StartingPage.dart';
+import 'package:coolmeal/pages/starting.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Loadingpage extends StatefulWidget {
-  const Loadingpage({super.key});
+class LoadingPage extends StatefulWidget {
+  const LoadingPage({super.key});
 
   @override
-  State<Loadingpage> createState() => _LoadingpageState();
+  State<LoadingPage> createState() => _LoadingPageState();
 }
 
-class _LoadingpageState extends State<Loadingpage> {
+class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();

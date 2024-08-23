@@ -1,4 +1,4 @@
-import 'package:coolmeal/widgets/PasswordRequirements.dart';
+import 'package:coolmeal/widgets/password_requirements.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {

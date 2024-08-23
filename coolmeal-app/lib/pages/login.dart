@@ -1,14 +1,14 @@
-import 'package:coolmeal/pages/GoogleSignInButtonWidget.dart';
-import 'package:coolmeal/widgets/LoginButtonWidget%20.dart';
+import 'package:coolmeal/pages/google_sign_in_button_widget.dart';
+import 'package:coolmeal/widgets/login_button.dart';
 import 'package:flutter/material.dart';
-import 'package:coolmeal/widgets/BackButtonWidget.dart';
-import 'package:coolmeal/widgets/WelcomeTextWidget.dart';
-import 'package:coolmeal/widgets/EmailInputWidget.dart';
-import 'package:coolmeal/widgets/PasswordInputWidget.dart';
-import 'package:coolmeal/widgets/ForgotPasswordWidget.dart';
+import 'package:coolmeal/widgets/back_button.dart';
+import 'package:coolmeal/widgets/welcome_text.dart';
+import 'package:coolmeal/widgets/email_input.dart';
+import 'package:coolmeal/widgets/password_input.dart';
+import 'package:coolmeal/widgets/forgot_password.dart';
 
-import 'package:coolmeal/widgets/SignUpTextWidget.dart';
-import 'package:coolmeal/widgets/OrDividerWidget.dart';
+import 'package:coolmeal/widgets/sign_up_text.dart';
+import 'package:coolmeal/widgets/or_divider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
