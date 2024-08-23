@@ -1,5 +1,3 @@
-import 'package:coolmeal/pages/login.dart';
-import 'package:coolmeal/pages/signup.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';

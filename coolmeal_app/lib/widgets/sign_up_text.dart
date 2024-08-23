@@ -1,4 +1,4 @@
-import 'package:coolmeal/pages/signup.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,10 +9,7 @@ class SignUpTextWidget extends StatelessWidget {
   //method for handle signup text pressed
   void handleSignUp(BuildContext context) {
     // Navigate to Sign Up page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
-    );
+    Navigator.pushNamed(context, Routes.signupScreen);
   }
 
   @override
