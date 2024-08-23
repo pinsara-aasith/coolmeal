@@ -1,4 +1,4 @@
-import 'package:coolmeal/pages/login.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/welcome/ui/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,6 @@ class AuthService {
   Future<void> signout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
+    Navigator.pushNamed(context, Routes.signupScreen);
   }
 }
