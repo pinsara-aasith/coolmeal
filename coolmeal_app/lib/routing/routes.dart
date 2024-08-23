@@ -7,4 +7,5 @@ class Routes {
   static const String splashScreen = "/splashScreen";
   static const String welcome = "/welcome";
   static const String letsStart = "/letsStart";
+  static const String profileCompletion = "/profileCompletion";
 }

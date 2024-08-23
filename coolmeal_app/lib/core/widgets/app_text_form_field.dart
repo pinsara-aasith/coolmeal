@@ -6,6 +6,7 @@ import '../../theming/styles.dart';
 
 class AppTextFormField extends StatelessWidget {
   final String hint;
+  final String? labelText;
   final Widget? suffixIcon;
   final FocusNode? focusNode;
   final Function(String)? onChanged;
@@ -16,6 +17,7 @@ class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
     super.key,
     required this.hint,
+    this.labelText,
     this.suffixIcon,
     this.isObscureText,
     this.isDense,
@@ -35,6 +37,7 @@ class AppTextFormField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: hint,
+        labelText: labelText,
         hintStyle: TextStyles.font14Hint500Weight,
         isDense: isDense ?? true,
         filled: true,

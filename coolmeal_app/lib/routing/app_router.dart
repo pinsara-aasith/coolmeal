@@ -1,4 +1,5 @@
 import 'package:coolmeal/screens/lets_start/ui/lets_Start.dart';
+import 'package:coolmeal/screens/complete_profile/ui/complete_profile.dart';
 import 'package:coolmeal/screens/splash_screen/splash_screen.dart';
 import 'package:coolmeal/screens/welcome/ui/welcome.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,14 @@ class AppRouter {
           builder: (_) => BlocProvider.value(
             value: authCubit,
             child: const LetsStartPage(),
+          ),
+        );
+      
+      case Routes.profileCompletion:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: authCubit,
+            child: const ProfileCompletionScreen(),
           ),
         );
     }
