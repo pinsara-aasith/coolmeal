@@ -67,7 +67,7 @@ class _WelcomepageState extends State<WelcomePage> {
               ),
               // Illustration Image
               Image.asset(
-                'assets/images/conversation.png', // Replace with your illustration image
+                'assets/images/conversation.png', 
                 height: 300,
               ),
 
