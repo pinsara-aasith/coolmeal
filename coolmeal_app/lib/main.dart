@@ -3,13 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'firebase_options.dart';
 import 'routing/app_router.dart';
 import 'routing/routes.dart';
 import 'theming/colors.dart';
 
-late String initialRoute;
+String initialRoute = Routes.loginScreen;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ Future<void> main() async {
   FirebaseAuth.instance.authStateChanges().listen(
     (user) {
       if (user == null || !user.emailVerified) {
-        initialRoute = Routes.loginScreen;
+        initialRoute = Routes.letsStart;
       } else {
         initialRoute = Routes.homeScreen;
       }
@@ -57,18 +58,22 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MaterialApp(
-          title: 'Login & Signup App',
+          title: 'CoolMeal',
           theme: ThemeData(
+            textTheme: GoogleFonts.poppinsTextTheme(),
+            primaryColor: ColorsManager.mainGreen,
+            secondaryHeaderColor: ColorsManager.secondaryGreen,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
             useMaterial3: true,
             textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: ColorsManager.mainBlue,
+              cursorColor: ColorsManager.mainGreen,
               selectionColor: Color.fromARGB(188, 36, 124, 255),
-              selectionHandleColor: ColorsManager.mainBlue,
+              selectionHandleColor: ColorsManager.mainGreen,
             ),
           ),
           onGenerateRoute: router.generateRoute,
           debugShowCheckedModeBanner: false,
-          initialRoute: initialRoute,
+          initialRoute: Routes.splashScreen,
         );
       },
     );

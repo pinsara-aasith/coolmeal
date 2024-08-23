@@ -1,5 +1,6 @@
 import 'package:coolmeal/widgets/password_requirements.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -150,7 +151,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
                   RichText(
                     text: TextSpan(
                       style: TextStyle(color: Colors.grey[700]),

@@ -1,5 +1,7 @@
 import 'package:coolmeal/pages/login.dart';
 import 'package:coolmeal/pages/signup.dart';
+import 'package:coolmeal/routing/routes.dart';
+import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -10,28 +12,22 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomepageState extends State<WelcomePage> {
-  // Add method to handle Sign Up
   void handleSignUp() {
-    // Navigate to Sign Up page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
-    );
+    Navigator.pushNamed(context, Routes.signupScreen);
   }
 
-  //add method to handle Login
   void handleLogin() {
-    // Navigate to Login page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+    Navigator.pushNamed(context, Routes.loginScreen);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: welcomeGradient,
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
@@ -39,35 +35,38 @@ class _WelcomepageState extends State<WelcomePage> {
             children: [
               Column(
                 children: [
-                  // Top Logo and Welcome Text
-                  const SizedBox(height: 60), // Spacing from top
+                  const SizedBox(height: 60),
                   Image.asset(
-                    'assets/images/Logo.png', // Replace with your logo image
-                    height: 60,
+                    'assets/images/Logo.png',
+                    height: 140,
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'Welcome Aboard!',
+                    'Welcome Abroad!',
                     style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
                       color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Join Us and Start Your Journey to Healthier Meals!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
-                  ),
+                  Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.10),
+                      child: Text(
+                        'Join Us and Start Your Journey to Healthier Meals!',
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      )),
                 ],
               ),
               // Illustration Image
               Image.asset(
-                'assets/images/conversation.png', 
+                'assets/images/conversation.png',
                 height: 300,
               ),
 
@@ -78,7 +77,7 @@ class _WelcomepageState extends State<WelcomePage> {
                     onPressed: handleSignUp,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      backgroundColor: Colors.green,
+                      backgroundColor: Theme.of(context).primaryColor,
                       minimumSize:
                           const Size(double.infinity, 50), // Full width
                       shape: RoundedRectangleBorder(
@@ -89,6 +88,7 @@ class _WelcomepageState extends State<WelcomePage> {
                       'Sign Up',
                       style: TextStyle(
                         fontSize: 18,
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                     ),
@@ -97,20 +97,22 @@ class _WelcomepageState extends State<WelcomePage> {
                   OutlinedButton(
                     onPressed: handleLogin,
                     style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      side: const BorderSide(color: Colors.green, width: 2),
+                      side: BorderSide(
+                          color: Theme.of(context).primaryColor, width: 2),
                       minimumSize:
                           const Size(double.infinity, 50), // Full width
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Login',
                       style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.green,
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Theme.of(context).primaryColor),
                     ),
                   ),
                   const SizedBox(height: 20), // Spacing from bottom
@@ -120,6 +122,6 @@ class _WelcomepageState extends State<WelcomePage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

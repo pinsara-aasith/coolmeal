@@ -19,8 +19,13 @@ class PasswordRequirements extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Your password should contain'),
-        const SizedBox(height: 8),
+        const Text(
+          'Your password should contain',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         RequirementItem(
           text: '1 or more special characters',
           isValid: hasSpecialCharacter,

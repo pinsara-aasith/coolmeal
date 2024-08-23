@@ -1,4 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:coolmeal/core/widgets/unified_back_button.dart';
+import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,15 +8,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/widgets/already_have_account_text.dart';
-import '../../../core/widgets/login_and_signup_animated_form.dart';
+import '../../../core/widgets/login_and_signup.dart';
 import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/sign_in_with_google_text.dart';
-import '../../../core/widgets/terms_and_conditions_text.dart';
 import '../../../helpers/extensions.dart';
-import '../../../helpers/rive_controller.dart';
 import '../../../logic/cubit/auth_cubit.dart';
 import '../../../routing/routes.dart';
-import '../../../theming/styles.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -24,30 +23,43 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final RiveAnimationControllerHelper riveHelper =
-      RiveAnimationControllerHelper();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+          child: Container(
+            height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: welcomeGradient,
+        ),
         child: Padding(
           padding:
-              EdgeInsets.only(left: 30.w, right: 30.w, bottom: 15.h, top: 5.h),
+              EdgeInsets.only(left: 10.w, right: 10.w, bottom: 15.h, top: 5.h),
           child: SingleChildScrollView(
+            padding: EdgeInsets.all(4.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Create Account',
-                  style: TextStyles.font24Blue700Weight,
+              children: <Widget>[
+                UnifiedBackButton(onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+                Gap(13.h),
+                const Text(
+                  'Create New Account',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black,
+                  ),
                 ),
-                Gap(8.h),
-                Text(
-                  'Sign up now and start exploring all that our\napp has to offer. We\'re excited to welcome\nyou to our community!',
-                  style: TextStyles.font14Grey400Weight,
+                const Text(
+                  'Create New Account and Begin Your Healthy Eating Journey',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w100,
+                  ),
                 ),
-                Gap(8.h),
+                Gap(20.h),
                 BlocConsumer<AuthCubit, AuthState>(
                   buildWhen: (previous, current) => previous != current,
                   listenWhen: (previous, current) => previous != current,
@@ -55,8 +67,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (state is AuthLoading) {
                       ProgressIndicaror.showProgressIndicator(context);
                     } else if (state is AuthError) {
-                      riveHelper.addFailController();
-
                       context.pop();
                       context.pop();
                       await AwesomeDialog(
@@ -67,9 +77,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         desc: state.message,
                       ).show();
                     } else if (state is UserSignIn) {
-                      riveHelper.addSuccessController();
                       await Future.delayed(const Duration(seconds: 2));
-                      riveHelper.dispose();
+
                       if (!context.mounted) return;
                       context.pushNamedAndRemoveUntil(
                         Routes.homeScreen,
@@ -83,7 +92,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       );
                     } else if (state is UserSingupButNotVerified) {
                       context.pop();
-                      riveHelper.addSuccessController();
                       await AwesomeDialog(
                         context: context,
                         dialogType: DialogType.success,
@@ -92,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         desc: 'Don\'t forget to verify your email check inbox.',
                       ).show();
                       await Future.delayed(const Duration(seconds: 2));
-                      riveHelper.removeAllControllers();
+
                       if (!context.mounted) return;
                       context.pushNamedAndRemoveUntil(
                         Routes.loginScreen,
@@ -119,7 +127,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 40.h,
                           ),
                         ),
-                        const TermsAndConditionsText(),
                         Gap(15.h),
                         const AlreadyHaveAccountText(),
                       ],
@@ -130,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
-      ),
+      )),
     );
   }
 

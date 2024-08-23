@@ -7,7 +7,6 @@ import 'package:gap/gap.dart';
 
 import '../../../core/widgets/already_have_account_text.dart';
 import '../../../core/widgets/progress_indicaror.dart';
-import '../../../core/widgets/terms_and_conditions_text.dart';
 import '../../../logic/cubit/auth_cubit.dart';
 import '../../../theming/styles.dart';
 import 'widgets/password_reset.dart';
@@ -90,14 +89,12 @@ class _ForgetScreenState extends State<ForgetScreen> {
                   ),
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
                   mainAxisSize: MainAxisSize.min, // Ensure minimum height
                   children: [
-                    const TermsAndConditionsText(),
-                    Gap(24.h),
-                    const AlreadyHaveAccountText(),
+                    AlreadyHaveAccountText(),
                   ],
                 ),
               ),

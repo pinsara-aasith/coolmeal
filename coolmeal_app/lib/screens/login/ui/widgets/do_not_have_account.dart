@@ -1,8 +1,10 @@
+import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../helpers/extensions.dart';
 import '../../../../routing/routes.dart';
 import '../../../../theming/styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoNotHaveAccountText extends StatelessWidget {
   const DoNotHaveAccountText({super.key});
@@ -19,11 +21,19 @@ class DoNotHaveAccountText extends StatelessWidget {
           children: [
             TextSpan(
               text: 'Don\'t have an account yet?',
-              style: TextStyles.font11DarkBlue400Weight,
+              style:  TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: ColorsManager.darkBlue,
+                ),
             ),
             TextSpan(
               text: ' Sign Up',
-              style: TextStyles.font11Blue600Weight,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w900,
+                color: ColorsManager.mainGreen,
+              ),
             ),
           ],
         ),

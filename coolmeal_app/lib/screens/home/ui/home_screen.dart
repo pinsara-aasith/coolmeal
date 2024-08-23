@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Center(
           child: CircularProgressIndicator(
-            color: ColorsManager.mainBlue,
+            color: ColorsManager.mainGreen,
           ),
         ),
       ),

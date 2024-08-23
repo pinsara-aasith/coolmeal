@@ -7,13 +7,13 @@ class TextStyles {
   static TextStyle font24Blue700Weight = TextStyle(
     fontSize: 24.sp,
     fontWeight: FontWeight.w700,
-    color: ColorsManager.mainBlue,
+    color: ColorsManager.mainGreen,
   );
 
   static TextStyle font14Blue400Weight = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
-    color: ColorsManager.mainBlue,
+    color: ColorsManager.mainGreen,
   );
 
   static TextStyle font16White600Weight = TextStyle(
@@ -59,7 +59,7 @@ class TextStyles {
   static TextStyle font11Blue600Weight = TextStyle(
     fontSize: 11.sp,
     fontWeight: FontWeight.w600,
-    color: ColorsManager.mainBlue,
+    color: ColorsManager.mainGreen,
   );
   static TextStyle font11MediumLightShadeOfGray400Weight = TextStyle(
     fontSize: 11.sp,

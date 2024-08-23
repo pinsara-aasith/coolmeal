@@ -8,10 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../core/widgets/login_and_signup_animated_form.dart';
+import '../../../core/widgets/login_and_signup.dart';
 import '../../../core/widgets/progress_indicaror.dart';
-import '../../../core/widgets/terms_and_conditions_text.dart';
-import '../../../helpers/rive_controller.dart';
 import '../../../logic/cubit/auth_cubit.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
@@ -19,8 +17,6 @@ import '../../../theming/styles.dart';
 class CreatePassword extends StatelessWidget {
   late GoogleSignInAccount googleUser;
   late OAuthCredential credential;
-  final RiveAnimationControllerHelper riveHelper =
-      RiveAnimationControllerHelper();
   CreatePassword({
     super.key,
     required this.googleUser,
@@ -51,7 +47,6 @@ class CreatePassword extends StatelessWidget {
                           if (state is AuthLoading) {
                             ProgressIndicaror.showProgressIndicator(context);
                           } else if (state is AuthError) {
-                            riveHelper.addFailController();
                             await AwesomeDialog(
                               context: context,
                               dialogType: DialogType.error,
@@ -60,7 +55,6 @@ class CreatePassword extends StatelessWidget {
                               desc: state.message,
                             ).show();
                           } else if (state is UserSingupAndLinkedWithGoogle) {
-                            riveHelper.addSuccessController();
                             await AwesomeDialog(
                               context: context,
                               dialogType: DialogType.success,
@@ -69,7 +63,6 @@ class CreatePassword extends StatelessWidget {
                               desc: 'You have successfully signed up.',
                             ).show();
                             await Future.delayed(const Duration(seconds: 2));
-                            riveHelper.removeAllControllers();
                             if (!context.mounted) return;
                             context.pushNamedAndRemoveUntil(
                               Routes.homeScreen,
@@ -89,7 +82,6 @@ class CreatePassword extends StatelessWidget {
                   ),
                 ),
               ),
-              const TermsAndConditionsText(),
             ],
           ),
         ),
