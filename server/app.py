@@ -10,7 +10,7 @@ import pandas as pd
 app = FastAPI()
 
 # To get the actual rows from the dataframe corresponding to the predictions:
-df = pd.read_csv("../notebooks/daily_menus.csv")
+df = pd.read_csv("./daily_menus.csv")
 
 
 @app.get("/")
