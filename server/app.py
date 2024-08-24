@@ -17,14 +17,13 @@ def read_root():
 
 @app.get("/prediction")
 def read_prediction():
+
     input_data = [[1800, 154, 60, 23]]
     prediction = predict_knn("knn_model.pkl", input_data)
     print(prediction)
-    output = df.iloc[prediction[0]].to_dict()
+    output = df.iloc[prediction[0]].to_dict(orient="records")
     return JSONResponse(status_code=200, content={"prediction": output})
 
-
-# define data path
 
 # Train the model and save it
 model = train_knn_model()
