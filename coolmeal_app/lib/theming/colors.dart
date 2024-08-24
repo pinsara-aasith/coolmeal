@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ColorsManager {
   static const Color mainGreen = Color(0xFF4AA28B);

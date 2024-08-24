@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'auth_cubit.dart';
+part of 'login_or_signup_cubit.dart';
 
 class AuthError extends AuthState {
   final String message;

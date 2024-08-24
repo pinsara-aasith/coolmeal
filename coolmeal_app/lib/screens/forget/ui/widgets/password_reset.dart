@@ -7,7 +7,7 @@ import '../../../../../helpers/app_regex.dart';
 import '../../../../../theming/styles.dart';
 import '../../../../core/widgets/app_text_button.dart';
 import '../../../../core/widgets/app_text_form_field.dart';
-import '../../../../logic/cubit/auth_cubit.dart';
+import '../../../../logic/cubit/login_or_signup_cubit.dart';
 
 class PasswordReset extends StatefulWidget {
   const PasswordReset({super.key});
@@ -66,7 +66,7 @@ class _PasswordResetState extends State<PasswordReset> {
       textStyle: TextStyles.font16White600Weight,
       onPressed: () {
         if (formKey.currentState!.validate()) {
-          context.read<AuthCubit>().resetPassword(emailController.text);
+          context.read<LoginOrSignupCubit>().resetPassword(emailController.text);
         }
       },
     );

@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/widgets/login_and_signup.dart';
 import '../../../core/widgets/progress_indicaror.dart';
-import '../../../logic/cubit/auth_cubit.dart';
+import '../../../logic/cubit/login_or_signup_cubit.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
 
@@ -40,7 +40,7 @@ class CreatePassword extends StatelessWidget {
                         'Create Password',
                         style: TextStyles.font24Blue700Weight,
                       ),
-                      BlocConsumer<AuthCubit, AuthState>(
+                      BlocConsumer<LoginOrSignupCubit, AuthState>(
                         buildWhen: (previous, current) => previous != current,
                         listenWhen: (previous, current) => previous != current,
                         listener: (context, state) async {
