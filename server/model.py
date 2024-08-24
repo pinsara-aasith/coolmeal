@@ -7,7 +7,6 @@ import pickle
 
 
 def train_knn_model(
-    data_path,
     n_neighbors=5,
     metric="cosine",
     algorithm="brute",
@@ -25,7 +24,7 @@ def train_knn_model(
     """
 
     # Load the data
-    df = pd.read_csv(data_path)
+    df = pd.read_csv("../notebooks/daily_menus.csv")
 
     # Preprocess the data
     scaler = StandardScaler()
