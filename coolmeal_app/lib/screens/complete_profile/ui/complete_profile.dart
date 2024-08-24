@@ -1,10 +1,9 @@
 import 'package:coolmeal/core/widgets/plain_app_bar.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/about_you.dart';
-import 'package:coolmeal/screens/complete_profile/ui/widgets/allow_location_access.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/about_you_more.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
-
 
 class ProceedToCompleteProfilePage extends StatelessWidget {
   final VoidCallback onGetStarted;
@@ -183,15 +182,10 @@ class _ProfileCompletionScreenState extends State<ProfileCompletionScreen> {
         _gotoPage(1);
       }),
       ProfileCompletionStepsWidget(onNext: () {
-        _gotoPage(2);
+        Navigator.pushReplacementNamed(context, 'home');
       }, onBack: () {
         _gotoPage(0);
-      }),
-      AllowAccessPage(onNext: () {
-        _gotoPage(0);
-      }, onBack: () {
-        _gotoPage(1);
-      }),
+      })
     ];
 
     super.initState();
@@ -241,12 +235,9 @@ class _ProfileCompletionStepsWidgetState
       ),
       AboutYouMore(
         onClickNext: () {
-          _pageController.animateToPage(2,
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeIn);
+          Navigator.pushReplacementNamed(context, Routes.homeScreen);
         },
       ),
-      
     ];
 
     super.initState();
@@ -291,46 +282,46 @@ class _ProfileCompletionStepsWidgetState
           ],
         ),
         body: Container(
-        decoration: BoxDecoration(
-          gradient: welcomeGradient,
-        ),
-        child:Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(children: [
-            Row(
-              children: List.generate(_pages.length, (index) {
-                return Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Container(
-                        height: 4,
-                        decoration: ShapeDecoration(
-                          color: _activePage >= index
-                              ? const Color(0xFF036D59)
-                              : Colors.grey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      )),
-                );
-              }),
+            decoration: BoxDecoration(
+              gradient: welcomeGradient,
             ),
-            Expanded(
-                child: PageView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              onPageChanged: (int page) {
-                setState(() {
-                  _activePage = page;
-                });
-              },
-              itemCount: _pages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _pages[index % _pages.length];
-              },
-            )),
-          ]),
-        )));
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(children: [
+                Row(
+                  children: List.generate(_pages.length, (index) {
+                    return Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            height: 4,
+                            decoration: ShapeDecoration(
+                              color: _activePage >= index
+                                  ? const Color(0xFF036D59)
+                                  : Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          )),
+                    );
+                  }),
+                ),
+                Expanded(
+                    child: PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _activePage = page;
+                    });
+                  },
+                  itemCount: _pages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _pages[index % _pages.length];
+                  },
+                )),
+              ]),
+            )));
   }
 }

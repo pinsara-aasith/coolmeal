@@ -12,10 +12,9 @@ import '../../../core/widgets/no_internet.dart';
 import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/sign_in_with_google_text.dart';
 import '../../../helpers/extensions.dart';
-import '../../../logic/cubit/auth_cubit.dart';
+import '../../../logic/cubit/login_or_signup_cubit.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/colors.dart';
-import '../../../theming/styles.dart';
 import 'widgets/do_not_have_account.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -50,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AuthCubit>(context);
+    BlocProvider.of<LoginOrSignupCubit>(context);
   }
 
   SafeArea _loginPage(BuildContext context) {
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding:
             EdgeInsets.only(left: 15.w, right: 15.w, bottom: 10.h, top: 5.h),
         child: SingleChildScrollView(
-          child: BlocConsumer<AuthCubit, AuthState>(
+          child: BlocConsumer<LoginOrSignupCubit, AuthState>(
             buildWhen: (previous, current) => previous != current,
             listenWhen: (previous, current) => previous != current,
             listener: (context, state) async {
@@ -143,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   InkWell(
                     radius: 50.r,
                     onTap: () {
-                      context.read<AuthCubit>().signInWithGoogle();
+                      context.read<LoginOrSignupCubit>().signInWithGoogle();
                     },
                     child: SvgPicture.asset(
                       'assets/svgs/google_logo.svg',

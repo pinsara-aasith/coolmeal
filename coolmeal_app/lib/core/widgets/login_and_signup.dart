@@ -1,4 +1,4 @@
-import 'package:coolmeal/widgets/password_requirements.dart';
+import 'package:coolmeal/core/widgets/password_requirements.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ import '../../../helpers/app_regex.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
 import '../../helpers/extensions.dart';
-import '../../logic/cubit/auth_cubit.dart';
+import '../../logic/cubit/login_or_signup_cubit.dart';
 import 'app_text_button.dart';
 import 'app_text_form_field.dart';
 import 'password_validations.dart';
@@ -160,7 +160,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
       onPressed: () async {
         passwordFocuseNode.unfocus();
         if (formKey.currentState!.validate()) {
-          context.read<AuthCubit>().signInWithEmail(
+          context.read<LoginOrSignupCubit>().signInWithEmail(
                 emailController.text,
                 passwordController.text,
               );
@@ -190,7 +190,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         passwordFocuseNode.unfocus();
         passwordConfirmationFocuseNode.unfocus();
         if (formKey.currentState!.validate()) {
-          context.read<AuthCubit>().createAccountAndLinkItWithGoogleAccount(
+          context.read<LoginOrSignupCubit>().createAccountAndLinkItWithGoogleAccount(
                 nameController.text,
                 passwordController.text,
                 widget.googleUser!,
@@ -292,7 +292,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         passwordFocuseNode.unfocus();
         passwordConfirmationFocuseNode.unfocus();
         if (formKey.currentState!.validate()) {
-          context.read<AuthCubit>().signUpWithEmail(
+          context.read<LoginOrSignupCubit>().signUpWithEmail(
                 nameController.text,
                 emailController.text,
                 passwordController.text,

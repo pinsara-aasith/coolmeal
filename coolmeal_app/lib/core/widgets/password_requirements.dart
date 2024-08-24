@@ -1,4 +1,4 @@
-import 'package:coolmeal/widgets/requirement_item.dart';
+import 'package:coolmeal/core/widgets/requirement_item.dart';
 import 'package:flutter/material.dart';
 
 class PasswordRequirements extends StatelessWidget {

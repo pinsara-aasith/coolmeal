@@ -1,10 +1,8 @@
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
-import 'package:coolmeal/core/widgets/mobile_number_input.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../widgets/page_header.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 
 class AboutYouMore extends StatefulWidget {
@@ -17,8 +15,6 @@ class AboutYouMore extends StatefulWidget {
 }
 
 class _AboutYouMoreState extends State<AboutYouMore> {
-  String? _internationalPhoneNo;
-  String? _saudiPhoneNo;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
@@ -69,7 +65,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         Expanded(
           child: SingleChildScrollView(
               child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

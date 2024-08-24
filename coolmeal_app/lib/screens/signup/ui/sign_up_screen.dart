@@ -12,7 +12,7 @@ import '../../../core/widgets/login_and_signup.dart';
 import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/sign_in_with_google_text.dart';
 import '../../../helpers/extensions.dart';
-import '../../../logic/cubit/auth_cubit.dart';
+import '../../../logic/cubit/login_or_signup_cubit.dart';
 import '../../../routing/routes.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 Gap(20.h),
-                BlocConsumer<AuthCubit, AuthState>(
+                BlocConsumer<LoginOrSignupCubit, AuthState>(
                   buildWhen: (previous, current) => previous != current,
                   listenWhen: (previous, current) => previous != current,
                   listener: (context, state) async {
@@ -119,7 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Gap(5.h),
                         InkWell(
                           onTap: () {
-                            context.read<AuthCubit>().signInWithGoogle();
+                            context.read<LoginOrSignupCubit>().signInWithGoogle();
                           },
                           child: SvgPicture.asset(
                             'assets/svgs/google_logo.svg',
@@ -144,6 +144,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AuthCubit>(context);
+    BlocProvider.of<LoginOrSignupCubit>(context);
   }
 }

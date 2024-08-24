@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:coolmeal/bloc/app_bloc.dart';
+import 'package:coolmeal/bloc/authentication_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +16,7 @@ String initialRoute = Routes.loginScreen;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Future.wait([
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -21,19 +24,26 @@ Future<void> main() async {
     ScreenUtil.ensureScreenSize(),
     preloadSVGs(['assets/svgs/google_logo.svg'])
   ]);
+  Bloc.observer = const AppBlocObserver();
 
-  FirebaseAuth.instance.authStateChanges().listen(
-    (user) {
-      if (user == null || !user.emailVerified) {
-        // initialRoute = Routes.letsStart;
-        initialRoute = Routes.profileCompletion;
-      } else {
-        initialRoute = Routes.homeScreen;
-      }
-    },
-  );
+  final authenticationRepository = AuthenticationRepository();
+  await authenticationRepository.user.first;
 
-  runApp(MyApp(router: AppRouter()));
+  // FirebaseAuth.instance.authStateChanges().listen(
+  //   (user) {
+  //     if (user == null || !user.emailVerified) {
+  //       initialRoute = Routes.letsStart;
+  //       // initialRoute = Routes.profileCompletion;
+  //     } else {
+  //       initialRoute = Routes.homeScreen;
+  //     }
+  //   },
+  // );
+
+  runApp(MyApp(
+    router: AppRouter(),
+    authenticationRepository: authenticationRepository,
+  ));
 }
 
 Future<void> preloadSVGs(List<String> paths) async {
@@ -49,7 +59,13 @@ Future<void> preloadSVGs(List<String> paths) async {
 class MyApp extends StatelessWidget {
   final AppRouter router;
 
-  const MyApp({super.key, required this.router});
+  final AuthenticationRepository _authenticationRepository;
+
+  const MyApp({
+    required this.router,
+    required authenticationRepository,
+    super.key,
+  }) : _authenticationRepository = authenticationRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -58,25 +74,109 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return MaterialApp(
-          title: 'CoolMeal',
-          theme: ThemeData(
-            textTheme: GoogleFonts.poppinsTextTheme(),
-            primaryColor: ColorsManager.mainGreen,
-            secondaryHeaderColor: ColorsManager.secondaryGreen,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            useMaterial3: true,
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: ColorsManager.mainGreen,
-              selectionColor: Color.fromARGB(188, 36, 124, 255),
-              selectionHandleColor: ColorsManager.mainGreen,
+        return RepositoryProvider.value(
+          value: _authenticationRepository,
+          child: BlocProvider(
+            create: (_) => AppBloc(
+              authenticationRepository: _authenticationRepository,
             ),
+            child: AppView(router: router),
           ),
-          onGenerateRoute: router.generateRoute,
-          debugShowCheckedModeBanner: false,
-          initialRoute: Routes.splashScreen,
         );
       },
     );
+  }
+}
+
+class AppView extends StatefulWidget {
+  final AppRouter router;
+  const AppView({super.key, required this.router});
+
+  @override
+  State<AppView> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'CoolMeal',
+      navigatorKey: _navigatorKey,
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+        primaryColor: ColorsManager.mainGreen,
+        secondaryHeaderColor: ColorsManager.secondaryGreen,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        useMaterial3: true,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: ColorsManager.mainGreen,
+          selectionColor: Color.fromARGB(188, 36, 124, 255),
+          selectionHandleColor: ColorsManager.mainGreen,
+        ),
+      ),
+      builder: (context, child) {
+        return BlocListener<AppBloc, AppState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AppStatus.authenticated:
+                _navigator.pushNamedAndRemoveUntil<void>(
+                  Routes.homeScreen,
+                  (route) => false,
+                );
+                break;
+              case AppStatus.unauthenticated:
+                _navigator.pushNamedAndRemoveUntil<void>(
+                  Routes.loginScreen,
+                  (route) => false,
+                );
+                break;
+              case AppStatus.unknown:
+                break;
+            }
+          },
+          child: child,
+        );
+      },
+      onGenerateRoute: widget.router.generateRoute,
+      debugShowCheckedModeBanner: false,
+      initialRoute: Routes.splashScreen,
+    );
+  }
+}
+
+
+
+class AppBlocObserver extends BlocObserver {
+  const AppBlocObserver();
+
+  @override
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
+    print(error);
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    super.onChange(bloc, change);
+    print(change);
+  }
+
+  @override
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
+    super.onTransition(bloc, transition);
+    print(transition);
   }
 }
