@@ -13,13 +13,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
   }
 
-  _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 2), () {});
-    Navigator.pushReplacementNamed(context, initialRoute);
-  }
 
   @override
   Widget build(BuildContext context) {
