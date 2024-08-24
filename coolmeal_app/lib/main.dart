@@ -29,17 +29,6 @@ Future<void> main() async {
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
 
-  // FirebaseAuth.instance.authStateChanges().listen(
-  //   (user) {
-  //     if (user == null || !user.emailVerified) {
-  //       initialRoute = Routes.letsStart;
-  //       // initialRoute = Routes.profileCompletion;
-  //     } else {
-  //       initialRoute = Routes.homeScreen;
-  //     }
-  //   },
-  // );
-
   runApp(MyApp(
     router: AppRouter(),
     authenticationRepository: authenticationRepository,
@@ -96,10 +85,31 @@ class AppView extends StatefulWidget {
   State<AppView> createState() => _AppViewState();
 }
 
+var splashShown = false;
+
 class _AppViewState extends State<AppView> {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
   NavigatorState get _navigator => _navigatorKey.currentState!;
+
+  void commitAppStateChanges(AppState appState) {
+    switch (appState.status) {
+      case AppStatus.authenticated:
+        _navigator.pushNamedAndRemoveUntil<void>(
+          Routes.homeScreen,
+          (route) => false,
+        );
+        break;
+      case AppStatus.unauthenticated:
+        _navigator.pushNamedAndRemoveUntil<void>(
+          Routes.loginScreen,
+          (route) => false,
+        );
+        break;
+      case AppStatus.unknown:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,22 +131,15 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
           listener: (context, state) {
-            switch (state.status) {
-              case AppStatus.authenticated:
-                _navigator.pushNamedAndRemoveUntil<void>(
-                  Routes.homeScreen,
-                  (route) => false,
-                );
-                break;
-              case AppStatus.unauthenticated:
-                _navigator.pushNamedAndRemoveUntil<void>(
-                  Routes.loginScreen,
-                  (route) => false,
-                );
-                break;
-              case AppStatus.unknown:
-                break;
+            if (!splashShown) {
+              Future.delayed(const Duration(seconds: 2)).then((v) {
+                commitAppStateChanges(state);
+              });
+
+              splashShown = true;
+              return;
             }
+            commitAppStateChanges(state);
           },
           child: child,
         );
@@ -147,8 +150,6 @@ class _AppViewState extends State<AppView> {
     );
   }
 }
-
-
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
