@@ -1,0 +1,182 @@
+Meal_Id,Name,Meal_Ingredient_Ids,Meal_Ingredients_Names,Meal_Ingredient_Quantities,Category,Description,CAT
+1,Kottu Roti,"SLB002,SLH006,SLJ002,SLK004,","Roti, Vegetables, Chicken,Coconut Oil,Chilli Powder,Salt","30, 40, 30,2.5",Main,Sri Lankan street food,1
+2,Hoppers,"SLA010,SLI005,SLL001,SLJ002","Rice flour, Coconut milk, Sugar, Coconut Water,Coconut Oil,salt","25, 20, 5,20,2.5",Main,Delicate rice flour pancakes,2
+3,Kiribath,"SLA009,SLI006","Rice, Coconut milk, Salt","50, 30, 2.5",Main,Traditional coconut milk rice,3
+4,Fish Ambul Thiyal,"SLF006,SLE027,SLK004","Fish, Goraka, Spices","40, 0.5, 10",side,Sour fish curry,"3,21,22,23,29,35"
+5,Dhal Curry,"SLC001,SLI006,SLK004,SLK019","Dhal, Coconut milk, Spices,Termeric powder","10, 20, 5",Side,Spicy lentil curry,"3,21,22,23,29,35"
+6,Chicken Curry,"SLH006,SLI006,SLK004","Chicken, Coconut milk, Spices","40, 10, 05",Side,Rich coconut chicken curry,"1,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,21,22,23,30,35"
+7,Pol Sambol,"SLI005,SLK004,SLK016,SLE027,SLK011","Coconut, Chili, Onion,Lime,Garlic","20, 5",Side,Coconut and chili relish,"6,21,35"
+8,Pittu,"SLA010,SLI005,","Rice flour, Coconut, Water","25,25,10",Main,Steamed coconut rice flour,4
+9,Lamprais,"SLA008,SLH009,SLK004","Rice, Meat, Spices","100,30,10",Main,Dutch-influenced rice and curry,5
+10,Parippu,"SLC001,SLI006,SLK004,SLK019","Dhal, Coconut milk, Spices,Termeric powder","10,10,5,0.25",Side,Creamy spiced lentil dish,"6,7,21,29,35"
+11,Wambatu Moju,"SLD017,SLK004,SLD060,SLD084","Eggplant, Vinegar, Spices,onion,tomato sause","20,0.5,5,10,3",Side,Sweet and tangy pickle,"7,8,9,"
+12,String Hoppers,SLA010,"Rice flour, Water, Salt","25,10,0.5",Main,Rice noodle bundles,6
+13,Jackfruit Curry,"SLE024,SLI006,SLK004,SLK009","Jackfruit, Coconut milk, Spices,curry leaves","15,10,5,0.25",Side,Tender jackfruit in spices,"6,21"
+14,Gotu Kola Sambol,"SLD048,SLI006,SLD060","Gotu Kola, Coconut, Onion","10,15,15",Side,Herbal green salad,"21,"
+15,Eggplant Curry,"SLD017,SLK004,SLI005,","Eggplant, Spices, Coconut milk","30,2,10",Side,Spicy eggplant dish,"21,"
+16,Lunu Miris,"SLK016,SLK016,SLE027,SLK011","Onion, Chili, Salt,Lime,Garlic","20, 50, 30",Side,Spicy onion relish,"3,4,22,23,29"
+17,Seeni Sambol,"SLK016,SLK004","Onion, Sugar, chillii","50,5,5",Side,Sweet caramelized onions,"3,29"
+18,Beetroot Curry,"SLB001,SLI006,SLK004","Beetroot, Coconut milk, Spices,curry leaves","30,20,5,2",Side,Sweet and spicy beetroot,"21,"
+19,Fish Curry,"SLF006,SLB001,SLI006,SLK004","Fish, Coconut milk, Spices,curry leaves","50,20,3,2",Side,Spicy coconut fish curry,"21,22,23,29,35"
+20,Polos Curry,"SLE024,SLI006,SLK004,SLK009","Jackfruit, Coconut milk, Spices,curry leaves","15,10,5,0.25",Side,Young jackfruit curry,"21,35"
+21,Chicken Curry,"SLH006, ","Chicken, Coconut milk, Spices",,Side,Spicy chicken curry,"1,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,21,23,22,29,30,35,39"
+22,Bathala Curry,"SLB010,SLI006,SLK004,SLK009","Sweet potato, Coconut milk, Spices,curry leaves","30, 10,5,3",Side,Sweet potato curry,"21,35"
+23,Malu Mirisata,,"Fish, Chili, Spices","40, 30, 30",Side,Chili fish curry,"21,22,23,29,30,35"
+24,Elumas Curry,"SLH018,SLI006,SLK004,SLK009","Goat, Coconut milk, Spices,curry leaves","50,20,5,2",Side,Goat meat curry,"21,29,30,35"
+25,Vegetable Fried Rice,"SLA008,SLB002,SLD007,SLD060,SLI006,SLK004,SLK009","Rice, Vegetables,onion, Spices,curry leaves","100,20,20,5,3,2.5",Main,Mixed vegetable rice,7
+26,Chicken Fried Rice,"SLA008,SLH006,SLD060,SLI006,SLK004,SLK009","Rice, Chicken, onion, Spices,curry leaves","100,50,20,5,3,2.5",Main,Spicy chicken rice,8
+27,Egg Fried Rice,"SLA008,SLH001,SLD060,SLI006,SLK004,SLK009","Rice, Egg, onion, Spices,curry leaves","100,30,10,5,3,2.5",Main,Egg mixed fried rice,9
+28,Seafood Fried Rice,"SLA008,SLF006,,SLD060,SLI006,SLK004,SLK009","Rice, Seafood, Oninon,Spices,curry leaves","100,50,10,5,3,2",Main,Mixed seafood rice,10
+29,Devilled Chicken,"SLH006,SLI006,SLK004,SLD060","Chicken, Chili, Curry leaves,salt,Onion","50,10,5,0.25,20",Side,Sweet and spicy chicken,"7,8,9,10,11,12,1,13,14,15,16,17,18,21,39"
+30,Devilled Fish,"SLF006,SLI006,SLK004,SLD060","Fish, Chili, Curry leaves,salt,Onion","50,10,5,0.25,20",Side,Sweet and spicy fish,"7,8,9,10,11,12,1,13,14,15,16,17,18,21,39"
+31,Vegetable Kottu,"SLA018, SLB002, SLD055, SLK002","Flour, Carrot, leeks, Chilli","70, 20, 20, 20",Main,Mixed vegetable stir-fry,11
+32,Chicken Kottu,"SLA018, SLB002, SLD055, SLH006, SLK002","Flour, Carrot, leeks, Chicken, Chilli","70, 20, 20, 40, 20",Main,Spicy chicken stir-fry,12
+33,Fish Kottu,"SLA018, SLB002, SLD055, SLF019,SLK002","Flour, Carrot, leeks, Fish, Chilli","70, 20, 20, 40, 20",Main,Spicy fish stir-fry,13
+34,Egg Kottu,"SLA018, SLB002, SLD055, SLH001, SLK002","Flour, Carrot, leeks, Egg, Chilli","70, 20, 20, 40, 20",Main,Spicy egg stir-fry,14
+35,Seafood Kottu,"SLA018, SLB002, SLD055, SLF019, SLF043, SLK002","Flour, Carrot, leeks, Fish, Prawn,Chilli","70, 20, 20, 30,30, 20",Main,Mixed seafood stir-fry,15
+36,Chicken Biryani,"SLA008,SLH006,SLD060,SLI006,SLK004,SLK009","Rice, Chicken, onion, Spices,curry leaves","100,50,20,5,3,2.5",Main,Spiced chicken rice,16
+37,Vegetable Biryani,"SLA008,SLB002,SLD007,SLD060,SLI006,SLK004,SLK009","Rice, Vegetables,onion, Spices,curry leaves","100,50,20,5,3,2.6",Main,Spiced vegetable rice,17
+38,Fish Biryani,"SLA008,SLF006,,SLD060,SLI006,SLK004,SLK009","Rice, Fish, ,onion, Spices,curry leaves","100,50,20,5,3,2.7",Main,Spiced fish rice,18
+39,Egg Biryani,"SLA008,SLH001,SLD060,SLI006,SLK004,SLK009","Rice, Egg, onion, Spices,curry leaves","100,50,20,5,3,2.8",Main,Spiced egg rice,19
+40,Seafood Biryani,"SLA008,SLF006,,SLD060,SLI006,SLK004,SLK009","Rice, Seafood, Oninon,Spices,curry leaves","100,50,20,5,3,2.9",Main,Spiced seafood rice,20
+42,Potato Curry,"SLB006,SLI006,SLK004,SLK009,SKL019","Potato, Coconut milk, Spices,curry leaves,Turmeric Powder","20,30,10,5,2",Side,Spicy potato curry,"21,6,35"
+43,Banana Blossom Curry,"SLE010,SLI006,SLK004","Banana blossom, Coconut milk, Spices","20,10,5",Side,Banana blossom in spices,"21,"
+44,Cabbage Mallung,"SLD021,SLI006,SLK004","Cabbage, Coconut, Spices","20,10,5",Side,Coconut cabbage stir-fry,"21,"
+45,Drumstick Curry,"SLD041,SLI006,SLK004","Drumstick, Coconut milk, Spices","50, 20, 05",Side,Drumstick vegetable curry,"21,"
+46,Carrot Curry,"SLB002,SLI006,SLK004,","Carrot, Coconut milk, Spices","50, 20, 5",Side,Spiced carrot curry,"21,,"
+47,Bean Curry,"SLD060,SLI006,SLK004","Beans, Coconut milk, Spices","30, 40, 30",Side,Green bean curry,"21,"
+48,Brinjal Moju,"SLD019, SLI017, SLK004","Eggplant, Vinegar, Spices","30, 40, 30",Side,Spicy eggplant pickle,"21,"
+49,Bitter Gourd Curry,"SLD013,SLI006,SLK004","Bitter gourd, Coconut milk, Spices","50,25,10",Side,Bitter gourd in spices,"21,"
+50,Snake Gourd Curry,"SLD077,SLI006,SLK004","Snake gourd, Coconut milk, Spices","50,25,10",Side,Tender snake gourd curry,"21,"
+51,Bitter Gourd Salad,"SLD013,SLI006,SLI006","Bitter gourd, Coconut, Onion","50,25,10",Side,Healthy bitter gourd salad,"21,"
+52,Green Gram Curry,"SLC006,SLI006,SLK004","Green gram, Coconut milk, Spices","50,25,10",Side,Nutritious green gram curry,"21,"
+53,Pumpkin Soup,,"Pumpkin, Coconut milk, Spices","50,25,10",Main,Creamy pumpkin soup,40
+54,Cuttlefish Curry,"SLF019,SLI006,SLK004","Cuttlefish, Coconut milk, Spices","50,25,10",Side,Spicy cuttlefish curry,"21,22,23,6,29,35"
+55,Mango Curry,"SLE030,SLI006,SLK004","Mango, Coconut milk, Spices","50,25,10",Side,Tangy mango curry,"21,"
+56,Thalapath Fish Curry,"SLF006,SLI006,SLK004","Thalapath fish, Coconut milk, Spices","50,25,10",Side,Spicy thalapath fish curry,"21,6,22,23,29,35"
+57,Pineapple Curry,"SLE041,SLI006,SLK004","Pineapple, Coconut milk, Spices","50,25,10",Side,Sweet pineapple curry,"21,"
+58,Ala Badun,"SLB006,SLJ002,SLD060,SLK004","Potato, Oil, Salt,onion,chilli","40, 30, 30",Side,Fried potato wedges,"21,7,8,9,10"
+59,Spinach Curry,,"Spinach, Coconut milk, Spices","30, 40, 30",Side,Nutritious spinach curry,"21,"
+60,Red Rice,SLA009,Red rice,"40, 30, 30",Main,Traditional red rice,"21,"
+61,Coconut Roti,"SLI005,SLA018","Coconut, Flour","30, 40, 30",Main,Flatbread with coconut,22
+62,Kurakkan Roti,,"Millet, Flour","40, 30, 30",Main,Flatbread with millet,23
+63,Vegetable Soup,SLB002,"Carrot, Cabbage, Pumpkin, Mushroom","30, 40, 30",Main,Mixed vegetable soup,24
+64,Paneer Curry,,"Paneer, Coconut milk, Spices","50,25,10",Side,Indian cheese curry,"16,17,18,19,20,29,35"
+65,Yam Curry,,"Yam, Coconut milk, Spices","50,25,10",Side,Rich yam curry,"21,"
+66,Murunga Curry,,"Drumstick, Coconut milk, Spices","50,25,10",Side,Drumstick vegetable curry,"21,"
+67,Papaya Curry,"SLE038,SLI006,SLK004","Papaya, Coconut milk, Spices","50,25,10",Side,Sweet papaya curry,"21,"
+68,Breadfruit Curry,,"Breadfruit, Coconut milk, Chillies","50,25,10",Side,Tender breadfruit curry,"21,"
+69,Chickpea Curry,,"Chickpea, Coconut milk, Chillies","50,25,10",Side,Spiced chickpea curry,"21,35"
+70,Tomato Curry,,"Tomato, Coconut milk, Chillies","50,25,10",Side,Tangy tomato curry,"21,"
+71,Ash Plantain Curry,,"Ash plantain, Coconut milk, Chillies","50,25,10",Side,Tender plantain curry,"21,"
+72,Soya Meat Curry,,"Soya meat, Coconut milk, Chillies","50,25,10",Side,Spicy soya meat,"21,"
+73,Cashew Curry,"SLI004, SLI005,SLK002","Cashew, Coconut milk, Chillies","50,25,10",Side,Rich cashew curry,"21,7,8,9,10"
+74,Lotus Root Curry,"SLB005, SLI005,SLK002","Lotus root, Coconut milk, Chillies","50,25,10",Side,Crunchy lotus root,"21,"
+75,Green Pea Curry,"SLC007, SLI005,SLK002","Green pea, Coconut milk, Chillies","50,25,10",Side,Sweet green pea curry,"21,7,8,9.10"
+76,Leeks Curry,"SLD055, SLI005,SLK002","Leeks, Coconut milk, Chillies","50,25,10",Side,Spiced leeks curry,"21,"
+77,Kohila Curry,"SLB004, SLI005,SLK002","Kohila, Coconut milk, Chillies","50,25,10",Side,Spicy kohila curry,"21,"
+78,Bitter Leaf Curry,"SLD013,SLI005,SLK002","Bitter leaves, Coconut milk, Chillies","50,25,10",Side,Bitter leaves in curry,"21,"
+79,Bottle Gourd Curry,"SLD015,SLI005,SLK002","Bottle gourd, Coconut milk, Chillies","50,25,10",Side,Tender bottle gourd curry,"21,"
+80,Breadfruit Chips,SLJ002,"Breadfruit, Oil, Salt","30, 40, 30",Side,Crispy breadfruit chips,"21,"
+81,Sweet Corn Curry,"SLD037, SLI005 ,SLK002","Sweet corn, Coconut milk, Chillies","50,25,10",Side,Sweet corn curry,"21,"
+82,Green Banana Curry,"SLE005, SLI005,SLK002","Green banana, Coconut milk, Chillies","50,25,10",Side,Green banana curry,"21,"
+83,Fenugreek Curry,"SLK010, SLI005,SLK002","Fenugreek, Coconut milk, Chillies","50,25,10",Side,Fenugreek seed curry,"21,"
+84,Pumpkin Leaves Curry,"SLI026, SLI005,SLK002","Pumpkin leaves, Coconut milk, Chillies","50,25,10",Side,Pumpkin leaves curry,"21,"
+85,Okra Curry,"SLD053, SLI005,SLK002","Okra, Coconut milk, Chillies","50,25,10",Side,Tender okra curry,"21,"
+86,Sesame Seed Sambol,"SLI023,SLK002, SLD060","Sesame seed, Chili, Onion","50,25,10",Side,Sesame seed and chili,"21,"
+88,Fish Patties,"SLF036, SLF034, SLJ002","Fish, Flour, Oil","40, 30, 30",Side,Fried fish patties,"21,"
+89,Seer Fish Curry,"SLF025, SLI005,SLK002","Seer fish, Coconut milk, Chillies","50,25,10",Side,Spicy seer fish curry,"21,22,23,1,35"
+90,Octopus Curry,"SLF042, SLI005,SLK002","Octopus, Coconut milk, Chillies","50,25,10",Side,Tender octopus curry,"21,10"
+91,Egg Curry,"SLH001, SLI005,SLK002","Egg, Coconut milk, Chillies","50,25,10",Side,Spiced egg curry,"21,6,35"
+92,Milk Rice,"P0617, SLI005,SLK002","Rice, Coconut milk","50,25,10",Main,Traditional milk rice,25
+93,Ginger Chicken,"SLH006,SLK012,SLK002","Chicken, Ginger, Chillies","50,25,10",Side,Spicy ginger chicken,"7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,39"
+94,Prawn Curry,"SLF043, SLI005,SLK002","Prawn, Coconut milk, Chillies","50,25,10",Side,Spicy prawn curry,"21,6"
+95,Jaffna Crab Curry,"SLF045, SLI005,SLK002","Crab, Coconut milk, Chillies","50,25,10",Side,Rich crab curry,"21,"
+96,Dry Fish Curry,"SLF020, SLI005, SLK002","Dry fish, Coconut milk, Chillies","50,25,10",Side,Dry fish and spices,"21,"
+97,Mustard Greens Curry,"SLI025, SLI005, SLK002","Mustard greens, Coconut milk, Chillies","50,25,10",Side,Mustard greens curry,"21,"
+98,Capsicum Curry,"SLF045, SLI005,SLK002","Capsicum, Coconut milk, Chillies","50,25,10",Side,Spicy capsicum curry,"21,"
+99,Collard Greens Curry,"SLI024, SLI005, SLK002","Collard greens, Coconut milk, Chillies","50,25,10",Side,Spiced collard greens,"21,"
+100,Beef Curry,"SLH016, SLI005,SLK002","Beef, Coconut milk, Chillies","60,25,10",Side,Rich beef curry,"21,"
+101,Gotu Kola Kanda,"SLD048, SLA010, SLI005","Gotu kola, Rice, Coconut milk","50,25,20",Main,Herbal porridge with rice,26
+102,Egg Hoppers,"SLH001, SLI019, SLI005","Egg, Rice flour, Coconut milk","50,45,20",Main,Crispy egg-filled hoppers,27
+103,Fish Cutlets,"SLF034, SLB006, SLK002","Fish, Potatoes, Chillies","30, 50, 10",Side,Spicy fish cutlets,"21,7,8,9,10"
+104,Vegetable Cutlets,"SLB002, SLB006, SLK002","Carrot, Potatoes, Chillies","30, 40, 10",Side,Spicy vegetable cutlets,"21,7,8,9,10"
+105,Ulundu Wade,"SLI020, SLA08, SLJ002","Urad, flour, Oil","30, 40, 20",Side,Lentil fritters,"21,"
+106,Tapioca Chips,"SLB011, SLJ002, SLK002","Tapioca, Oil, Salt, chillies","50, 20, 10, 10",Side,Crispy tapioca chips,"21,7,8,9,10"
+107,potatoe cheese Balls,"SLG002, SLB006, SLK018","cheese, Potatoes, pepper","30, 60, 10",Side,cheese potato balls,"21,7,8,9,10"
+108,Vegetable Balls,"SLB002, SLD055, SLD049, SLB006, SLK018","Carrot, leeks, Jackfruit, Potatoes, pepper","30, 50, 10",Side,Spicy vegetable balls,"21,7,8,9,10"
+109,Kalu Dodol,"SLI005, SLI011, SLI019","Coconut milk, sugar, rice flour","30, 30, 50",Dessert,Sweet black pudding,
+110,Watalappan,"SLI005, SLI018, SLH001","Coconut milk, Jaggery, Eggs","40, 20, 40",Dessert,Sweet coconut custard,
+111,Lavariya,"SLI005, SLI018, SLI019","Coconut, Jaggery, Rice flour","30, 20, 50",Main,Sweet coconut pancakes,28
+112,Thala Guli,"SLI023, SLI018, SLI019","Sesame seeds, Jaggery, Rice flour","30, 30, 30",Dessert,Sesame seed balls,
+113,Murukku,"SLA08, SLK002","flour, Chillies","50, 20",Side,Crispy rice flour sticks,"21,"
+114,Sannas,"SLI019, SLI005, SLK002","Rice flour, Coconut milk, Chillies","50, 30, 10",Snack,Soft rice flour cakes,
+115,Aluwa,"SLI019, SLI018","Rice flour, sugar","50, 30",Dessert,Sweet squares,
+116,Pol Pani,"SLI005, SLI018","Coconut, Jaggery","50, 30",Dessert,Sweet coconut filling,
+117,Dodam Toffee,"SLI019, SLI011, SLE027","Rice flour, Sugar, Orange zest","50, 20, 10",Dessert,Orange flavored toffee,
+118,Kokis,"SLI019, SLI005","Rice flour, Coconut milk","30, 30",Dessert,Crispy coconut flour snack,
+119,Undu Walalu,"SLI020, SLI019, SLI005, SLI018","Urad, Rice flour, Coconut milk, Jaggery","40, 40, 20, 20",Dessert,Sweet coconut rings,
+120,Kiri Toffee,"SLG008, SLI011","Milk, Sugar","30, 40",Dessert,Milk toffee,
+121,Bibikkan,"SLI005, SLI018, SLI019","Coconut, Jaggery, Rice flour","40, 30, 30",Dessert,Coconut and jaggery cake,
+122,Aasmi,"SLI019, SLI011","Rice flour, Sugar","50, 30",Dessert,Fried rice flour sweet,
+124,Mung Kavum,"SLI019, SLC007, SLI018","Mung beans, Jaggery, rice flour","30, 40, 30",Dessert,Mung bean sweet,
+125,Keerai Poriyal,"SLI022, SLI005,  SLI020, SLJ002","Spinach, Coconut, urad, oil","30, 20, 30, 10",Side,Spicy spinach stir-fry,
+126,Carrot Sambol,"SLB002, SLI005, SLK018","Carrot, Coconut, pepper","50, 10, 05",Side,Spicy carrot salad,"21,"
+129,Gotu Kola Sambol,"SLD048,SLI005, SLK018","Gotu kola, Coconut, pepper","60, 30, 05",Side,Herbal green sambol,"21,"
+130,Cucumber Sambol,"SLD038,SLI005, SLK018","Cucumber, Coconut, pepper","60, 30, 05",Side,Refreshing cucumber salad,"21,"
+133,Coriander Sambol,"SLK006,SLI005,SLK018","Coriander, Coconut, pepper","60, 30, 05",Side,Herbal coriander sambol,"21,"
+134,Mint Sambol,"SLI020, SLI005,SLK018","Mint, Coconut, pepper","60, 30, 05",Side,Herbal mint sambol,"21,"
+135,Radish Sambol,"SLB007,SLI005,SLK018","Radish, Coconut, pepper","60, 30, 05",Side,Spicy radish salad,"21,"
+136,Carrot curry,"SLB002,SLI005,SLK002,SLK009","Carrot, Coconut milk, chillies,curry leaves","50, 20, 10, 05",Side,Spicy carrot curry,"21,"
+137,Garlic curry,"SLK011,SLI005,SLK002,SLK009","Garlic, Coconut milk, chillies, curry leaves ","50, 20, 10, 05",Side,Spicy garlic curry,"21,"
+141,Pineapple Pickle,"SLE041, SLK018","Pineapple, pepper, salt","50, 10, 05",Side,Sweet pineapple pickle,"21,"
+143,Kochchi Sambol,"SLK002,SLI005","Green chili, Coconut","10, 30",Side,Spicy green chili sambol,"21,6,29,65"
+144,Coconut Sambol,"SLI005, SLK002,SLD060","Coconut, Chili, Onion","50, 15, 20",Side,Spicy coconut sambol,"21,6,35"
+146,Pumpkin curry,"SLD071,SLI005,SLK002,SLK009","Pumpkin, Coconut milk, chillies,curry leaves","60, 20, 10, 05",Side,Sweet pumpkin sambol,"21,"
+147,Seeni Sambol,"SLD060,SLI011,SLK002","Onion, Sugar, chillie","40, 10, 10",Side,Sweet caramelized onions,"21,22,23,29"
+149,Beetroot curry,"SLB001,SLI005,SLK002,SLK009","Beetroot, Coconut milk, chillies,curry leaves","70, 30, 10, 10",Side,beetroot curry,"21,"
+150,Cauliflower Pickle,"SLD031,SLJ002,SLK011","Cauliflower, Oil, Garlic","100, 50, 20",Side,Spicy cauliflower pickle,"21,"
+151,Pol Roti,"SLI005,SLA018","Coconut, Flour","30, 60, 05",Main,Coconut flatbread,29
+152,String Hopper Kottu,"SLA012,SLE028,SLH006,SLB002,SLD055,SLH001","String hoppers, Chicken, Carrot, leaks, Egg","100, 40, 25, 10, 50",Main,string hoppers kottu,30
+153,Fish Curry,"SLF035,SLK011,SLK012,SLJ002","Fish, garlic, ginger, oil","50, 10, 10, 10",Side,Spicy fish head curry,"21,29,23"
+154,Dhal Vade,"SLC009,SLK002,SLJ002","Lentils, chillie, Oil","50, 15, 30",Side,Lentil fritters,"21,"
+155,Mango Chutney,"SLE030,SLI017,SLI011","Mango, Vinegar, sugar","40, 10, 10",Side,Sweet and tangy chutney,"21,"
+156,Polos Mallum,"SLE024,SLI005,SLJ002","Jackfruit, Coconut, oil","50, 30, 05",Side,Jackfruit with coconut,"21,"
+157,Sinhala Achcharu,"SLB002,SLD060,SLK002,SLI017","Carrot, onion, green chillies, Vinegar","30, 35, 15, 10",Side,Spicy mixed vegetable pickle,"21,"
+158,Kiri Aluwa,"SLI019,SLI005,SLI011,SLI016","rice flour, coconut Milk, Sugar, peanut","40, 30, 30, 10",Dessert,Milk-based sweet,
+159,Lavariya,"SLI005,SLA018,SLI011","Coconut, Rice flour, Jaggery","30, 60, 15",Main,Coconut stuffed rice pancakes,31
+160,Batu Moju,"SLD019,SLK011","Eggplant, garlic","70, 15, 10",Side,Eggplant relish,"21,"
+162,Jaffna Crab Curry,"SLF045,SLI005,SLJ002,SLD060","Crab, Coconut milk, oil, onion","100, 30, 10, 20",Side,Spicy crab curry,"21,"
+163,Kiri Hodi,SLI005,Coconut milk,60,Side,Creamy coconut gravy,"21,6,35,"
+165,Maalu Badun,"SLF035,SLJ002","Fish, Oil","90,15",Side,Spicy fried fish,"21,6,35"
+166,Kappa Masala,"SLI014,SLI005","Cassava, Coconut","60, 25",Side,Tapioca porridge,"21,"
+167,Masala Dosa,"SLA018,SLC009,SLC001","Rice flour, Lentils, Urad","60, 60, 30",Main,South Indian savory crepe,32
+168,Lassi,"SLG013,SLI011,SLD058,SLG008","Yogurt, Sugar, Mango, milk","40, 20, 50, 10",Drink,Sweet mango drink,
+169,Pineapple Rice,"SLE041,SLA012","Pineapple, Rice","30, 80",Main,Pineapple flavored rice,33
+170,Prawn Tempered,"SLF043,SLJ002","Prawns, Oil","90, 20",Main,Spiced prawns,34
+171,Roast Bread,"SLA018,SLJ002","Flour, sugar, Oil","50, 20, 20",Main,Crispy roast bread,35
+172,Sri lankan Pancakes,"SLA018,SLH001,SLI005,SLI005,SLI011","Flour, Egg, coconut milk, coconut, sugar","90, 50, 30, 30, 20",Main,sweet coconut filled pancakes,36
+173,Shrimp Cutlets,"SLI015,SLB006,SLA018","Shrimp, Potatoes, flour","30, 50, 20",Side,Spicy shrimp cutlets,"21,"
+174,Spicy Crab,"SLF045,SLJ002,SLK002","Crab, Oil, chillies","70, 20, 10",Side,Hot and spicy crab,"21,35,6"
+175,Sprats Fry,"SLF019,SLJ002,SLK002","Dried fish, Oil, Chillies","40, 20, 10",Side,Fried dried fish,"21,35"
+176,Sweet Rotti,"SLI005,SLA018,SLI011","Coconut, Flour, Jaggery","40, 50, 20",Dessert,Sweet coconut filled flatbread,
+177,Simmered Fish Roe,"SLF054,SLA018,SLH001","Fish, Oil, flour, egg","70, 30, 20, 10",Side,Fried fish roe,"21,35"
+178,Tender Jackfruit Fry,"SLD049,SLJ002","Jackfruit, Oil","90, 20",Side,Fried tender jackfruit,"21,35"
+179,Tropical Salad,"SLD058,SLE001,SLB002,SLE041,SLD038","Mango, Apple, Carrot, Pineapple, Cucumber","30, 20, 30, 20,30",Side,Fresh tropical fruit salad,"21,"
+180,Vegetable Lasagna,"SLB002,SLD021,SLA018,SLG002","Carrot,Cabbage, Pasta, Cheese","30,20,70,20",Main,Layered vegetable pasta,37
+181,Wheat Halapa,"SLA018,SLI011,SLI005","Wheat flour, Jaggery, Coconut","60, 20, 30",Dessert,Sweet wheat flour cake,
+182,Woodapple Juice,"SLE054,SLI011,SLG008","Woodapple, Sugar, milk","60, 20, 40",Drink,Tangy woodapple drink,
+183,Yoghurt Parfait,"SLG013,SLI010,SLD058,SLE005","Yogurt, Honey, Mango, Banana","40, 20,15,15,15",Dessert,Creamy layered yogurt,
+184,Zesty Lime Rice,"SLA012,SLE028","Rice, Lime","90, 20",Main,Lime infused rice,38
+186,Polos Ambula,"SLD049,SLI005,SLK002,SLK009","Jackfruit, coconut milk, chillies, curry leaves","80, 30, 10, 10",Side,Sour jackfruit curry,"21,35"
+187,Banana Pancakes,"SLE005,SLA018,SLI011","Banana, Flour, Sugar, eggs","40, 90, 30, 50",Snack,Sweet banana pancakes,
+188,Cassava Chips,"SLI014,SLJ002","Cassava, Oil","90, 20, 10",Side,Crispy cassava chips,
+189,Chickpea Salad,"SLI013,SLB002,SLD021","Chickpeas, Carrot, Cabbage","60, 30, 30",Side,Refreshing chickpea salad,"21,16,17,18,19,20,"
+190,Coconut Pudding,"SLI005,SLI011, SLI012","Coconut milk, Sugar, Agar","50, 40, 20",Dessert,Coconut milk pudding,
+191,Devilled Beef,"SLH016,SLJ002,SLK002","Beef, Oil, chillies","80, 30, 05",Side,Spicy beef stir-fry,"21,16,17,18,19,20"
+192,Egg Hopper,"SLH001,SLA012,SLI005","Egg, Rice flour, Coconut milk","40, 50, 30",Side,Crispy egg-filled hoppers,
+194,Ginger Chicken,"SLH006,SLK012, SLJ002","Chicken, Ginger, oil","80, 30, 20",Side,Spicy ginger chicken,"7,8,9,10,11,12,1,13,14,15,16,17,18,21,39"
+195,Honey Pancake,"SLA018,SLI010,SLI011,SLH001,SLG008","Flour, Honey, Sugar, egg, milk","60, 20, 10, 30, 20",Dessert,Sweet honey pancakes,
+196,Indian Fish Curry,"SLF034,SLI005,SLK002","Fish, Coconut milk, chillies","60, 30, 10",Side,Indian style fish curry,"21,35"
+197,Jackfruit Mallum,"SLD049,SLI005","Jackfruit, Coconut","80, 40",Side,Stir-fried jackfruit,"21,"
+198,Chicken Koththu,"SLA018,SLH006,SLB002,SLH001,SLD060","Flour, Chicken, Carrot, Egg, onion","80, 40, 20, 20, 10",Main,Chopped roti stir-fry,39
