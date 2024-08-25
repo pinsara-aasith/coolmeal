@@ -34,7 +34,7 @@ class _LetsStartpageState extends State<LetsStartPage> {
                   ),
                 )),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

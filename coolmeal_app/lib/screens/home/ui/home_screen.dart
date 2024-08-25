@@ -1,20 +1,14 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:coolmeal/screens/home/tabs/create_meal_plan_tab/create_meal_plan_tab.dart';
+import 'package:coolmeal/screens/home/tabs/home_tab/home_tab.dart';
+import 'package:coolmeal/screens/profile_details_edit/ui/profile_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '/helpers/extensions.dart';
 import '/routing/routes.dart';
-import '/theming/styles.dart';
-import '../../../core/widgets/app_text_button.dart';
 import '../../../core/widgets/no_internet.dart';
-import '../../../core/widgets/progress_indicaror.dart';
 import '../../../logic/cubit/login_or_signup_cubit.dart';
 import '../../../theming/colors.dart';
 
@@ -36,7 +30,23 @@ class _HomeScreenState extends State<HomeScreen> {
           Widget child,
         ) {
           final bool connected = connectivity[0] != ConnectivityResult.none;
-          return connected ? _homePage(context) : const BuildNoInternet();
+          return connected
+              ? BlocConsumer<AppBloc, AppState>(
+                  buildWhen: (previous, current) => previous != current,
+                  listenWhen: (previous, current) => previous != current,
+                  listener: (context, state) async {
+                    if (state is UserSignedOut) {
+                      context.pushNamedAndRemoveUntil(
+                        Routes.loginScreen,
+                        predicate: (route) => false,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return const HomeBody();
+                  },
+                )
+              : const BuildNoInternet();
         },
         child: const Center(
           child: CircularProgressIndicator(
@@ -52,62 +62,54 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     BlocProvider.of<AppBloc>(context);
   }
+}
 
-  SafeArea _homePage(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // SizedBox(
-              //   height: 200.h,
-              //   width: 200.w,
-              //   child: FirebaseAuth.instance.currentUser!.photoURL != null
-              //       ? CachedNetworkImage(
-              //           imageUrl: FirebaseAuth.instance.currentUser!.photoURL!,
-              //           placeholder: (context, url) =>
-              //               Image.asset('assets/images/loading.gif'),
-              //           fit: BoxFit.cover,
-              //         )
-              //       : Image.asset('assets/images/placeholder.png'),
-              // ),
-              // Text(
-              //   FirebaseAuth.instance.currentUser!.displayName!,
-              //   style: TextStyles.font15DarkBlue500Weight
-              //       .copyWith(fontSize: 30.sp),
-              // ),
-              BlocConsumer<AppBloc, AppState>(
-                buildWhen: (previous, current) => previous != current,
-                listenWhen: (previous, current) => previous != current,
-                listener: (context, state) async {
-                  if (state.status == AppStatus.authenticated) {
-                    ProgressIndicaror.showProgressIndicator(context);
-                  } else if (state is UserSignedOut) {
-                    context.pop();
-                    context.pushNamedAndRemoveUntil(
-                      Routes.loginScreen,
-                      predicate: (route) => false,
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return AppTextButton(
-                    buttonText: 'Sign Out',
-                    textStyle: TextStyles.font15DarkBlue500Weight,
-                    onPressed: () {
-                      try {
-                        GoogleSignIn().disconnect();
-                      } finally {
-                        context.read<AppBloc>().add(const AppLogoutRequested());
-                      }
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+class HomeBody extends StatefulWidget {
+  const HomeBody({Key? key}) : super(key: key);
+
+  @override
+  _HomeBodyState createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State {
+  int _selectedTab = 0;
+
+  final List _pages = [
+    const HomeTab(),
+    const CreateMealPlanTab(),
+    const Center(
+      child: Text("Contact"),
+    ),
+    const Center(
+      child: Text("Settings"),
+    ),
+  ];
+
+  _changeTab(int index) {
+    setState(() {
+      _selectedTab = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(child: _pages[_selectedTab]),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTab,
+        iconSize: 40,
+        onTap: (index) => _changeTab(index),
+        selectedItemColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.four_k_plus_rounded), label: "Meals"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.contact_mail), label: "Contact"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Settings"),
+        ],
       ),
     );
   }

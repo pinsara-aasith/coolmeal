@@ -171,7 +171,7 @@ class AuthenticationRepository {
   }
 
   User? get currentUser {
-    return _cache.read<User>(key: userCacheKey) ?? null;
+    return _cache.read<User>(key: userCacheKey);
   }
 
   Future<void> signUp({required String email, required String password}) async {
@@ -197,7 +197,7 @@ class AuthenticationRepository {
         throw LogInWithGoogleFailure.fromCode('invalid-verification-id');
       }
 
-      final googleAuth = await googleUser!.authentication;
+      final googleAuth = await googleUser.authentication;
       credential = firebase_auth.GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
