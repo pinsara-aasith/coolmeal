@@ -13,7 +13,6 @@ import '../../helpers/extensions.dart';
 import '../../logic/cubit/login_or_signup_cubit.dart';
 import 'app_text_button.dart';
 import 'app_text_form_field.dart';
-import 'password_validations.dart';
 
 // ignore: must_be_immutable
 class EmailAndPassword extends StatefulWidget {

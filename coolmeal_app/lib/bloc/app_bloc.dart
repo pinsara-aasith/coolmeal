@@ -18,7 +18,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     
     _userSubscription = _authenticationRepository.user.listen(
       (user) { 
-        print("User");
         print(user?.email);
         return add(_AppUserChanged(user));
       },
@@ -29,7 +28,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late final StreamSubscription<User?> _userSubscription;
 
   void _onUserChanged(_AppUserChanged event, Emitter<AppState> emit) {
-    print(event);
     emit(
       event.user != null
           ? AppState.authenticated(event.user!)
