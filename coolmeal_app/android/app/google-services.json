@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632689501425",
+    "project_id": "coolmeal-app",
+    "storage_bucket": "coolmeal-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632689501425:android:7f988850085d641d22f550",
+        "android_client_info": {
+          "package_name": "com.uom.coolmeal_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoXnsgU-hS6ZIN9Gg_r3z1Hy79cpj6WFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
