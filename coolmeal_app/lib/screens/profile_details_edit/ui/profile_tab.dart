@@ -125,7 +125,7 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const ProfileCompletionPageHeader(
+                const CategoryTitle(
                     title: "Profile",
                     subtitle: "Update Profile Details",
                     assetImagePath:

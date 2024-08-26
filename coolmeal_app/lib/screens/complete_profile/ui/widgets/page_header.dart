@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
 
-class ProfileCompletionPageHeader extends StatelessWidget {
+class CategoryTitle extends StatelessWidget {
   final String title;
   final String subtitle;
   final String assetImagePath;
 
-  const ProfileCompletionPageHeader(
+  const CategoryTitle(
       {Key? key,
       required this.title,
       required this.subtitle,

@@ -34,7 +34,7 @@ class _GeneratedMealsComboTabState extends State<GeneratedMealsComboTab> {
               padding: const EdgeInsets.all( 28),
               child: Column(
                 children: [
-                  const ProfileCompletionPageHeader(
+                  const CategoryTitle(
                       title: "Meals you've generated",
                       subtitle: "Your Meals",
                       assetImagePath:

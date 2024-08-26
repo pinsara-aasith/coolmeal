@@ -57,7 +57,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 3),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const SizedBox(height: 20),
-        const ProfileCompletionPageHeader(
+        const CategoryTitle(
             title: "Complete Your Profile",
             subtitle: "Tell Me More About You",
             assetImagePath: "assets/images/tell_me_more_about_you_2.png"),

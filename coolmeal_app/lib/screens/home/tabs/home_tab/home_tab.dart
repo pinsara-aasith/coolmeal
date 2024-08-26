@@ -23,7 +23,7 @@ class _HomeTabState extends State<HomeTab> {
     print('$mealType clicked!');
   }
 
-    final List<Map<String, String>> gateItems = [
+  final List<Map<String, String>> gateItems = [
     {
       'imageUrl':
           'https://example.com/gate1.jpg', // Replace with actual image URLs
@@ -87,7 +87,6 @@ class _HomeTabState extends State<HomeTab> {
     },
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -139,28 +138,36 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                       // Expanded(child:  GateList())
-                     
                     ],
                   );
                 },
                 childCount: 1,
               ),
             ),
-
-
-            SliverList(
-              delegate: SliverChildBuilderDelegate( (BuildContext context, int index) {
-                var gateItem = gateItems[index];
-  return GateListItem(
-          imageUrl: gateItem['imageUrl']!,
-          gateName: gateItem['gateName']!,
-          accessType: gateItem['accessType']!,
-          distance: gateItem['distance']!,
-        );
-                  
-                  },childCount: gateItems.length,)
-              
-              )
+            SliverPadding(
+              padding: EdgeInsets.only(top: 10, bottom: 0, left: 12, right: 12),
+              sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                return Text('Popular Meals');
+              }, childCount: 1)),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.all(12),
+              sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  var gateItem = gateItems[index];
+                  return MealListItem(
+                    imageUrl: gateItem['imageUrl']!,
+                    gateName: gateItem['gateName']!,
+                    accessType: gateItem['accessType']!,
+                    distance: gateItem['distance']!,
+                  );
+                },
+                childCount: gateItems.length,
+              )),
+            )
           ],
         ));
   }
@@ -235,13 +242,13 @@ class MealItem extends StatelessWidget {
   }
 }
 
-class GateListItem extends StatelessWidget {
+class MealListItem extends StatelessWidget {
   final String imageUrl;
   final String gateName;
   final String accessType;
   final String distance;
 
-  GateListItem({
+  MealListItem({
     required this.imageUrl,
     required this.gateName,
     required this.accessType,
@@ -251,7 +258,7 @@ class GateListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
           // Gate Image

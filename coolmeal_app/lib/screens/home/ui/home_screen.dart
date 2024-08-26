@@ -108,9 +108,9 @@ class _HomeBodyState extends State {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.four_k_plus_rounded), label: "Meals"),
+              icon: Icon(Icons.add_box), label: "New Meal Plan"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail), label: "Contact"),
+              icon: Icon(Icons.food_bank), label: "Your Meals"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
