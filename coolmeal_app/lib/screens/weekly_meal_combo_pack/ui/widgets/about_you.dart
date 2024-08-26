@@ -61,7 +61,7 @@ class _AboutYouState extends State<AboutYou> {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         const SizedBox(height: 20),
-        const ProfileCompletionPageHeader(
+        const CategoryTitle(
             title: "Complete Your Profile",
             subtitle: "Tell more about yourself",
             assetImagePath: "assets/images/tell_me_more_about_you_2.png"),
