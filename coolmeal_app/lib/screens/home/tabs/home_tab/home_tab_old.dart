@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:coolmeal/screens/home/tabs/create_meal_plan_tab/widgets/generate_meal.dart';
+import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/widgets/generate_meal.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
