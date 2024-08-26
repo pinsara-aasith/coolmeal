@@ -22,7 +22,7 @@ google_embeddings = GoogleGenerativeAIEmbeddings(
 print("Load Embedding model Successfully --------------------- ")
 
 # get pdf data from directory ---------------
-pdf_directory = "../food_data/pdf"
+pdf_directory = "./food_data/pdf"
 vectordb_file_path = "faiss_index"
 
 
