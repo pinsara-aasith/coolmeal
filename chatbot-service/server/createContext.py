@@ -44,7 +44,7 @@ def createVectorDB():
     final_pdf_documents = text_splitter.split_documents(pdf_docs)
 
     # Create Faiss Vector database------------
-    vector_db = FAISS.from_documents(pdf_docs, google_embeddings)
+    vector_db = FAISS.from_documents(final_pdf_documents, google_embeddings)
     # Save vector database locally
     vector_db.save_local(vectordb_file_path)
 
@@ -72,7 +72,7 @@ def createContext():
         chain_type="stuff",
         retriever=retriever,
         input_key="query",
-        memory=memory,
+        # memory=memory,
         return_source_documents=False,
         chain_type_kwargs=chain_type_kwargs,
     )

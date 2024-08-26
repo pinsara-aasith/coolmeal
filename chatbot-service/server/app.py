@@ -16,6 +16,7 @@ def read_root():
 @app.post("/chat")
 def chat(query: str):
     response = chain.invoke(query)
+    # print("response", )
     return {"response": response}
 
 
