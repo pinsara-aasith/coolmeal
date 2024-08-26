@@ -1,14 +1,12 @@
 import pandas as pd
 
-# Read the meals and nutrition data from CSV files
 meals_df = pd.read_csv('meals.csv')
 nutrition_df = pd.read_csv('nutrition.csv')
 
-# Prepare a dictionary to map ingredient names to their nutritional values
 nutrition_dict = {}
 for index, row in nutrition_df.iterrows():
     nutrition_dict[row['Food Name']] = {
-        'Energy': row['Energy (Kcal)'],
+        'Energy': row['Energy(Kcal)'],
         'Protein': row['Protein(g)'],
         'Total fat': row['Total fat(g)'],
         'Carbohydrates': row['Carbohydrates(g)'],
@@ -63,7 +61,7 @@ for index, row in meals_df.iterrows():
         if ingredient in nutrition_dict:
             quantity = quantities[i] / 100.0  # Convert quantity to per 100g
             for key in meal_nutrition.keys():
-                meal_nutrition[key] += nutrition_dict[ingredient][key] * quantity
+                meal_nutrition[key] += float(nutrition_dict[ingredient][key]) * quantity
 
     calculated_nutrition.append(meal_nutrition)
 
