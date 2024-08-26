@@ -1,15 +1,9 @@
-import 'dart:io';
 import 'dart:ui';
 
-import 'package:coolmeal/screens/home/tabs/create_meal_plan_tab/widgets/generate_meal.dart';
 import 'package:coolmeal/theming/colors.dart';
-import 'package:coolmeal/theming/styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);

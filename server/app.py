@@ -17,9 +17,6 @@ def read_prediction():
     print(prediction)
     return {"prediction": prediction.tolist()}
 
-
-# define data path
-
 # Train the model and save it
 model = train_knn_model()
 print("model trained successfully --------------------- ")

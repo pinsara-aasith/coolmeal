@@ -1,20 +1,20 @@
 import 'dart:io';
 
-import 'package:coolmeal/screens/home/tabs/create_meal_plan_tab/widgets/generate_meal.dart';
+import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/widgets/generate_meal.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CreateMealPlanTab extends StatefulWidget {
-  const CreateMealPlanTab({Key? key}) : super(key: key);
+class NewMealPlanTab extends StatefulWidget {
+  const NewMealPlanTab({Key? key}) : super(key: key);
 
   @override
-  State<CreateMealPlanTab> createState() => _CreateMealPlanTabState();
+  State<NewMealPlanTab> createState() => _NewMealPlanTabState();
 }
 
-class _CreateMealPlanTabState extends State<CreateMealPlanTab>
+class _NewMealPlanTabState extends State<NewMealPlanTab>
     with SingleTickerProviderStateMixin {
   TextEditingController nameController = TextEditingController();
   TextEditingController homeController = TextEditingController();
