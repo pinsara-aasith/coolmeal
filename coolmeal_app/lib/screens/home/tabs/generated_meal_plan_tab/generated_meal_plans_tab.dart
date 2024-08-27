@@ -1,7 +1,6 @@
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
 import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/bloc/generated_meal_plans_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,8 +21,6 @@ class _GeneratedMealsComboTabState extends State<GeneratedMealsComboTab> {
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = FirebaseAuth.instance.currentUser;
-
     return Container(
       decoration: BoxDecoration(
         color: ColorsManager.gradient.withAlpha(100),
@@ -35,8 +32,8 @@ class _GeneratedMealsComboTabState extends State<GeneratedMealsComboTab> {
               child: Column(
                 children: [
                   const CategoryTitle(
-                      title: "Meals you've generated",
-                      subtitle: "Your Meals",
+                      title: "Meal plans you've generated",
+                      subtitle: "Your Meal Plans",
                       assetImagePath:
                           "assets/images/tell_me_more_about_you_2.png"),
                   if (state is MealPlanInitial)

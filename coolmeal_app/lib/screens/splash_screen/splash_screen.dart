@@ -1,4 +1,3 @@
-import 'package:coolmeal/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,7 +5,7 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -14,7 +13,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

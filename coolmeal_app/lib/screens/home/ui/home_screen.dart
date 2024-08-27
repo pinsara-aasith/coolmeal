@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/bloc/generated_meal_plans_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/new_meal_plan_tab.dart';
 import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/generated_meal_plans_tab.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/home_tab.dart';
@@ -71,10 +72,10 @@ class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
 
   @override
-  _HomeBodyState createState() => _HomeBodyState();
+  State<HomeBody> createState() => _HomeBodyState();
 }
 
-class _HomeBodyState extends State {
+class _HomeBodyState extends State<HomeBody> {
   int _selectedTab = 0;
 
   _changeTab(int index) {
@@ -87,7 +88,11 @@ class _HomeBodyState extends State {
   Widget build(BuildContext context) {
     var currentUser = FirebaseAuth.instance.currentUser;
     var pages = [
-      const HomeTab(),
+      BlocProvider(
+          create: (context) =>
+              PopularMealBloc(firestore: FirebaseFirestore.instance)
+                ..add(FetchPopularMeals()),
+          child: const HomeTab()),
       const NewMealPlanTab(),
       BlocProvider(
           create: (context) => MealPlanBloc(FirebaseFirestore.instance)
@@ -97,6 +102,7 @@ class _HomeBodyState extends State {
         child: Text("Settings"),
       ),
     ];
+
     return Scaffold(
       body: SafeArea(child: pages[_selectedTab]),
       bottomNavigationBar: BottomNavigationBar(
