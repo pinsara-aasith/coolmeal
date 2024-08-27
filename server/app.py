@@ -31,7 +31,6 @@ def read_prediction(request: UserRequest):
     output = df.iloc[prediction[0]].to_dict(orient="records")
     return JSONResponse(status_code=200, content={"prediction": output})
 
-
 # Train the model and save it
 model = train_knn_model()
 print("model trained successfully --------------------- ")

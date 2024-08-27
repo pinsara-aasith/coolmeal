@@ -57,7 +57,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const ProfileCompletionPageHeader(
+                const CategoryTitle(
                     title: "Meals",
                     subtitle: "Get Your Meal",
                     assetImagePath:
