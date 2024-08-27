@@ -5,9 +5,9 @@ from skfuzzy import control as ctrl
 
 def recommend_nutrients(age_input, weight_input, height_input):
     # Define the fuzzy variables and their ranges
-    age = ctrl.Antecedent(np.arange(0, 101, 1), "age")
-    weight = ctrl.Antecedent(np.arange(30, 201, 1), "weight")
-    height = ctrl.Antecedent(np.arange(100, 251, 1), "height")
+    age = ctrl.Antecedent(np.arange(0, 100, 1), "age")
+    weight = ctrl.Antecedent(np.arange(25, 210, 1), "weight")
+    height = ctrl.Antecedent(np.arange(80, 251, 1), "height")
     protein = ctrl.Consequent(np.arange(0, 201, 1), "protein")
     fat = ctrl.Consequent(np.arange(0, 101, 1), "fat")
     fiber = ctrl.Consequent(np.arange(0, 51, 1), "fiber")
