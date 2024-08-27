@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
-import 'package:coolmeal/screens/home/tabs/create_meal_plan_tab/create_meal_plan_tab.dart';
+import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/bloc/generated_meal_plans_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/new_meal_plan_tab.dart';
+import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/generated_meal_plans_tab.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/home_tab.dart';
-import 'package:coolmeal/screens/profile_details_edit/ui/profile_tab.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
@@ -74,17 +77,6 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State {
   int _selectedTab = 0;
 
-  final List _pages = [
-    const HomeTab(),
-    const CreateMealPlanTab(),
-    const Center(
-      child: Text("Contact"),
-    ),
-    const Center(
-      child: Text("Settings"),
-    ),
-  ];
-
   _changeTab(int index) {
     setState(() {
       _selectedTab = index;
@@ -93,8 +85,20 @@ class _HomeBodyState extends State {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    var pages = [
+      const HomeTab(),
+      const NewMealPlanTab(),
+      BlocProvider(
+          create: (context) => MealPlanBloc(FirebaseFirestore.instance)
+            ..add(FetchMealPlans(currentUser?.email ?? '')),
+          child: const GeneratedMealsComboTab()),
+      const Center(
+        child: Text("Settings"),
+      ),
+    ];
     return Scaffold(
-      body: SafeArea(child: _pages[_selectedTab]),
+      body: SafeArea(child: pages[_selectedTab]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
         iconSize: 40,
@@ -104,9 +108,9 @@ class _HomeBodyState extends State {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.four_k_plus_rounded), label: "Meals"),
+              icon: Icon(Icons.add_box), label: "New Meal Plan"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail), label: "Contact"),
+              icon: Icon(Icons.food_bank), label: "Your Meals"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],

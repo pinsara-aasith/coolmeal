@@ -2,7 +2,7 @@ import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import '../widgets/page_header.dart';
+import 'page_header.dart';
 import 'package:flutter/material.dart';
 
 class AboutYouMore extends StatefulWidget {
