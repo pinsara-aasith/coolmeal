@@ -7,7 +7,7 @@ class PasswordInputWidget extends StatefulWidget {
   const PasswordInputWidget({super.key, required this.controller});
 
   @override
-  _PasswordInputWidgetState createState() => _PasswordInputWidgetState();
+  State<PasswordInputWidget> createState() => _PasswordInputWidgetState();
 }
 
 class _PasswordInputWidgetState extends State<PasswordInputWidget> {

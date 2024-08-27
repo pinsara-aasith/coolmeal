@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
-import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -46,7 +44,6 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
 
   @override
   Widget build(BuildContext context) {
-    User user = FirebaseAuth.instance.currentUser!;
     return Container(
       padding: const EdgeInsets.all(20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

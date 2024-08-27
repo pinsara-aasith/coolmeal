@@ -1,7 +1,8 @@
-import 'dart:ui';
-
+import 'package:coolmeal/models/meals.dart';
+import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -22,70 +23,6 @@ class _HomeTabState extends State<HomeTab> {
     // Handle the click event here
     print('$mealType clicked!');
   }
-
-  final List<Map<String, String>> gateItems = [
-    {
-      'imageUrl':
-          'https://example.com/gate1.jpg', // Replace with actual image URLs
-      'gateName': 'Bab As Salam - Gate 1',
-      'accessType': 'Mens & women Access',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate2.jpg',
-      'gateName': 'Bab Abu Bakr - Gate 2',
-      'accessType': 'Mens Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate3.jpg',
-      'gateName': 'Bab Al-Rahmah - Gate 3',
-      'accessType': 'Women Only',
-      'distance': '2 mins away'
-    },
-    {
-      'imageUrl': 'https://example.com/gate4.jpg',
-      'gateName': 'Bab Al-Hijrah - Gate 4',
-      'accessType': 'Mens & women Access',
-      'distance': '2 mins away'
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -145,29 +82,40 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             SliverPadding(
-              padding: EdgeInsets.only(top: 10, bottom: 0, left: 12, right: 12),
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 0, left: 12, right: 12),
               sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                return Text('Popular Meals');
+                return const Text('Popular Meals');
               }, childCount: 1)),
             ),
-            SliverPadding(
-              padding: EdgeInsets.all(12),
-              sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  var gateItem = gateItems[index];
-                  return MealListItem(
-                    imageUrl: gateItem['imageUrl']!,
-                    gateName: gateItem['gateName']!,
-                    accessType: gateItem['accessType']!,
-                    distance: gateItem['distance']!,
+            BlocBuilder<PopularMealBloc, PopularMealState>(
+              builder: (context, state) {
+                if (state is PopularMealLoading) {
+                  return const SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()));
+                } else if (state is PopularMealLoaded) {
+                  return SliverPadding(
+                    padding: const EdgeInsets.all(12),
+                    sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        final meal = state.meals[index];
+                        return MealListItem(meal: meal);
+                      },
+                      childCount: state.meals.length,
+                    )),
                   );
-                },
-                childCount: gateItems.length,
-              )),
-            )
+                } else if (state is PopularMealError) {
+                  return SliverToBoxAdapter(
+                      child: Center(child: Text(state.message)));
+                } else {
+                  return const SliverToBoxAdapter(
+                      child: Center(child: Text('No meals found')));
+                }
+              },
+            ),
           ],
         ));
   }
@@ -243,16 +191,10 @@ class MealItem extends StatelessWidget {
 }
 
 class MealListItem extends StatelessWidget {
-  final String imageUrl;
-  final String gateName;
-  final String accessType;
-  final String distance;
+  final Meal meal;
 
-  MealListItem({
-    required this.imageUrl,
-    required this.gateName,
-    required this.accessType,
-    required this.distance,
+  const MealListItem({super.key, 
+    required this.meal,
   });
 
   @override
@@ -279,14 +221,14 @@ class MealListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  gateName,
+                  meal.completeMeal,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  accessType,
+                  meal.mealTime,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,
@@ -302,7 +244,7 @@ class MealListItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 4.0),
                     Text(
-                      distance,
+                      meal.generatedTimes.toString(),
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,

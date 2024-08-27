@@ -18,7 +18,7 @@ class MealPlanBloc extends Bloc<MealPlanEvent, MealPlanState> {
       //     .get();
 
       // final mealPlans = snapshot.docs.map((doc) => doc.data()).toList();
-      emit(MealPlanLoaded([]));
+      emit(const MealPlanLoaded([]));
     } catch (e) {
       emit(const MealPlanError('Failed to load meal plans.'));
     }
