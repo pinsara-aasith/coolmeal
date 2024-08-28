@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:coolmeal/bloc/authentication_repository.dart';
+import 'package:coolmeal/repositories/authentication_repository.dart';
 import 'package:coolmeal/models/user.dart';
 import 'package:equatable/equatable.dart';
 

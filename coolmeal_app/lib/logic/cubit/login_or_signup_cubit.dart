@@ -1,4 +1,4 @@
-import 'package:coolmeal/bloc/authentication_repository.dart';
+import 'package:coolmeal/repositories/authentication_repository.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
