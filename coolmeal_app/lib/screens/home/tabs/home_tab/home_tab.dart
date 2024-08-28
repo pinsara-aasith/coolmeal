@@ -193,76 +193,81 @@ class MealItem extends StatelessWidget {
 class MealListItem extends StatelessWidget {
   final Meal meal;
 
-  const MealListItem({super.key, 
+  const MealListItem({
+    super.key,
     required this.meal,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          // Gate Image
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.asset(
-              "assets/images/food_item.jpg",
-              width: 60,
-              height: 60,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 16.0),
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: () {
+            print("");
+          },
+          child: Row(
+            children: [
+              // Gate Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  "assets/images/food_item.jpg",
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 16.0),
 
-          // Gate Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  meal.completeMeal,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  meal.mealTime,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 4.0),
-                Row(
+              // Gate Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.directions_walk,
-                      size: 16,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(width: 4.0),
                     Text(
-                      meal.generatedTimes.toString(),
+                      meal.completeMeal,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      meal.mealTime,
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                       ),
                     ),
+                    const SizedBox(height: 4.0),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.directions_walk,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4.0),
+                        Text(
+                          meal.generatedTimes.toString(),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
 
-          // Navigation Icon
-          const Icon(
-            Icons.navigation,
-            color: Colors.green,
+              // Navigation Icon
+              const Icon(
+                Icons.navigation,
+                color: Colors.green,
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

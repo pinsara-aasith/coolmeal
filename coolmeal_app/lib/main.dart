@@ -102,7 +102,7 @@ class _AppViewState extends State<AppView> {
         break;
       case AppStatus.unauthenticated:
         _navigator.pushNamedAndRemoveUntil<void>(
-          Routes.loginScreen,
+          Routes.letsStart,
           (route) => false,
         );
         break;
@@ -139,6 +139,7 @@ class _AppViewState extends State<AppView> {
               splashShown = true;
               return;
             }
+
             commitAppStateChanges(state);
           },
           child: child,
