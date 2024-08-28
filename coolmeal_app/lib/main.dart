@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
 import 'package:coolmeal/repositories/authentication_repository.dart';
+import 'package:coolmeal/repositories/meal_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,8 +65,13 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return RepositoryProvider.value(
-          value: _authenticationRepository,
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+                create: (context) =>
+                    MealRepository(firestore: FirebaseFirestore.instance)),
+            RepositoryProvider(create: (context) => _authenticationRepository),
+          ],
           child: BlocProvider(
             create: (_) => AppBloc(
               authenticationRepository: _authenticationRepository,

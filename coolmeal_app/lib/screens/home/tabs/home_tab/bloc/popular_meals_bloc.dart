@@ -21,7 +21,8 @@ class PopularMealBloc extends Bloc<PopularMealEvent, PopularMealState> {
           .get();
 
       List<Meal> meals = querySnapshot.docs
-          .map((doc) => Meal.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) =>
+              Meal.fromJson(doc.id, doc.data() as Map<String, dynamic>))
           .toList();
 
       emit(PopularMealLoaded(meals));
