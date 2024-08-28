@@ -24,11 +24,11 @@ def train_knn_model(
     """
 
     # Load the data
-    df = pd.read_csv("./daily_menus.csv")
+    df = pd.read_csv("./final_meal_combinations_dataset.csv")
 
-    # Preprocess the data
+    # Standarize the nutrient data
     scaler = StandardScaler()
-    prep_data = scaler.fit_transform(df.iloc[:, 1:5].to_numpy())
+    prep_data = scaler.fit_transform(df.iloc[:, 4:].to_numpy())
 
     # Initialize KNN model
     neigh = NearestNeighbors(
