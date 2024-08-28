@@ -1,4 +1,5 @@
 class Meal {
+  final String id;
   final String mainMeal;
   final String sideMeal;
   final String completeMeal;
@@ -28,6 +29,7 @@ class Meal {
   final double generatedTimes;
 
   Meal({
+    required this.id,
     required this.mainMeal,
     required this.sideMeal,
     required this.completeMeal,
@@ -57,8 +59,9 @@ class Meal {
     required this.generatedTimes,
   });
 
-  factory Meal.fromJson(Map<String, dynamic> json) {
+  factory Meal.fromJson(String id, Map<String, dynamic> json) {
     return Meal(
+      id: id,
       mainMeal: json['mainMeal'],
       sideMeal: json['sideMeal'],
       completeMeal: json['completeMeal'],

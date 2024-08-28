@@ -1,6 +1,7 @@
 import 'package:coolmeal/repositories/authentication_repository.dart';
 import 'package:coolmeal/screens/lets_start/ui/lets_Start.dart';
 import 'package:coolmeal/screens/complete_profile/ui/complete_profile.dart';
+import 'package:coolmeal/screens/meal_details/ui/meal_details.dart';
 import 'package:coolmeal/screens/splash_screen/splash_screen.dart';
 import 'package:coolmeal/screens/welcome/ui/welcome.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class AppRouter {
         }
 
       case Routes.signupScreen:
-      return MaterialPageRoute(
+        return MaterialPageRoute(
           builder: (_) => BlocProvider<LoginOrSignupCubit>(
             create: (_) =>
                 LoginOrSignupCubit(_.read<AuthenticationRepository>()),
@@ -61,14 +62,13 @@ class AppRouter {
         );
 
       case Routes.loginScreen:
-       return MaterialPageRoute(
+        return MaterialPageRoute(
           builder: (_) => BlocProvider<LoginOrSignupCubit>(
             create: (_) =>
                 LoginOrSignupCubit(_.read<AuthenticationRepository>()),
             child: const LoginScreen(),
           ),
         );
-
 
       case Routes.welcome:
         return MaterialPageRoute(
@@ -84,6 +84,16 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ProfileCompletionScreen(),
         );
+
+      case Routes.mealItem:
+        final arguments = settings.arguments;
+        if (arguments is List) {
+          return MaterialPageRoute(
+            builder: (_) => MealDetailsPage(
+              mealId: arguments[0],
+            ),
+          );
+        }
     }
     return null;
   }

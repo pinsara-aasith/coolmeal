@@ -47,7 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                   },
                   builder: (context, state) {
-                    return const HomeBody();
+                    return BlocProvider(
+                        create: (context) => PopularMealBloc(
+                            firestore: FirebaseFirestore.instance),
+                        child: const HomeBody());
                   },
                 )
               : const BuildNoInternet();
@@ -77,8 +80,22 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   int _selectedTab = 0;
+  bool _popularMealsLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<PopularMealBloc>(context).add(FetchPopularMeals());
+  }
 
   _changeTab(int index) {
+    if (index == 0 && _popularMealsLoaded) {
+      BlocProvider.of<PopularMealBloc>(context).add(FetchPopularMeals());
+      setState(() {
+        _popularMealsLoaded = true;
+      });
+    }
+
     setState(() {
       _selectedTab = index;
     });
@@ -88,16 +105,13 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     var currentUser = FirebaseAuth.instance.currentUser;
     var pages = [
-      BlocProvider(
-          create: (context) =>
-              PopularMealBloc(firestore: FirebaseFirestore.instance)
-                ..add(FetchPopularMeals()),
-          child: const HomeTab()),
+      const HomeTab(),
       const NewMealPlanTab(),
       BlocProvider(
           create: (context) => MealPlanBloc(FirebaseFirestore.instance)
             ..add(FetchMealPlans(currentUser?.email ?? '')),
           child: const GeneratedMealsComboTab()),
+      Center(),
       Center(
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {

@@ -1,4 +1,5 @@
 import 'package:coolmeal/models/meal.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void handleMealClick(String mealType) {
     // Handle the click event here
     print('$mealType clicked!');
@@ -54,19 +50,19 @@ class _HomeTabState extends State<HomeTab> {
                         margin: const EdgeInsets.all(10),
                         child: Row(
                           children: [
-                            MealItem(
+                            MealTime(
                               imageUrl: "assets/images/breakfast.jpg",
                               mealType: 'Breakfast',
                               onClick: () => handleMealClick('Breakfast'),
                             ),
                             Gap(6.h),
-                            MealItem(
+                            MealTime(
                               imageUrl: "assets/images/lunch.jpg",
                               mealType: 'Lunch',
                               onClick: () => handleMealClick('Lunch'),
                             ),
                             Gap(6.h),
-                            MealItem(
+                            MealTime(
                               imageUrl: "assets/images/dinner.jpg",
                               mealType: 'Dinner',
                               onClick: () => handleMealClick('Dinner'),
@@ -121,12 +117,12 @@ class _HomeTabState extends State<HomeTab> {
   }
 }
 
-class MealItem extends StatelessWidget {
+class MealTime extends StatelessWidget {
   final String mealType;
   final String imageUrl;
   final VoidCallback onClick;
 
-  const MealItem({
+  const MealTime({
     Key? key,
     required this.mealType,
     required this.imageUrl,
@@ -200,74 +196,84 @@ class MealListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Material(
+        color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            print("");
-          },
-          child: Row(
-            children: [
-              // Gate Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  "assets/images/food_item.jpg",
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 16.0),
-
-              // Gate Details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            onTap: () {
+              Navigator.pushNamed(context, Routes.mealItem,
+                  arguments: [meal.id]);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [
+                Row(
                   children: [
-                    Text(
-                      meal.completeMeal,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    // Gate Image
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        "assets/images/food_item.jpg",
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Text(
-                      meal.mealTime,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.directions_walk,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 4.0),
-                        Text(
-                          meal.generatedTimes.toString(),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
+                    const SizedBox(width: 16.0),
+
+                    // Gate Details
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            meal.completeMeal,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            meal.mealTime,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.directions_walk,
+                                size: 16,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(width: 4.0),
+                              Text(
+                                meal.generatedTimes.toString(),
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Navigation Icon
+                    const Icon(
+                      Icons.navigation,
+                      color: Colors.green,
                     ),
                   ],
                 ),
-              ),
-
-              // Navigation Icon
-              const Icon(
-                Icons.navigation,
-                color: Colors.green,
-              ),
-            ],
-          ),
-        ));
+                const Divider(
+                  color: Colors.grey,
+                  thickness: 0.3,
+                  endIndent: 20,
+                )
+              ]),
+            )));
   }
 }
