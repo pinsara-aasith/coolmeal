@@ -98,8 +98,16 @@ class _HomeBodyState extends State<HomeBody> {
           create: (context) => MealPlanBloc(FirebaseFirestore.instance)
             ..add(FetchMealPlans(currentUser?.email ?? '')),
           child: const GeneratedMealsComboTab()),
-      const Center(
-        child: Text("Settings"),
+      Center(
+        child: BlocBuilder<AppBloc, AppState>(
+          builder: (context, state) {
+            return ElevatedButton(
+                onPressed: () {
+                  context.read<AppBloc>().add(const AppLogoutRequested());
+                },
+                child: const Text("Logout"));
+          },
+        ),
       ),
     ];
 
