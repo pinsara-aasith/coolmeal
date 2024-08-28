@@ -7,7 +7,7 @@ import pickle
 
 
 def train_knn_model(
-    n_neighbors=5,
+    n_neighbors=7,
     metric="cosine",
     algorithm="brute",
     model_filename="knn_model.pkl",
@@ -25,6 +25,7 @@ def train_knn_model(
 
     # Load the data
     df = pd.read_csv("./final_meal_combinations_dataset.csv")
+    print("data set  loaded successfully --------------------- ")
 
     # Standarize the nutrient data
     scaler = StandardScaler()
@@ -35,6 +36,7 @@ def train_knn_model(
         metric=metric, algorithm=algorithm, n_neighbors=n_neighbors
     )
     neigh.fit(prep_data)
+    print("KNN model trained successfully --------------------- ")
 
     # Create a transformer for KNN
     transformer = FunctionTransformer(
@@ -43,10 +45,12 @@ def train_knn_model(
 
     # Create the pipeline
     pipeline = Pipeline([("std_scaler", scaler), ("NN", transformer)])
+    print("pipeline created successfully --------------------- ")
 
     # Save the pipeline to a pickle file
     with open(model_filename, "wb") as f:
         pickle.dump(pipeline, f)
+    print("model saved successfully --------------------- ")
 
     return pipeline
 
