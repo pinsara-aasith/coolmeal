@@ -32,7 +32,7 @@ for _, row in df.iterrows():
     
     query = db.collection(collection_name).where(filter=FieldFilter('foodCode', '==', food_code)).get()
     if query:
-        for doc in query:
+        for doc in query: 
             doc_ref = db.collection(collection_name).document(doc.id)
             doc_ref.update(row_dict)
             print(f"Updated ingredient: {row_dict.get('foodName')}")
