@@ -1,4 +1,4 @@
-import 'package:coolmeal/models/meals.dart';
+import 'package:coolmeal/models/meal.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';

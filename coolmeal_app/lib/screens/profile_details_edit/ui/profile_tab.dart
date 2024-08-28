@@ -5,7 +5,6 @@ import 'package:coolmeal/core/widgets/gender_toggle.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
