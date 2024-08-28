@@ -126,6 +126,8 @@ class _HomeBodyState extends State<HomeBody> {
           BottomNavigationBarItem(
               icon: Icon(Icons.food_bank), label: "Your Meals"),
           BottomNavigationBarItem(
+              icon: Icon(Icons.food_bank), label: "Chat Bot"),
+          BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
       ),
