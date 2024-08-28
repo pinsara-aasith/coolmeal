@@ -60,32 +60,32 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                     assetImagePath:
                         "assets/images/tell_me_more_about_you_2.png"),
 
-                Row(
-                  children: [
-                    Expanded(
-                        child: FormFieldWrapper(
-                      label: "No of meals per day",
-                      textField: TextFormField(
-                          controller: ageController,
-                          decoration:
-                              TextDecorations.getLabellessTextFieldDecoration(
-                                  placeholder: "No of meals", context: context),
-                          keyboardType: TextInputType.number),
-                    )),
-                    Gap(10.w),
-                    Expanded(
-                        child: FormFieldWrapper(
-                      label: "Curries need with rice",
-                      textField: TextFormField(
-                          controller: ageController,
-                          decoration:
-                              TextDecorations.getLabellessTextFieldDecoration(
-                                  placeholder: "Curries with rice",
-                                  context: context),
-                          keyboardType: TextInputType.number),
-                    )),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //         child: FormFieldWrapper(
+                //       label: "No of meals per day",
+                //       textField: TextFormField(
+                //           controller: ageController,
+                //           decoration:
+                //               TextDecorations.getLabellessTextFieldDecoration(
+                //                   placeholder: "No of meals", context: context),
+                //           keyboardType: TextInputType.number),
+                //     )),
+                //     Gap(10.w),
+                //     Expanded(
+                //         child: FormFieldWrapper(
+                //       label: "Curries need with rice",
+                //       textField: TextFormField(
+                //           controller: ageController,
+                //           decoration:
+                //               TextDecorations.getLabellessTextFieldDecoration(
+                //                   placeholder: "Curries with rice",
+                //                   context: context),
+                //           keyboardType: TextInputType.number),
+                //     )),
+                //   ],
+                // ),
 
                 Gap(16.h),
                 // Age
