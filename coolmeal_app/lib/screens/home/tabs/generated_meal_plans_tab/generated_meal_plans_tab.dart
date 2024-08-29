@@ -1,5 +1,5 @@
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
-import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/bloc/generated_meal_plans_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/generated_meal_plans_tab/bloc/generated_meal_plans_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

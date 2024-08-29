@@ -261,11 +261,6 @@ class MealListItem extends StatelessWidget {
                       ),
                     ),
 
-                    // Navigation Icon
-                    const Icon(
-                      Icons.navigation,
-                      color: Colors.green,
-                    ),
                   ],
                 ),
                 const Divider(

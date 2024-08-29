@@ -246,82 +246,83 @@ class _ProfileCompletionStepsWidgetState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PlainAppBar(
-          title: '',
-          onBackPressed: () {
-            if (_pageController.page == null) return;
+            appBar: PlainAppBar(
+              title: '',
+              onBackPressed: () {
+                if (_pageController.page == null) return;
 
-            if (_pageController.page! == 0) {
-              widget.onBack();
-            }
+                if (_pageController.page! == 0) {
+                  widget.onBack();
+                }
 
-            if (_pageController.page! > 0) {
-              // Go back to previous step
-              _pageController.animateToPage(
-                _pageController.page!.toInt() - 1,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            }
-          },
-          actions: [
-            TextButton(
-              onPressed: () {
-                // UserInfomationRepository().increaseSkipCount().then((value) {
-                //   navigatorKey.currentState?.pushReplacementNamed('/home');
-                // });
+                if (_pageController.page! > 0) {
+                  // Go back to previous step
+                  _pageController.animateToPage(
+                    _pageController.page!.toInt() - 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
               },
-              child: const Text(
-                "Skip",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-        body: Container(
-            decoration: BoxDecoration(
-              gradient: welcomeGradient,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(children: [
-                Row(
-                  children: List.generate(_pages.length, (index) {
-                    return Expanded(
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Container(
-                            height: 4,
-                            decoration: ShapeDecoration(
-                              color: _activePage >= index
-                                  ? const Color(0xFF036D59)
-                                  : Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                          )),
-                    );
-                  }),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // UserInfomationRepository().increaseSkipCount().then((value) {
+                    //   navigatorKey.currentState?.pushReplacementNamed('/home');
+                    // });
+                  },
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-                Expanded(
-                    child: PageView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageController,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      _activePage = page;
-                    });
-                  },
-                  itemCount: _pages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _pages[index % _pages.length];
-                  },
-                )),
-              ]),
-            )));
+              ],
+            ),
+            body:  Container(
+                    decoration: BoxDecoration(
+                      gradient: welcomeGradient,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(children: [
+                        Row(
+                          children: List.generate(_pages.length, (index) {
+                            return Expanded(
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Container(
+                                    height: 4,
+                                    decoration: ShapeDecoration(
+                                      color: _activePage >= index
+                                          ? const Color(0xFF036D59)
+                                          : Colors.grey,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                  )),
+                            );
+                          }),
+                        ),
+                        Expanded(
+                            child: PageView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          controller: _pageController,
+                          onPageChanged: (int page) {
+                            setState(() {
+                              _activePage = page;
+                            });
+                          },
+                          itemCount: _pages.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _pages[index % _pages.length];
+                          },
+                        )),
+                      ]),
+                    )));
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
@@ -168,10 +169,8 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
         )),
         OutlinedButton(
           onPressed: () {
-            // saveData();
-            // widget.onClickNext();
             FocusManager.instance.primaryFocus?.unfocus();
-            Navigator.pop(context);
+            Navigator.pushNamed(context, Routes.profileCompletion);
           },
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.all(14),

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/widgets/generate_meal.dart';
+import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/widgets/generate_meal_form.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
