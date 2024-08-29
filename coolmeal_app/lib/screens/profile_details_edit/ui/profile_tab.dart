@@ -142,7 +142,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   children: [
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Height",
+                      label: "Height(cm)",
                       textField: TextFormField(
                           controller: ageController,
                           decoration:
@@ -153,7 +153,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     Gap(10.w),
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Weight",
+                      label: "Weight(kg)",
                       textField: TextFormField(
                           controller: ageController,
                           decoration:
@@ -167,12 +167,12 @@ class _ProfileTabState extends State<ProfileTab> {
                 Gap(16.h),
                 // Age
                 FormFieldWrapper(
-                  label: "Age",
+                  label: "Age(years)",
                   textField: TextFormField(
                       controller: ageController,
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
-                              placeholder: "Age", context: context),
+                              placeholder: "Age(years)", context: context),
                       keyboardType: TextInputType.number),
                 ),
 
