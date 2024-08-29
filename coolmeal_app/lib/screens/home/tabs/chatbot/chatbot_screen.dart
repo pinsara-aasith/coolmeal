@@ -32,8 +32,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     print("User message: $userMessage");
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: {'query': userMessage},
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'query': userMessage}),
     );
     print(response.body);
 
