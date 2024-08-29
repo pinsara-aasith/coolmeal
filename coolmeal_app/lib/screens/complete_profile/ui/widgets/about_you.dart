@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coolmeal/bloc/app_bloc.dart';
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/core/widgets/gender_toggle.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
@@ -19,8 +22,11 @@ class AboutYou extends StatefulWidget {
 class _AboutYouState extends State<AboutYou> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   String? selectedGender;
-  String? selectedNationality;
+
+  bool loading = true;
 
   @override
   void initState() {
@@ -29,28 +35,62 @@ class _AboutYouState extends State<AboutYou> {
     loadData();
   }
 
-  void loadData() {
-    // Map<dynamic, dynamic>? userInfoRepo =
-    //     UserInfomationRepository().getUserInformation();
+  Future<void> saveData() async {
+    var user = context.read<AppBloc>().state.user;
 
-    // if (userInfoRepo == null) return;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('user_profiles')
+        .where('email', isEqualTo: user?.email)
+        .get();
 
-    setState(() {
-      // nameController.text = (userInfoRepo['name'] ?? '').toString();
-      // ageController.text = (userInfoRepo['age'] ?? '').toString();
+    if (querySnapshot.docs.isNotEmpty) {
+      var docId = querySnapshot.docs.first.id; // Get the document ID
 
-      // selectedGender = userInfoRepo['gender'];
-      // selectedNationality = userInfoRepo['nationality'];
-    });
+      await FirebaseFirestore.instance.collection('user_profiles').doc(docId).update({
+        'email': user?.email,
+        'name': nameController.text,
+        'age': int.tryParse(ageController.text) ?? 0,
+        'gender': selectedGender,
+        'height': int.tryParse(heightController.text) ?? 0,
+        'weight': int.tryParse(weightController.text) ?? 0,
+      });
+    } else {
+      FirebaseFirestore.instance.collection('user_profiles').add({
+        'email': user?.email,
+        'name': nameController.text,
+        'age': int.tryParse(ageController.text) ?? 0,
+        'gender': selectedGender,
+        'height': int.tryParse(heightController.text) ?? 0,
+        'weight': int.tryParse(weightController.text) ?? 0,
+      });
+    }
   }
 
-  Future<void> saveData() async {
-    // await UserInfomationRepository().saveAll({
-    //   'name': nameController.text,
-    //   'age': ageController.text,
-    //   'gender': selectedGender,
-    //   'nationality': selectedNationality,
-    // });
+  void loadData() async {
+    var user = context.read<AppBloc>().state.user;
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('user_profiles')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var userDoc = querySnapshot.docs.first;
+
+      setState(() {
+        nameController.text = userDoc['name'] ?? '';
+        ageController.text = userDoc['age']?.toString() ?? '';
+        selectedGender = userDoc['gender'];
+
+        heightController.text = userDoc['height']?.toString()  ?? '';
+        weightController.text = userDoc['weight']?.toString()  ?? '';
+        loading = false;
+      });
+    } else {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -60,6 +100,10 @@ class _AboutYouState extends State<AboutYou> {
         gradient: welcomeGradient,
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (loading) ...[
+          const Column(
+              children: [SizedBox(height: 20), CircularProgressIndicator()])
+        ],
         const SizedBox(height: 20),
         const CategoryTitle(
             title: "Complete Your Profile",
@@ -67,10 +111,7 @@ class _AboutYouState extends State<AboutYou> {
             assetImagePath: "assets/images/tell_me_more_about_you_2.png"),
         const SizedBox(height: 20),
         Expanded(
-            child: 
-            
-            
-            SingleChildScrollView(
+            child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Column(
@@ -84,27 +125,26 @@ class _AboutYouState extends State<AboutYou> {
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder: "Name", context: context))),
-
                 Gap(16.h),
-
                 Row(
                   children: [
                     Expanded(
                         child: FormFieldWrapper(
                       label: "Height",
                       textField: TextFormField(
-                          controller: ageController,
-                          decoration:
-                              TextDecorations.getLabellessTextFieldDecoration(
-                                  placeholder: "Height", context: context),
-                          keyboardType: TextInputType.number),
+                        controller: heightController,
+                        keyboardType: TextInputType.number,
+                        decoration:
+                            TextDecorations.getLabellessTextFieldDecoration(
+                                placeholder: "Height", context: context),
+                      ),
                     )),
                     Gap(10.w),
                     Expanded(
                         child: FormFieldWrapper(
                       label: "Weight",
                       textField: TextFormField(
-                          controller: ageController,
+                          controller: weightController,
                           decoration:
                               TextDecorations.getLabellessTextFieldDecoration(
                                   placeholder: "Weight", context: context),
@@ -112,7 +152,6 @@ class _AboutYouState extends State<AboutYou> {
                     )),
                   ],
                 ),
-
                 Gap(16.h),
                 // Age
                 FormFieldWrapper(
@@ -136,15 +175,14 @@ class _AboutYouState extends State<AboutYou> {
                             selectedGender = gender;
                           });
                         })),
-
                 const SizedBox(height: 16),
               ],
             ),
           ),
         )),
         ElevatedButton(
-          onPressed: () {
-            saveData();
+          onPressed: ()async  {
+            await saveData();
             widget.onClickNext();
             FocusManager.instance.primaryFocus?.unfocus();
           },

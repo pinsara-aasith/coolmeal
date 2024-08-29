@@ -1,9 +1,12 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
-import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/bloc/generated_meal_plans_bloc.dart';
+import 'package:coolmeal/repositories/user_profile_repository.dart';
+import 'package:coolmeal/screens/home/bloc/user_profile_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/generated_meal_plans_tab/bloc/generated_meal_plans_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/new_meal_plan_tab.dart';
-import 'package:coolmeal/screens/home/tabs/generated_meal_plan_tab/generated_meal_plans_tab.dart';
+import 'package:coolmeal/screens/home/tabs/generated_meal_plans_tab/generated_meal_plans_tab.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/home_tab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +51,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   builder: (context, state) {
                     return BlocProvider(
-                        create: (context) => PopularMealBloc(
-                            firestore: FirebaseFirestore.instance),
-                        child: const HomeBody());
+                        create: (context) => UserProfileBloc(
+                            userProfileRepository:
+                                RepositoryProvider.of<UserProfileRepository>(
+                                    context))
+                          ..add(LoadUserProfile(
+                              FirebaseAuth.instance.currentUser?.email ?? '')),
+                        child: BlocListener<UserProfileBloc, UserProfileState>(
+                            listenWhen: (previous, current) =>
+                                previous != current,
+                            listener: (context, state) {
+                              if (state is UserProfileError &&
+                                  state.message == 'Profile not found') {
+                                Navigator.pushReplacementNamed(
+                                    context, Routes.profileCompletion);
+                              } else if (state is UserProfileError) {
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.error,
+                                  animType: AnimType.rightSlide,
+                                  title: 'Error!',
+                                  desc: state.message,
+                                ).show();
+                              }
+                            },
+                            child: BlocProvider(
+                                create: (context) => PopularMealBloc(
+                                    firestore: FirebaseFirestore.instance),
+                                child: const HomeBody())));
                   },
                 )
               : const BuildNoInternet();
@@ -126,25 +154,24 @@ class _HomeBodyState extends State<HomeBody> {
     ];
 
     return Scaffold(
-      body: SafeArea(child: pages[_selectedTab]),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        iconSize: 40,
-        onTap: (index) => _changeTab(index),
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_box), label: "New Meal Plan"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.food_bank), label: "Your Meals"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.food_bank), label: "Chat Bot"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
-      ),
-    );
+        body: SafeArea(child: pages[_selectedTab]),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          iconSize: 40,
+          onTap: (index) => _changeTab(index),
+          selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add_box), label: "New Meal Plan"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.food_bank), label: "Your Meals"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.article), label: "Chat Bot"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "Settings"),
+          ],
+        ));
   }
 }

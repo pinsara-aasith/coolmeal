@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/theming/styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../widgets/page_header.dart';
@@ -15,9 +17,10 @@ class AboutYouMore extends StatefulWidget {
 }
 
 class _AboutYouMoreState extends State<AboutYouMore> {
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+  TextEditingController healthConcernsController = TextEditingController();
+  TextEditingController anyAllerigesController = TextEditingController();
+  TextEditingController fitnessGoalsController = TextEditingController();
+  TextEditingController excerciseLevelController = TextEditingController();
 
   @override
   void initState() {
@@ -25,23 +28,64 @@ class _AboutYouMoreState extends State<AboutYouMore> {
     super.initState();
   }
 
-  void loadData() {
-    // Map<dynamic, dynamic>? userInfoRepo =
-    //     UserInfomationRepository().getUserInformation();
-
-    // if (userInfoRepo == null) return;
-
-    setState(() {
-      // _internationalPhoneNo = userInfoRepo['internationalPhoneNo'];
-      // _saudiPhoneNo = userInfoRepo['saudiPhoneNo'];
-    });
-  }
+  bool loading = true;
 
   Future<void> saveData() async {
-    // await UserInfomationRepository().saveAll({
-    //   'internationalPhoneNo': _internationalPhoneNo,
-    //   'saudiPhoneNo': _saudiPhoneNo,
-    // });
+    var user = FirebaseAuth.instance.currentUser;
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('user_profiles')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var docId = querySnapshot.docs.first.id; // Get the document ID
+
+      await FirebaseFirestore.instance
+          .collection('user_profiles')
+          .doc(docId)
+          .update({
+        'email': user?.email,
+        'healthConcerns': healthConcernsController.text,
+        'anyAllergies': anyAllerigesController.text,
+        'fitnessGoals': fitnessGoalsController.text,
+        'exerciseLevel': excerciseLevelController.text,
+      });
+    } else {
+      FirebaseFirestore.instance.collection('user_profiles').add({
+        'email': user?.email,
+        'healthConcerns': healthConcernsController.text,
+        'anyAllergies': anyAllerigesController.text,
+        'fitnessGoals': fitnessGoalsController.text,
+        'exerciseLevel': excerciseLevelController.text,
+      });
+    }
+  }
+
+  void loadData() async {
+    var user = FirebaseAuth.instance.currentUser;
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('user_profiles')
+        .where('email', isEqualTo: user?.email)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var userDoc = querySnapshot.docs.first;
+
+      setState(() {
+        healthConcernsController.text = userDoc['healthConcerns'] ?? '';
+        anyAllerigesController.text = userDoc['anyAllergies'] ?? '';
+        fitnessGoalsController.text = userDoc['fitnessGoals'] ?? '';
+        excerciseLevelController.text = userDoc['exerciseLevel'] ?? '';
+
+        loading = false;
+      });
+    } else {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   final focusNodeForInternationalPhone = FocusNode();
@@ -56,6 +100,10 @@ class _AboutYouMoreState extends State<AboutYouMore> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 3),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (loading) ...[
+          const Column(
+              children: [SizedBox(height: 20), CircularProgressIndicator()])
+        ],
         const SizedBox(height: 20),
         const CategoryTitle(
             title: "Complete Your Profile",
@@ -72,7 +120,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Health Concerns",
                     textField: TextField(
-                        controller: nameController,
+                        controller: healthConcernsController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder:
@@ -82,7 +130,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Any allergies?",
                     textField: TextField(
-                        controller: nameController,
+                        controller: healthConcernsController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder: "Do you have any allergies?",
@@ -91,7 +139,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Fitness goals?",
                     textField: TextField(
-                        controller: nameController,
+                        controller: healthConcernsController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder: "What are your fitness goals?",
@@ -100,7 +148,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Exercise level?",
                     textField: TextField(
-                        controller: nameController,
+                        controller: healthConcernsController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder:
