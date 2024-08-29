@@ -54,8 +54,11 @@ class LoadingScreen {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(height: 10),
-                    const CircularProgressIndicator(),
+                    const Image(
+                      image: AssetImage('assets/images/chatbot_page.png'),
+                      width: 100,
+                      height: 100,
+                    ),
                     const SizedBox(height: 10),
                     StreamBuilder(
                       stream: textController.stream,
@@ -73,6 +76,8 @@ class LoadingScreen {
                         }
                       },
                     ),
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -104,7 +109,8 @@ typedef UpdateLoadingScreen = bool Function(String text);
 @immutable
 class LoadingScreenController {
   final CloseLoadingScreen close; // to closs our dialog
-  final UpdateLoadingScreen update; // to update anytext with in our dialog if needed
+  final UpdateLoadingScreen
+      update; // to update anytext with in our dialog if needed
 
   const LoadingScreenController({
     required this.close,
