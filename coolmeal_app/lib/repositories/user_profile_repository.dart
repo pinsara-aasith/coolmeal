@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/models/user_profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserProfileRepository {
   final FirebaseFirestore firestore;
+  UserProfile? _userProfile;
 
   UserProfileRepository({required this.firestore});
+  UserProfile? get userProfile => _userProfile;
 
   Future<void> saveUserProfile(UserProfile userProfile) async {
     try {
@@ -12,6 +15,9 @@ class UserProfileRepository {
           .collection('user_profiles')
           .doc(userProfile.name)
           .set(userProfile.toMap());
+
+      await loadUserProfile(FirebaseAuth.instance.currentUser?.email ?? '');
+    
     } catch (e) {
       throw Exception('Failed to save user profile');
     }
@@ -28,7 +34,8 @@ class UserProfileRepository {
         final doc = querySnapshot.docs.first;
         final data = doc.data();
 
-        return UserProfile.fromMap(data);
+        _userProfile = UserProfile.fromMap(data);
+        return _userProfile;
       } else {
         return null; // No matching profile found
       }
