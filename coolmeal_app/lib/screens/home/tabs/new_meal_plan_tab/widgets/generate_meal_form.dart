@@ -1,13 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
+import 'package:coolmeal/screens/prediction_result/ui/prediction_result.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class GenerateMealForm extends StatefulWidget {
   const GenerateMealForm({Key? key}) : super(key: key);
@@ -34,13 +37,53 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
     }
   }
 
-  TextEditingController ageController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _budgetController = TextEditingController();
+  String _selectedGender = 'male';
+  String _selectedActivityLevel = 'very active';
+
   String? selectedGender;
   String? selectedNationality;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void _generatePrediction() async {
+    final weight = int.parse(_weightController.text);
+    final height = int.parse(_heightController.text);
+    final age = int.parse(_ageController.text);
+
+    final response = await http.post(
+      Uri.parse('http://51.20.109.154/prediction'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'weight': weight,
+        'height': height,
+        'age': age,
+        'gender': _selectedGender,
+        'activity_level': _selectedActivityLevel,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final prediction = jsonDecode(response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PredictionResult(prediction: prediction),
+        ),
+      );
+    } else {
+      // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to generate prediction')),
+      );
+    }
   }
 
   @override
@@ -93,10 +136,22 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                 FormFieldWrapper(
                   label: "Your budget for this week",
                   textField: TextFormField(
-                      controller: ageController,
+                      controller: _budgetController,
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
                               placeholder: "Budget for this week",
+                              context: context),
+                      keyboardType: TextInputType.number),
+                ),
+
+                const SizedBox(height: 16),
+                FormFieldWrapper(
+                  label: "Age",
+                  textField: TextFormField(
+                      controller: _ageController,
+                      decoration:
+                          TextDecorations.getLabellessTextFieldDecoration(
+                              placeholder: "Age",
                               context: context),
                       keyboardType: TextInputType.number),
                 ),
@@ -124,7 +179,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                         child: FormFieldWrapper(
                       label: "Height",
                       textField: TextFormField(
-                          controller: ageController,
+                          controller: _heightController,
                           decoration:
                               TextDecorations.getLabellessTextFieldDecoration(
                                   placeholder: "Height", context: context),
@@ -135,7 +190,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                         child: FormFieldWrapper(
                       label: "Weight",
                       textField: TextFormField(
-                          controller: ageController,
+                          controller: _weightController,
                           decoration:
                               TextDecorations.getLabellessTextFieldDecoration(
                                   placeholder: "Weight", context: context),
@@ -144,24 +199,58 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                   ],
                 ),
                 Gap(16.h),
+                // FormFieldWrapper(
+                //     label: "Fitness goals?",
+                //     textField: TextField(
+                //         controller: nameController,
+                //         decoration:
+                //             TextDecorations.getLabellessTextFieldDecoration(
+                //                 placeholder: "What are your fitness goals?",
+                //                 context: context))),
+                // Gap(16.h),
+
                 FormFieldWrapper(
-                    label: "Fitness goals?",
-                    textField: TextField(
-                        controller: nameController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder: "What are your fitness goals?",
-                                context: context))),
+                    label: "Gender",
+                    textField: DropdownButtonFormField<String>(
+                      value: _selectedGender,
+                      items: ['male', 'female'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedGender = newValue!;
+                        });
+                      },
+                      decoration: InputDecoration(labelText: 'Gender'),
+                    )),
+
                 Gap(16.h),
                 FormFieldWrapper(
-                    label: "Exercise level For The Week?",
-                    textField: TextField(
-                        controller: nameController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder:
-                                    "Describe your current exercise routine.",
-                                context: context))),
+                  label: "Exercise level For The Week?",
+                  textField: DropdownButtonFormField<String>(
+                    value: _selectedActivityLevel,
+                    items: [
+                      'sedentary',
+                      'lightly active',
+                      'active',
+                      'very active'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedActivityLevel = newValue!;
+                      });
+                    },
+                    decoration: InputDecoration(labelText: 'Activity Level'),
+                  ),
+                ),
                 Gap(16.h),
               ],
             ),
@@ -191,8 +280,9 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
           onPressed: () {
             // saveData();
             // widget.onClickNext();
-            FocusManager.instance.primaryFocus?.unfocus();
-            Navigator.pop(context);
+            _generatePrediction();
+            // FocusManager.instance.primaryFocus?.unfocus();
+            // Navigator.pop(context);
           },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.all(14),
