@@ -130,7 +130,7 @@ class _AboutYouState extends State<AboutYou> {
                   children: [
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Height",
+                      label: "Height(cm)",
                       textField: TextFormField(
                         controller: heightController,
                         keyboardType: TextInputType.number,
@@ -142,7 +142,7 @@ class _AboutYouState extends State<AboutYou> {
                     Gap(10.w),
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Weight",
+                      label: "Weight(kg)",
                       textField: TextFormField(
                           controller: weightController,
                           decoration:
@@ -155,7 +155,7 @@ class _AboutYouState extends State<AboutYou> {
                 Gap(16.h),
                 // Age
                 FormFieldWrapper(
-                  label: "Age",
+                  label: "Age(years)",
                   textField: TextFormField(
                       controller: ageController,
                       decoration:

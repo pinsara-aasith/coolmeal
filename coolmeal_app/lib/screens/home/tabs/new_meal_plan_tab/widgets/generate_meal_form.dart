@@ -146,7 +146,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
 
                 const SizedBox(height: 16),
                 FormFieldWrapper(
-                  label: "Age",
+                  label: "Age(years)",
                   textField: TextFormField(
                       controller: _ageController,
                       decoration:
