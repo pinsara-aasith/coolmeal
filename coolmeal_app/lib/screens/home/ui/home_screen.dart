@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/bloc/app_bloc.dart';
 import 'package:coolmeal/repositories/user_profile_repository.dart';
 import 'package:coolmeal/screens/home/bloc/user_profile_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/chatbot/chatbot_screen.dart';
 import 'package:coolmeal/screens/home/tabs/generated_meal_plans_tab/bloc/generated_meal_plans_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
 import 'package:coolmeal/screens/home/tabs/new_meal_plan_tab/new_meal_plan_tab.dart';
@@ -136,10 +137,11 @@ class _HomeBodyState extends State<HomeBody> {
       const HomeTab(),
       const NewMealPlanTab(),
       BlocProvider(
-          create: (context) => MealPlanBloc(FirebaseFirestore.instance)
-            ..add(FetchMealPlans(currentUser?.email ?? '')),
-          child: const GeneratedMealsComboTab()),
-      Center(),
+        create: (context) => MealPlanBloc(FirebaseFirestore.instance)
+          ..add(FetchMealPlans(currentUser?.email ?? '')),
+        child: const GeneratedMealsComboTab(),
+      ),
+      const ChatbotScreen(),
       Center(
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
@@ -168,7 +170,7 @@ class _HomeBodyState extends State<HomeBody> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.food_bank), label: "Your Meals"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.article), label: "Chat Bot"),
+                icon: Icon(Icons.smart_toy), label: "Chat Bot"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings), label: "Settings"),
           ],
