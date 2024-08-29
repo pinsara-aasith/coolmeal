@@ -1,13 +1,13 @@
 class UserProfile {
-  final String name;
-  final double height;
-  final double weight;
-  final int age;
-  final String gender;
-  final String healthConcerns;
-  final String allergies;
-  final String fitnessGoals;
-  final String exerciseLevel;
+  final String? name;
+  final double? height;
+  final double? weight;
+  final double? age;
+  final String? gender;
+  final String? healthConcerns;
+  final String? allergies;
+  final String? fitnessGoals;
+  final String? exerciseLevel;
 
   UserProfile({
     required this.name,
@@ -38,9 +38,9 @@ class UserProfile {
   factory UserProfile.fromMap(Map<String, dynamic> map) {
     return UserProfile(
       name: map['name'],
-      height: map['height'],
-      weight: map['weight'],
-      age: map['age'],
+      height: double.parse(map['height'].toString()),
+      weight: double.parse(map['weight'].toString()),
+      age: double.parse(map['age'].toString()),
       gender: map['gender'],
       healthConcerns: map['healthConcerns'],
       allergies: map['allergies'],
