@@ -2,11 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
+import 'package:coolmeal/core/widgets/loading_screen.dart';
+import 'package:coolmeal/core/widgets/progress_indicaror.dart';
+import 'package:coolmeal/core/widgets/toggle_buttons.dart';
+import 'package:coolmeal/repositories/user_profile_repository.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
+import 'package:coolmeal/screens/home/bloc/user_profile_bloc.dart';
 import 'package:coolmeal/screens/prediction_result/ui/prediction_result.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +31,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   TextEditingController businessController = TextEditingController();
   TextEditingController shopController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
@@ -51,12 +58,20 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   @override
   void initState() {
     super.initState();
+    var userProfile =
+        RepositoryProvider.of<UserProfileRepository>(context).userProfile;
+    print(userProfile);
+    _weightController.text = userProfile?.weight?.toString() ?? '';
+    _heightController.text = userProfile?.height?.toString() ?? '';
+    _ageController.text = userProfile?.age?.toString() ?? '';
   }
 
   void _generatePrediction() async {
-    final weight = int.parse(_weightController.text);
-    final height = int.parse(_heightController.text);
-    final age = int.parse(_ageController.text);
+
+      LoadingScreen.instance().show(context: context,  text: "We are generating a meal plan tailored to your needs...");
+    final weight = double.parse(_weightController.text);
+    final height = double.parse(_heightController.text);
+    final age = double.parse(_ageController.text);
 
     final response = await http.post(
       Uri.parse('http://51.20.109.154/prediction'),
@@ -69,6 +84,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
         'activity_level': _selectedActivityLevel,
       }),
     );
+    LoadingScreen.instance().hide();
 
     if (response.statusCode == 200) {
       final prediction = jsonDecode(response.body);
@@ -131,38 +147,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                 //   ],
                 // ),
 
-                Gap(16.h),
-                // Age
-                FormFieldWrapper(
-                  label: "Your budget for this week",
-                  textField: TextFormField(
-                      controller: _budgetController,
-                      decoration:
-                          TextDecorations.getLabellessTextFieldDecoration(
-                              placeholder: "Budget for this week",
-                              context: context),
-                      keyboardType: TextInputType.number),
-                ),
-
-                const SizedBox(height: 16),
-                FormFieldWrapper(
-                  label: "Age(years)",
-                  textField: TextFormField(
-                      controller: _ageController,
-                      decoration:
-                          TextDecorations.getLabellessTextFieldDecoration(
-                              placeholder: "Age", context: context),
-                      keyboardType: TextInputType.number),
-                ),
-
-                const SizedBox(height: 16),
-                Container(
-                  height: 1 * 0.1,
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  color: Theme.of(context).primaryColor,
-                  width: double.infinity,
-                ),
-                const SizedBox(height: 16),
+                Gap(8.h),
                 const Text(
                   "Personal Details",
                   style: TextStyle(
@@ -172,11 +157,24 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                // Age
+
+                FormFieldWrapper(
+                  label: "Age (years)",
+                  textField: TextFormField(
+                      controller: _ageController,
+                      decoration:
+                          TextDecorations.getLabellessTextFieldDecoration(
+                              placeholder: "Age", context: context),
+                      keyboardType: TextInputType.number),
+                ),
+
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Height",
+                      label: "Height(cm)",
                       textField: TextFormField(
                           controller: _heightController,
                           decoration:
@@ -187,7 +185,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                     Gap(10.w),
                     Expanded(
                         child: FormFieldWrapper(
-                      label: "Weight",
+                      label: "Weight(kg)",
                       textField: TextFormField(
                           controller: _weightController,
                           decoration:
@@ -198,6 +196,13 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                   ],
                 ),
                 Gap(16.h),
+                Container(
+                  height: 1 * 0.1,
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  color: Theme.of(context).primaryColor,
+                  width: double.infinity,
+                ),
+                const SizedBox(height: 16),
                 // FormFieldWrapper(
                 //     label: "Fitness goals?",
                 //     textField: TextField(
@@ -207,49 +212,33 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                 //                 placeholder: "What are your fitness goals?",
                 //                 context: context))),
                 // Gap(16.h),
-
                 FormFieldWrapper(
-                    label: "Gender",
-                    textField: DropdownButtonFormField<String>(
-                      value: _selectedGender,
-                      items: ['male', 'female'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          _selectedGender = newValue!;
-                        });
-                      },
-                      decoration: const InputDecoration(labelText: 'Gender'),
-                    )),
-
+                  label: "Your budget for this week (Rs.)",
+                  textField: TextFormField(
+                      controller: _budgetController,
+                      decoration:
+                          TextDecorations.getLabellessTextFieldDecoration(
+                              placeholder: "Budget for this week",
+                              context: context),
+                      keyboardType: TextInputType.number),
+                ),
                 Gap(16.h),
                 FormFieldWrapper(
                   label: "Exercise level For The Week?",
-                  textField: DropdownButtonFormField<String>(
-                    value: _selectedActivityLevel,
-                    items: [
-                      'sedentary',
-                      'lightly active',
-                      'active',
-                      'very active'
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedActivityLevel = newValue!;
-                      });
-                    },
-                    decoration:
-                        const InputDecoration(labelText: 'Activity Level'),
-                  ),
+                  textField: Column(children: [
+                    Gap(5.h),
+                    CMToggleButtons(
+                      selectedKey: selectedGender,
+                      hideIcon: true,
+                      onSelected: (key) => setState(() => selectedGender = key),
+                      keyValueMap: const {
+                        'sedentary': ["Sedentary", Icons.run_circle],
+                        'very active': ["Very Active", Icons.female],
+                        'active': ["Active", Icons.female],
+                        'other': ["Other", Icons.transgender],
+                      },
+                    )
+                  ]),
                 ),
                 Gap(16.h),
               ],
