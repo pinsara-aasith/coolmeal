@@ -35,115 +35,99 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ],
       ),
       drawer: const Drawer(),
-      body: Column(
-        children: [
-          // add image
-          Container(
-            width: 220, // Increase width to accommodate border and shadow
-            height: 220, // Increase height to accommodate border and shadow
-            decoration: BoxDecoration(
-              color: Colors.white, // Background color (optional)
-              borderRadius: BorderRadius.circular(20), // Rounded corners
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              border: Border.all(
-                color: Colors.teal, // Border color
-                width: 2, // Border width
-              ),
+      body: Container(
+        child: Column(
+          children: [
+            // add image
+            const Image(
+              image: AssetImage('assets/images/chatbot_page.png'),
+              width: 200,
+              height: 200,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                  20), // Ensure the image has rounded corners
-              child: Image.asset(
-                'assets/images/chatbot_page.png',
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover, // Adjust the image to fill the container
-              ),
-            ),
-          ),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: ListView.builder(
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment
+                        .stretch, // Allows full-width alignment
                     children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.teal[50],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          _messages[index],
-                          style: const TextStyle(color: Colors.black),
+                      Align(
+                        alignment: Alignment
+                            .centerLeft, // Aligns the message to the left
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.teal[50],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            _messages[index],
+                            style: const TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          _responses[index],
-                          style: const TextStyle(color: Colors.black87),
+                      Align(
+                        alignment: Alignment
+                            .centerRight, // Aligns the response to the right
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            _responses[index],
+                            style: const TextStyle(color: Colors.black87),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'type here',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'type here',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: _sendMessage,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: const BoxDecoration(
-                      color: Colors.teal,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.send,
-                      color: Colors.white,
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: _sendMessage,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
+                        color: Colors.teal,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
