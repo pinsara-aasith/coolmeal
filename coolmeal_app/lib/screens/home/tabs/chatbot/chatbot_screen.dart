@@ -12,9 +12,7 @@ class ChatbotScreen extends StatefulWidget {
 class _ChatbotScreenState extends State<ChatbotScreen> {
   final TextEditingController _controller = TextEditingController();
   final List<String> _messages = ["Give me nutrition of rice ?"];
-  final List<String> _responses = [
-    "Below is the nutritional breakdown\n• Calories: 130 kcal\n• Carbohydrates: 28.2 g\n• Protein: 2.4 g\n• Fat: 0.3 g"
-  ];
+  final List<String> _responses = ["Hi !! I am food related chat bot . /n "];
 
   Future<void> _sendMessage() async {
     final userMessage = _controller.text;
@@ -28,22 +26,19 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     });
 
     // Send POST request to the backend
-    final url = Uri.parse('http://13.61.4.28/chat/query=$userMessage');
-    print("User message: $userMessage");
+    final url = Uri.parse('http://13.61.4.28/chat?query=$userMessage');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       // Parse the response body
       final responseBody = json.decode(response.body);
 
-      // Add the response to the list
       setState(() {
-        _responses.add(responseBody[
-            'response']); // Assuming the response is under 'response' key
+        _responses.add(responseBody['response']
+            ['result']); // Assuming 'result' contains the string you want
       });
     } else {
       // Handle error response
