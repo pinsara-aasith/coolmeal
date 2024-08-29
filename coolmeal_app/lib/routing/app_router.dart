@@ -3,6 +3,7 @@ import 'package:coolmeal/screens/lets_start/ui/lets_Start.dart';
 import 'package:coolmeal/screens/complete_profile/ui/complete_profile.dart';
 import 'package:coolmeal/screens/meal_details/ui/meal_details.dart';
 import 'package:coolmeal/screens/splash_screen/splash_screen.dart';
+import 'package:coolmeal/screens/verify_please/verify_please.dart';
 import 'package:coolmeal/screens/welcome/ui/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,11 @@ class AppRouter {
       case Routes.splashScreen:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
+        );
+
+      case Routes.verifyPlease:
+        return MaterialPageRoute(
+          builder: (_) => const VerifyPlease(),
         );
 
       case Routes.homeScreen:
