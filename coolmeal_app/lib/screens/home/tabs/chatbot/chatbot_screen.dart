@@ -38,10 +38,35 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       body: Column(
         children: [
           // add image
-          const Image(
-            image: AssetImage('assets/images/chatbot_page.png'),
-            width: 200,
-            height: 200,
+          Container(
+            width: 220, // Increase width to accommodate border and shadow
+            height: 220, // Increase height to accommodate border and shadow
+            decoration: BoxDecoration(
+              color: Colors.white, // Background color (optional)
+              borderRadius: BorderRadius.circular(20), // Rounded corners
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+              border: Border.all(
+                color: Colors.teal, // Border color
+                width: 2, // Border width
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                  20), // Ensure the image has rounded corners
+              child: Image.asset(
+                'assets/images/chatbot_page.png',
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover, // Adjust the image to fill the container
+              ),
+            ),
           ),
 
           Expanded(
