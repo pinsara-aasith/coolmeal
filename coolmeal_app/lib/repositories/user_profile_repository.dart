@@ -33,6 +33,7 @@ class UserProfileRepository {
         return null; // No matching profile found
       }
     } catch (e) {
+      print(e);
       throw Exception('Failed to load user profile');
     }
   }

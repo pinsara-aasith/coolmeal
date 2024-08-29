@@ -32,6 +32,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         emit(const UserProfileError('Profile not found'));
       }
     } catch (e) {
+      print(e);
       emit(const UserProfileError('Failed to load profile'));
     }
   }
