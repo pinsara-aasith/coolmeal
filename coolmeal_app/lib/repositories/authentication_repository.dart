@@ -250,6 +250,7 @@ extension on firebase_auth.User {
         id: uid,
         email: email ?? '',
         name: displayName ?? '',
-        photo: photoURL ?? '');
+        photo: photoURL ?? '',
+        emailVerified: emailVerified);
   }
 }

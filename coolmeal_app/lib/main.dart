@@ -111,6 +111,12 @@ class _AppViewState extends State<AppView> {
           (route) => false,
         );
         break;
+      case AppStatus.authenticatedNotVerified:
+        _navigator.pushNamedAndRemoveUntil<void>(
+          Routes.verifyPlease,
+          (route) => false,
+        );
+        break;
       case AppStatus.unauthenticated:
         _navigator.pushNamedAndRemoveUntil<void>(
           Routes.letsStart,

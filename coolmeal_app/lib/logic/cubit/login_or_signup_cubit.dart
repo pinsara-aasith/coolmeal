@@ -64,7 +64,8 @@ class LoginOrSignupCubit extends Cubit<AuthState> {
       if (userCredential.user!.emailVerified) {
         emit(UserSignIn());
       } else {
-        await _firebaseAuth.signOut();
+        print("");
+        // await _firebaseAuth.signOut();
         emit(AuthError('Email not verified. Please check your email.'));
         emit(UserNotVerified());
       }
