@@ -28,12 +28,11 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     });
 
     // Send POST request to the backend
-    final url = Uri.parse('http://13.61.4.28/chat');
+    final url = Uri.parse('http://13.61.4.28/chat/query=$userMessage');
     print("User message: $userMessage");
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({'query': userMessage}),
     );
     print(response.body);
 
