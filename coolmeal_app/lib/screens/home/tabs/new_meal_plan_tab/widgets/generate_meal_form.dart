@@ -81,7 +81,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
     } else {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to generate prediction')),
+        const SnackBar(content: Text('Failed to generate prediction')),
       );
     }
   }
@@ -151,8 +151,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                       controller: _ageController,
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
-                              placeholder: "Age",
-                              context: context),
+                              placeholder: "Age", context: context),
                       keyboardType: TextInputType.number),
                 ),
 
@@ -224,7 +223,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                           _selectedGender = newValue!;
                         });
                       },
-                      decoration: InputDecoration(labelText: 'Gender'),
+                      decoration: const InputDecoration(labelText: 'Gender'),
                     )),
 
                 Gap(16.h),
@@ -248,7 +247,8 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                         _selectedActivityLevel = newValue!;
                       });
                     },
-                    decoration: InputDecoration(labelText: 'Activity Level'),
+                    decoration:
+                        const InputDecoration(labelText: 'Activity Level'),
                   ),
                 ),
                 Gap(16.h),
