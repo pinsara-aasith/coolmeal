@@ -1,6 +1,6 @@
 import 'package:coolmeal/models/meal.dart';
 import 'package:coolmeal/routing/routes.dart';
-import 'package:coolmeal/screens/home/tabs/home_tab/bloc/popular_meals_bloc.dart';
+import 'package:coolmeal/screens/home/tabs/home_tab/popular_meals_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

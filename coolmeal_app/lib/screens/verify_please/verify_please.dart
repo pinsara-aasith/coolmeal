@@ -1,3 +1,5 @@
+import 'package:coolmeal/theming/styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,12 +32,28 @@ class _VerifyPleaseState extends State<VerifyPlease> {
             Text(
               'Please Verify Your Email!',
               style: GoogleFonts.lato(
-                textStyle: const TextStyle(
-                  color: Colors.lightGreen,
-                  fontSize: 20,
-                ),
+                textStyle: TextStyles.font24Blue700Weight,
               ),
             ),
+            ElevatedButton(
+          onPressed: ()async  {
+            FirebaseAuth.instance.currentUser?.reload();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              backgroundColor: Theme.of(context).primaryColor),
+          child: const Text(
+            'Check Again!',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
           ],
         ),
       ),
