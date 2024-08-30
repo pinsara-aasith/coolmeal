@@ -24,8 +24,8 @@ class _AboutYouMoreState extends State<AboutYouMore> {
 
   @override
   void initState() {
-    loadData();
     super.initState();
+    loadData();
   }
 
   bool loading = true;
@@ -71,7 +71,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      var userDoc = querySnapshot.docs.first;
+      var userDoc = querySnapshot.docs.first.data() as Map<String, dynamic>;
 
       setState(() {
         healthConcernsController.text = userDoc['healthConcerns'] ?? '';
@@ -130,7 +130,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Any allergies?",
                     textField: TextField(
-                        controller: healthConcernsController,
+                        controller: anyAllerigesController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder: "Do you have any allergies?",
@@ -139,7 +139,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Fitness goals?",
                     textField: TextField(
-                        controller: healthConcernsController,
+                        controller: fitnessGoalsController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder: "What are your fitness goals?",
@@ -148,7 +148,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 FormFieldWrapper(
                     label: "Exercise level?",
                     textField: TextField(
-                        controller: healthConcernsController,
+                        controller: excerciseLevelController,
                         decoration:
                             TextDecorations.getLabellessTextFieldDecoration(
                                 placeholder:
@@ -160,9 +160,16 @@ class _AboutYouMoreState extends State<AboutYouMore> {
           )),
         ),
         ElevatedButton(
-          onPressed: () {
-            saveData();
+          onPressed: () async {
+            setState(() {
+              loading = true;
+            });
+            await saveData();
+            
             FocusManager.instance.primaryFocus?.unfocus();
+            setState(() {
+              loading = false;
+            });
             widget.onClickNext();
           },
           style: ElevatedButton.styleFrom(
