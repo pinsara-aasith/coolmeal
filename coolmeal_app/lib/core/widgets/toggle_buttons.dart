@@ -27,7 +27,7 @@ class CMToggleButtons extends StatelessWidget {
         final String label = entry.value[0] as String;
 
         IconData? icon;
-        if (!hideIcon) entry.value[1] as IconData;
+        if (!hideIcon) icon = entry.value[1] as IconData;
 
         return Expanded(
           child: buildToggleButton(context, key, label, icon),

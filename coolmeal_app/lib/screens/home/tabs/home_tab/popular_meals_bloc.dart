@@ -14,11 +14,22 @@ class PopularMealBloc extends Bloc<PopularMealEvent, PopularMealState> {
       FetchPopularMeals event, Emitter<PopularMealState> emit) async {
     emit(PopularMealLoading());
     try {
-      QuerySnapshot querySnapshot = await firestore
-          .collection('meals')
-          .orderBy('generatedTimes', descending: true)
-          .limit(20)
-          .get();
+      Query<Map<String, dynamic>> q = firestore
+          .collection('meals');
+
+      if (event.mealTime != null) {
+        q = q.where('mealTime', isEqualTo: event.mealTime);
+      }
+
+      if (event.searchQuery != null) {
+        q = q
+            .where('completeMeal', isGreaterThanOrEqualTo: event.mealTime)
+            .where('completeMeal',
+                isLessThanOrEqualTo: '${event.mealTime ?? ''}\uf8ff');
+      }
+
+      QuerySnapshot querySnapshot =
+          await q.orderBy('generatedTimes', descending: true).limit(20).get();
 
       List<Meal> meals = querySnapshot.docs
           .map((doc) =>
@@ -66,6 +77,11 @@ abstract class PopularMealEvent extends Equatable {
 }
 
 class FetchPopularMeals extends PopularMealEvent {
+  final String? searchQuery;
+  final String? mealTime;
+
+  FetchPopularMeals({this.searchQuery, this.mealTime});
+
   @override
   List<Object> get props => [];
 }
