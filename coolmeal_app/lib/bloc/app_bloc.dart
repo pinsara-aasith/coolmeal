@@ -15,9 +15,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<_AppUserChanged>(_onUserLoginStatusChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
-    
+
     _userSubscription = _authenticationRepository.user.listen(
-      (user) { 
+      (user) {
         print(user?.email);
         return add(_AppUserChanged(user));
       },
@@ -27,12 +27,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User?> _userSubscription;
 
-  void _onUserLoginStatusChanged(_AppUserChanged event, Emitter<AppState> emit) {
-    emit(
-      event.user != null
-          ? AppState.authenticated(event.user!)
-          : const AppState.unauthenticated(),
-    );
+  void _onUserLoginStatusChanged(
+      _AppUserChanged event, Emitter<AppState> emit) {
+    if (event.user != null && event.user!.emailVerified) {
+      emit(AppState.authenticated(event.user!));
+    } else if (event.user != null && !event.user!.emailVerified) {
+      emit(AppState.authenticatedNotVerified(event.user!));
+    }  else if (event.user == null) {
+      emit(const AppState.unauthenticated());
+    } 
   }
 
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
@@ -48,6 +51,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
 enum AppStatus {
   authenticated,
+  authenticatedNotVerified,
   unauthenticated,
   unknown
 }
@@ -60,6 +64,9 @@ final class AppState extends Equatable {
 
   const AppState.authenticated(User user)
       : this._(status: AppStatus.authenticated, user: user);
+
+  const AppState.authenticatedNotVerified(User user)
+      : this._(status: AppStatus.authenticatedNotVerified, user: user);
 
   const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
 
