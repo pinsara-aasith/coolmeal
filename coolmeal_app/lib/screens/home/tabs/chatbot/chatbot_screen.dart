@@ -52,10 +52,21 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CoolBOT'),
+        title: const Text(
+          'CoolBOT',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 193, 39),
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(
+              Icons.notifications,
+              color: Color.fromARGB(255, 2, 2, 2),
+              size: 30,
+            ),
             onPressed: () {},
           ),
         ],
