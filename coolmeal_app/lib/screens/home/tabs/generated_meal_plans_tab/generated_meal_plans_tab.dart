@@ -25,35 +25,35 @@ class _GeneratedMealsComboTabState extends State<GeneratedMealsComboTab> {
       decoration: BoxDecoration(
         color: ColorsManager.gradient.withAlpha(100),
       ),
-      child: BlocBuilder<MealPlanBloc, MealPlanState>(
+      child: BlocBuilder<GeneratedMealBloc, GeneratedMealState>(
         builder: (context, state) {
           return Padding(
               padding: const EdgeInsets.all( 28),
               child: Column(
                 children: [
                   const CategoryTitle(
-                      title: "Meal plans you've generated",
+                      title: "Meal plans you've saved",
                       subtitle: "Your Meal Plans",
                       assetImagePath:
                           "assets/images/tell_me_more_about_you_2.png"),
-                  if (state is MealPlanInitial)
+                  if (state is GeneratedMealInitial)
                     const Center(child: Text('Please wait...')),
-                  if (state is MealPlanLoading)
+                  if (state is GeneratedMealLoading)
                     const Center(child: CircularProgressIndicator()),
-                  if (state is MealPlanLoaded)
-                    state.mealPlans.isEmpty
-                        ? const Center(child: Text('You haven\'t generated any meals earlier.'))
+                  if (state is GeneratedMealLoaded)
+                    state.generatedMealPlans.isEmpty
+                        ? const Center(child: Text('You haven\'t generated any meal plans earlier.'))
                         : Expanded(
                             child: ListView.builder(
-                            itemCount: state.mealPlans.length,
+                            itemCount: state.generatedMealPlans.length,
                             itemBuilder: (context, index) {
-                              final mealPlan = state.mealPlans[index];
+                              final generatedMealPlan = state.generatedMealPlans[index];
                               return Card(
                                 margin: const EdgeInsets.all(8.0),
                                 child: ListTile(
-                                  title: Text(mealPlan['title']),
-                                  subtitle: Text(mealPlan['description']),
-                                  trailing: Text(mealPlan['date']),
+                                  title: Text(generatedMealPlan.name),
+                                  subtitle: Text(generatedMealPlan.description),
+                                  // trailing: Text(generatedMealPlan.),
                                   onTap: () {
                                     // Navigate to meal plan details
                                   },
@@ -61,7 +61,7 @@ class _GeneratedMealsComboTabState extends State<GeneratedMealsComboTab> {
                               );
                             },
                           )),
-                  if (state is MealPlanError)
+                  if (state is GeneratedMealError)
                     Center(child: Text(state.message)),
                 ],
               ));

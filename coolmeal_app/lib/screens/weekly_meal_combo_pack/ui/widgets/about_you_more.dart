@@ -1,4 +1,5 @@
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
+import 'package:coolmeal/core/widgets/toggle_buttons.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -18,6 +19,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  String? selectedActivityLevel;
 
   @override
   void initState() {
@@ -99,13 +101,17 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 Gap(16.h),
                 FormFieldWrapper(
                     label: "Exercise level?",
-                    textField: TextField(
-                        controller: nameController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder:
-                                    "Describe your current exercise routine.",
-                                context: context))),
+                    textField:CMToggleButtons(
+                      selectedKey: selectedActivityLevel,
+                      hideIcon: true,
+                      onSelected: (key) => setState(() => selectedActivityLevel = key),
+                      keyValueMap: const {
+                        'sedentary': ["Sedentary", Icons.run_circle],
+                        'very active': ["Very Active", Icons.female],
+                        'active': ["Active", Icons.female],
+                        'other': ["Other", Icons.transgender],
+                      },
+                    ) ),
                 Gap(16.h),
               ],
             ),
