@@ -1,70 +1,73 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:coolmeal/models/meal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coolmeal/models/meal_plan_collection.dart';
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class MealPlanBloc extends Bloc<MealPlanEvent, MealPlanState> {
-  final FirebaseFirestore _firestore;
+class GeneratedMealBloc extends Bloc<GeneratedMealEvent, GeneratedMealState> {
+  final FirebaseFirestore firestore;
 
-  MealPlanBloc(this._firestore) : super(MealPlanInitial()) {
-    on<FetchMealPlans>(onFetchMeals);
+  GeneratedMealBloc({required this.firestore}) : super(GeneratedMealInitial()) {
+    on<FetchGeneratedMeals>(_onFetchGeneratedMeals);
   }
 
-  void onFetchMeals(FetchMealPlans event, Emitter<MealPlanState> emit) async {
-    emit(MealPlanLoading());
+  Future<void> _onFetchGeneratedMeals(
+      FetchGeneratedMeals event, Emitter<GeneratedMealState> emit) async {
+    emit(GeneratedMealLoading());
     try {
-      // final snapshot = await _firestore
-      //     .collection('mealPlans')
-      //     .where('userId', isEqualTo: event.userId)
-      //     .get();
+      var querySnapshot = await firestore
+          .collection('generated_meal_plans')
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+          .get();
 
-      // final mealPlans = snapshot.docs.map((doc) => doc.data()).toList();
-      emit(const MealPlanLoaded([]));
+      List<MealPlanCollection> meals = querySnapshot.docs
+          .map((doc) => MealPlanCollection.fromJson(doc.data()))
+          .toList();
+
+      emit(GeneratedMealLoaded(meals));
     } catch (e) {
-      emit(const MealPlanError('Failed to load meal plans.'));
+      emit(GeneratedMealError("Failed to fetch meals ${e.toString()}"));
     }
   }
 }
 
-abstract class MealPlanState extends Equatable {
-  const MealPlanState();
+abstract class GeneratedMealState extends Equatable {
+  const GeneratedMealState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class MealPlanInitial extends MealPlanState {}
+class GeneratedMealInitial extends GeneratedMealState {}
 
-class MealPlanLoading extends MealPlanState {}
+class GeneratedMealLoading extends GeneratedMealState {}
 
-class MealPlanLoaded extends MealPlanState {
-  final List<Map<String, dynamic>> mealPlans;
-  const MealPlanLoaded(this.mealPlans);
+class GeneratedMealLoaded extends GeneratedMealState {
+  final List<MealPlanCollection> generatedMealPlans;
+
+  const GeneratedMealLoaded(this.generatedMealPlans);
 
   @override
-  List<Object> get props => [mealPlans];
+  List<Object?> get props => [generatedMealPlans];
 }
 
-class MealPlanError extends MealPlanState {
+class GeneratedMealError extends GeneratedMealState {
   final String message;
 
-  const MealPlanError(this.message);
+  const GeneratedMealError(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }
 
-abstract class MealPlanEvent extends Equatable {
-  const MealPlanEvent();
+abstract class GeneratedMealEvent extends Equatable {
+  const GeneratedMealEvent();
+}
+
+class FetchGeneratedMeals extends GeneratedMealEvent {
+  FetchGeneratedMeals();
 
   @override
   List<Object> get props => [];
-}
-
-class FetchMealPlans extends MealPlanEvent {
-  final String userId;
-
-  const FetchMealPlans(this.userId);
-
-  @override
-  List<Object> get props => [userId];
 }
