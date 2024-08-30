@@ -1,3 +1,5 @@
+import 'package:coolmeal/helpers/extensions.dart';
+import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,24 +38,30 @@ class _VerifyPleaseState extends State<VerifyPlease> {
               ),
             ),
             ElevatedButton(
-          onPressed: ()async  {
-            FirebaseAuth.instance.currentUser?.reload();
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.all(14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+              onPressed: () async {
+                FirebaseAuth.instance.currentUser?.reload();
+                if (FirebaseAuth.instance.currentUser?.emailVerified == true) {
+                  context.pushNamedAndRemoveUntil(
+                    Routes.loginScreen,
+                    predicate: (route) => false,
+                  );
+                }
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  backgroundColor: Theme.of(context).primaryColor),
+              child: const Text(
+                'Check Again!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              backgroundColor: Theme.of(context).primaryColor),
-          child: const Text(
-            'Check Again!',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
+            )
           ],
         ),
       ),
