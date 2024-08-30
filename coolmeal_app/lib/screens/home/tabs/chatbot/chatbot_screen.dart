@@ -11,8 +11,8 @@ class ChatbotScreen extends StatefulWidget {
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<String> _messages = ["Give me nutrition of rice ?"];
-  final List<String> _responses = ["Hi !! I am food related chat bot . /n "];
+  final List<String> _messages = ['Hi !'];
+  final List<String> _responses = ["Hi !! I am food related chat bot . "];
 
   Future<void> _sendMessage() async {
     final userMessage = _controller.text;
@@ -52,10 +52,21 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CoolBOT'),
+        title: const Text(
+          'CoolBOT',
+          style: TextStyle(
+            color: Color.fromARGB(255, 0, 193, 39),
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(
+              Icons.notifications,
+              color: Color.fromARGB(255, 2, 2, 2),
+              size: 30,
+            ),
             onPressed: () {},
           ),
         ],
@@ -85,8 +96,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                             vertical: 10, horizontal: 10),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.teal[50],
-                          borderRadius: BorderRadius.circular(8),
+                          color: const Color.fromARGB(255, 211, 232, 231),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
                           _messages[index],
@@ -100,14 +111,22 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                             .centerRight, // Aligns the response to the right
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 10),
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(3),
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            color: const Color.fromARGB(255, 124, 246, 134),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(
-                            _responses[index],
-                            style: const TextStyle(color: Colors.black87),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 124, 246, 134),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              _responses[index],
+                              style: const TextStyle(color: Colors.black87),
+                            ),
                           ),
                         ),
                       ),
