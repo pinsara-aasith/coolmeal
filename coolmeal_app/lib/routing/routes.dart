@@ -10,4 +10,5 @@ class Routes {
   static const String profileCompletion = "/profileCompletion";
   static const String mealItem = "/mealItem";
   static const String verifyPlease = "/verifyPlease";
+  static const String mealPlanPerWeek = "/mealPlanPerWeek";
 }

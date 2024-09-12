@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/core/widgets/loading_screen.dart';
-import 'package:coolmeal/core/widgets/progress_indicaror.dart';
 import 'package:coolmeal/core/widgets/toggle_buttons.dart';
+import 'package:coolmeal/models/meal_plan.dart';
+import 'package:coolmeal/models/meal_plan_collection.dart';
 import 'package:coolmeal/repositories/user_profile_repository.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
-import 'package:coolmeal/screens/home/bloc/user_profile_bloc.dart';
-import 'package:coolmeal/screens/prediction_result/ui/prediction_result.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +30,6 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   TextEditingController businessController = TextEditingController();
   TextEditingController shopController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
@@ -67,8 +65,9 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   }
 
   void _generatePrediction() async {
-
-      LoadingScreen.instance().show(context: context,  text: "We are generating a meal plan tailored to your needs...");
+    LoadingScreen.instance().show(
+        context: context,
+        text: "We are generating a meal plan tailored to your needs...");
     final weight = double.parse(_weightController.text);
     final height = double.parse(_heightController.text);
     final age = double.parse(_ageController.text);
@@ -85,15 +84,17 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
       }),
     );
     LoadingScreen.instance().hide();
-
     if (response.statusCode == 200) {
       final prediction = jsonDecode(response.body);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PredictionResult(prediction: prediction),
-        ),
-      );
+      
+      var mpc = MealPlanCollection(
+        name: "Meal plan on ${DateTime.now().toString()}",
+        description: '',
+        generatedTime: DateTime.now().toString(),
+          mealPlans: (prediction["prediction"] as List)
+              .map<MealPlan>((m) => MealPlan.fromJson(m))
+              .toList());
+      Navigator.pushNamed(context, Routes.mealPlanPerWeek, arguments: [mpc]);
     } else {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
@@ -228,9 +229,9 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                   textField: Column(children: [
                     Gap(5.h),
                     CMToggleButtons(
-                      selectedKey: selectedGender,
+                      selectedKey: _selectedActivityLevel,
                       hideIcon: true,
-                      onSelected: (key) => setState(() => selectedGender = key),
+                      onSelected: (key) => setState(() => _selectedActivityLevel = key),
                       keyValueMap: const {
                         'sedentary': ["Sedentary", Icons.run_circle],
                         'very active': ["Very Active", Icons.female],

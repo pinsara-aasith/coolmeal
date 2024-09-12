@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/core/widgets/gender_toggle.dart';
+import 'package:coolmeal/core/widgets/toggle_buttons.dart';
 import 'package:coolmeal/screens/complete_profile/ui/widgets/page_header.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
@@ -42,7 +43,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   TextEditingController ageController = TextEditingController();
   String? selectedGender;
-  String? selectedNationality;
+  String? selectedActivityLevel;
 
   @override
   void initState() {
@@ -219,14 +220,22 @@ class _ProfileTabState extends State<ProfileTab> {
                                 context: context))),
                 Gap(16.h),
                 FormFieldWrapper(
-                    label: "Exercise level?",
-                    textField: TextField(
-                        controller: nameController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder:
-                                    "Describe your current exercise routine.",
-                                context: context))),
+                  label: "Exercise level For The Week?",
+                  textField: Column(children: [
+                    Gap(5.h),
+                    CMToggleButtons(
+                      selectedKey: selectedActivityLevel,
+                      hideIcon: true,
+                      onSelected: (key) => setState(() => selectedActivityLevel = key),
+                      keyValueMap: const {
+                        'sedentary': ["Sedentary", Icons.run_circle],
+                        'very active': ["Very Active", Icons.female],
+                        'active': ["Active", Icons.female],
+                        'other': ["Other", Icons.transgender],
+                      },
+                    )
+                  ]),
+                ),
                 Gap(16.h),
               ],
             ),
