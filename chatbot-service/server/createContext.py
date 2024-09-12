@@ -31,7 +31,7 @@ def createVectorDB():
     pdf_file_names = os.listdir(pdf_directory)
 
     # Load PDF Loader in Langchain with support also for images
-    pdf_loader = PyPDFDirectoryLoader(pdf_directory, extract_images=True)
+    pdf_loader = PyPDFDirectoryLoader(pdf_directory)
 
     # Load all the documents in the directory
     pdf_docs = pdf_loader.load_and_split()
