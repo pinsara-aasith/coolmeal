@@ -137,8 +137,8 @@ class _HomeBodyState extends State<HomeBody> {
       const HomeTab(),
       const NewMealPlanTab(),
       BlocProvider(
-        create: (context) => MealPlanBloc(FirebaseFirestore.instance)
-          ..add(FetchMealPlans(currentUser?.email ?? '')),
+        create: (context) => GeneratedMealBloc(firestore: FirebaseFirestore.instance)
+          ..add(FetchGeneratedMeals()),
         child: const GeneratedMealsComboTab(),
       ),
       const ChatbotScreen(),

@@ -15,9 +15,10 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  void handleMealClick(String mealType) {
-    // Handle the click event here
-    print('$mealType clicked!');
+  void handleMealClick(String mealTime) {
+    BlocProvider.of<PopularMealBloc>(context)
+        .add(FetchPopularMeals(mealTime: mealTime));
+    print('$mealTime clicked!');
   }
 
   @override
@@ -260,7 +261,6 @@ class MealListItem extends StatelessWidget {
                         ],
                       ),
                     ),
-
                   ],
                 ),
                 const Divider(
