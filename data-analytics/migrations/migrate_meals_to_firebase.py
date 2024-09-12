@@ -18,7 +18,7 @@ def snake_to_camel(snake_str):
 def clean_column_name(column_name):
     return snake_to_camel(column_name.replace(" ", "_").replace("(", "_").replace(")", "").replace(",", "").replace('µ','u').lower())
 
-csv_file_path = '../datasets/meals/completed_meals_with_preference.csv'
+csv_file_path = '../datasets/meals/complete_meal_with_nutrition2_final.csv'
 df = pd.read_csv(csv_file_path)
 
 # Clean the column names
