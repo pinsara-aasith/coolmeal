@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
+import 'package:coolmeal/core/widgets/toggle_buttons.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,9 +20,9 @@ class AboutYouMore extends StatefulWidget {
 class _AboutYouMoreState extends State<AboutYouMore> {
   TextEditingController healthConcernsController = TextEditingController();
   TextEditingController anyAllerigesController = TextEditingController();
-  TextEditingController fitnessGoalsController = TextEditingController();
-  TextEditingController excerciseLevelController = TextEditingController();
 
+  String _selectedActivityLevel = 'very active';
+  String _selectedFitnessGoals = 'Cutting';
   @override
   void initState() {
     super.initState();
@@ -48,16 +49,16 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         'email': user?.email,
         'healthConcerns': healthConcernsController.text,
         'anyAllergies': anyAllerigesController.text,
-        'fitnessGoals': fitnessGoalsController.text,
-        'exerciseLevel': excerciseLevelController.text,
+        'fitnessGoals': _selectedFitnessGoals,
+        'exerciseLevel': _selectedActivityLevel,
       });
     } else {
       FirebaseFirestore.instance.collection('user_profiles').add({
         'email': user?.email,
         'healthConcerns': healthConcernsController.text,
         'anyAllergies': anyAllerigesController.text,
-        'fitnessGoals': fitnessGoalsController.text,
-        'exerciseLevel': excerciseLevelController.text,
+        'fitnessGoals': _selectedFitnessGoals,
+        'exerciseLevel': _selectedActivityLevel,
       });
     }
   }
@@ -76,8 +77,8 @@ class _AboutYouMoreState extends State<AboutYouMore> {
       setState(() {
         healthConcernsController.text = userDoc['healthConcerns'] ?? '';
         anyAllerigesController.text = userDoc['anyAllergies'] ?? '';
-        fitnessGoalsController.text = userDoc['fitnessGoals'] ?? '';
-        excerciseLevelController.text = userDoc['exerciseLevel'] ?? '';
+        _selectedFitnessGoals = userDoc['fitnessGoals'] ?? '';
+        _selectedActivityLevel = userDoc['exerciseLevel'] ?? '';
 
         loading = false;
       });
@@ -118,7 +119,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 FormFieldWrapper(
-                    label: "Health Concerns",
+                    label: "Health Concerns (eg. Diebetes, Cholesterol)",
                     textField: TextField(
                         controller: healthConcernsController,
                         decoration:
@@ -138,22 +139,31 @@ class _AboutYouMoreState extends State<AboutYouMore> {
                 Gap(16.h),
                 FormFieldWrapper(
                     label: "Fitness goals?",
-                    textField: TextField(
-                        controller: fitnessGoalsController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder: "What are your fitness goals?",
-                                context: context))),
+                    textField: CMToggleButtons(
+                      selectedKey: _selectedFitnessGoals,
+                      onSelected: (key) =>
+                          setState(() => _selectedFitnessGoals = key),
+                      keyValueMap: const {
+                        'Cutting': ["Cutting", Icons.cut],
+                        'Bulking': ["Bulking", Icons.man_4_outlined],
+                        'Weightloss': ["Weightloss", Icons.stacked_bar_chart],
+                      },
+                    )),
                 Gap(16.h),
                 FormFieldWrapper(
                     label: "Exercise level?",
-                    textField: TextField(
-                        controller: excerciseLevelController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder:
-                                    "Describe your current exercise routine.",
-                                context: context))),
+                    textField: CMToggleButtons(
+                      selectedKey: _selectedActivityLevel,
+                      hideIcon: true,
+                      onSelected: (key) =>
+                          setState(() => _selectedActivityLevel = key),
+                      keyValueMap: const {
+                        'sedentary': ["Sedentary", Icons.run_circle],
+                        'very active': ["Very Active", Icons.female],
+                        'active': ["Active", Icons.female],
+                        'other': ["Other", Icons.transgender],
+                      },
+                    )),
                 Gap(16.h),
               ],
             ),
@@ -165,7 +175,7 @@ class _AboutYouMoreState extends State<AboutYouMore> {
               loading = true;
             });
             await saveData();
-            
+
             FocusManager.instance.primaryFocus?.unfocus();
             setState(() {
               loading = false;
