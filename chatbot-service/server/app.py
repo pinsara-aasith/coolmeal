@@ -2,7 +2,20 @@ from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
 
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+
+# Path to your Firebase configuration JSON file
+firebase_config_path = "./firebase_private_key.json"
+
 app = FastAPI()
+
+# Initialize Firebase Admin SDK with credentials
+# cred = credentials.Certificate(firebase_config_path)
+# firebase_admin.initialize_app(cred)
+
+# print("Initialize Firebase Admin SDK Successfully --------------------- ")
 
 # create LLM chain ()
 chain = createContext()

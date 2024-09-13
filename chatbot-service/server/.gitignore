@@ -1,2 +1,3 @@
 myenv/
 .env
+firebase_private_key.json
