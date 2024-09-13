@@ -34,9 +34,18 @@ def read_root():
 
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+async def chat(request: ChatRequest):
     response = chain.invoke(request.query)
-    # print("response", )
+    chat_template_data = {
+        "id": "12345",
+        "request": "What is your name?",
+        "response": "My name is FastAPI.",
+    }
+    print("storage function called *-** ")
+    await firebase_db_helper.create_item(chat_template=chat_template_data)
+    print(
+        "response",
+    )
     return {"response": response}
 
 

@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 # Pydantic models for request body validation
-class Item(BaseModel):
+class ChatTemplate(BaseModel):
     id: str
     request: str
     response: str
