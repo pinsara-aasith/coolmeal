@@ -37,21 +37,18 @@ def read_root():
 @app.post("/chat")
 async def chat(request: ChatRequest):
     response = chain.invoke(request.query)
+    print(response)
     chat_template_data = {
-        "id": "12345",
-        "request": "What is your name?",
-        "response": "My name is FastAPI.",
+        "id": "456",
+        "request": request.query,
+        "response": response["result"],
     }
     print("storage function called *-** ")
     # Run the Firebase operation asynchronously without blocking the response
     asyncio.create_task(
         firebase_db_helper.create_item(chat_template=chat_template_data)
     )
-
-    print(
-        "response",
-    )
-    return {"response": response}
+    return {"response": response["result"]}
 
 
 # mention running port
