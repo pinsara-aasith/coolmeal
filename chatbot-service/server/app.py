@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
@@ -42,7 +43,11 @@ async def chat(request: ChatRequest):
         "response": "My name is FastAPI.",
     }
     print("storage function called *-** ")
-    await firebase_db_helper.create_item(chat_template=chat_template_data)
+    # Run the Firebase operation asynchronously without blocking the response
+    asyncio.create_task(
+        firebase_db_helper.create_item(chat_template=chat_template_data)
+    )
+
     print(
         "response",
     )
