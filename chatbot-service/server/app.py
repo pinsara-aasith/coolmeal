@@ -1,17 +1,7 @@
 from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
-
-from firebase_admin import credentials
-import firebase_admin
-
-
-# Initialize fire base
-cred = credentials.Certificate(
-    r"D:\DSE project\coolmeal\chatbot-service\server\firebase_private_key.json"
-)
-firebase_admin.initialize_app(cred)
-print("Initialize Firebase Admin SDK Successfully --------------------- ")
+import firebase_db_helper
 
 
 app = FastAPI()
