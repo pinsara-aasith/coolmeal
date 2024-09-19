@@ -4,9 +4,7 @@ from models.chat_template import ChatTemplate
 import asyncio
 
 # Initialize fire base
-cred = credentials.Certificate(
-    r"D:\DSE project\coolmeal\chatbot-service\server\firebase_private_key.json"
-)
+cred = credentials.Certificate("./firebase_private_key.json")
 firebase_admin.initialize_app(cred)
 print("Initialize Firebase Admin SDK Successfully --------------------- ")
 
