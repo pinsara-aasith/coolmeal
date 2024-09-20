@@ -33,6 +33,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'query': userMessage, // Add the userMessage to the request body
+      }),
     );
 
     if (response.statusCode == 200) {
