@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
-import firebase_db_helper
+import mongodb_helper
 import uuid
 import memory_helper
 from models.session_response import SessionResponse
@@ -30,6 +30,7 @@ print("Load Chain Successfully --------------------- ")
 
 class ChatRequest(BaseModel):
     query: str
+    session_id: str
 
 
 @app.get("/")
@@ -39,18 +40,24 @@ def read_root():
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
+    print("Session id : ", request.session_id)
+    session_id = request.session_id
     response = chain.invoke(request.query)
     print(response)
-    chat_template_data = {
-        "id": "1225",
-        "request": request.query,
-        "response": response["result"],
-    }
-    print("storage function called *-** ")
-    # Run the Firebase operation asynchronously without blocking the response
-    asyncio.create_task(
-        firebase_db_helper.create_item(chat_template=chat_template_data)
+
+    if session_id not in memory_helper.memory_store:
+        memory_helper.memory_store[session_id] = [
+            "Assistant: Hi! I am specialized AI assistant for food data."
+        ]
+
+    memory_helper.memory_store[session_id] = memory_helper.update_memory_stack(
+        question=request.query,
+        response=response["result"],
+        memory_stack=memory_helper.memory_store[session_id],
     )
+    print("memory Updated Sucessfully --------------------- ")
+
+    print("Memory Store : ", memory_helper.memory_store)
     return {"response": response["result"]}
 
 
@@ -63,8 +70,18 @@ async def get_session(user_id: str):
         "session_id": session_id,
     }
     print("storage function called *-** ")
-    await firebase_db_helper.create_session(session_template_data)
+    # add session to database with user id
+    await mongodb_helper.create_session(session_template_data)
     return {"session_id": session_id}
+
+
+# create get endpoint for get all sessions coressponding to user id
+@app.get("/gethistory")
+async def get_history(user_id: str):
+    print("get history function called *-** ")
+    # get session ids --------------------------
+    sessions = await mongodb_helper.find_session(user_id)
+    return {"sessions": sessions}
 
 
 # mention running port
