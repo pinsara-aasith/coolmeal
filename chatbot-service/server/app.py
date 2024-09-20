@@ -4,6 +4,8 @@ from createContext import createContext
 from pydantic import BaseModel
 import firebase_db_helper
 import uuid
+import memory_helper
+from models.session_response import SessionResponse
 
 
 app = FastAPI()
@@ -55,7 +57,8 @@ async def chat(request: ChatRequest):
 @app.post("/getSession", response_model=SessionResponse)
 async def get_session(user_id: str):
     session_id = str(uuid.uuid4())
-    memory_store[session_id] = clear_memory_stack()
+    memory_helper.memory_store[session_id] = memory_helper.clear_memory_stack()
+
     return {"session_id": session_id}
 
 
