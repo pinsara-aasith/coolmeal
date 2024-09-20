@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 from models.session_template import SessionTemplate
+from models.chat_history import ChatHistory
+from models.chat_history import convert_to_chat_dict
 from dotenv import load_dotenv
 
 
@@ -63,3 +65,44 @@ async def get_user(session_id: str):
         print(f"User found: {result}")
     except OperationFailure as e:
         print(f"Find operation failed: {e}")
+
+
+# add chat history to database
+# Insert chat history
+async def insert_chat_history(chat_history: ChatHistory):
+    try:
+        result = history_collection.insert_one(
+            chat_history
+        )  # Convert Pydantic model to dict
+        print(f"Chat history inserted with session ID: {result.inserted_id}")
+    except OperationFailure as e:
+        print(f"Insert operation failed: {e}")
+
+
+# Retrieve chat history by session ID
+async def get_chat_history_by_session_id(session_id: str):
+    try:
+        document = history_collection.find_one({"session_id": session_id})
+        if document:
+            print(f"Chat history found for session ID: {session_id}")
+            return document  # Convert dict back to Pydantic model
+        else:
+            print(f"No chat history found for session ID: {session_id}")
+            return None
+    except OperationFailure as e:
+        print(f"Find operation failed: {e}")
+        return None
+
+
+async def getAllChatsForUser(user_id: str):
+    try:
+        session_id_list = await find_session(user_id)
+        chat_history_list = []
+        for session_id in session_id_list:
+            chat_history = await get_chat_history_by_session_id(session_id)
+            if chat_history:
+                chat_history_dict = convert_to_chat_dict(chat_history["data"])
+                chat_history_list.append(chat_history_dict)
+    except OperationFailure as e:
+        print(f"Find operation failed: {e}")
+    return chat_history_list
