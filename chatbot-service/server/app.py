@@ -42,7 +42,7 @@ async def chat(request: ChatRequest):
     response = chain.invoke(request.query)
     print(response)
     chat_template_data = {
-        "id": "456",
+        "id": "1225",
         "request": request.query,
         "response": response["result"],
     }

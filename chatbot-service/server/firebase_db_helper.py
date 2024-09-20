@@ -27,7 +27,9 @@ async def create_item(chat_template: ChatTemplate):
 
 async def create_session(session_template: SessionTemplate):
     print("userId -------------- ", session_template)
-    doc_ref = db.collection(SESSION_COLLECTION_NAME).document(session_id["session_id"])
+    doc_ref = db.collection(SESSION_COLLECTION_NAME).document(
+        session_template["session_id"]
+    )
     doc_ref.set(session_template)
     print("Document written with ID: ", session_template["session_id"])
     return {"message": "Item created successfully"}
