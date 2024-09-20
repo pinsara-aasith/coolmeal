@@ -80,7 +80,7 @@ async def insert_chat_history(chat_history: ChatHistory):
 
 
 # Retrieve chat history by session ID
-def get_chat_history_by_session_id(session_id: str):
+async def get_chat_history_by_session_id(session_id: str):
     try:
         document = history_collection.find_one({"session_id": session_id})
         if document:
@@ -96,10 +96,10 @@ def get_chat_history_by_session_id(session_id: str):
 
 async def getAllChatsForUser(user_id: str):
     try:
-        session_id_list = find_session(user_id)
+        session_id_list = await find_session(user_id)
         chat_history_list = []
         for session_id in session_id_list:
-            chat_history = get_chat_history_by_session_id(session_id)
+            chat_history = await get_chat_history_by_session_id(session_id)
             if chat_history:
                 chat_history_dict = convert_to_chat_dict(chat_history["data"])
                 chat_history_list.append(chat_history_dict)
