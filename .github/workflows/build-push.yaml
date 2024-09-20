@@ -15,7 +15,7 @@ jobs:
       # Build the chatbot Docker image with 'latest' tag and commit SHA
       - name: Build the Chatbot Docker image
         run: |
-          docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot
+          docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
       # Build the server Docker image with 'latest' tag and commit SHA
       - name: Build the Server Docker image
@@ -27,13 +27,13 @@ jobs:
         run: |
           docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
 
-      # Push both the chatbot images (commit SHA and latest)
+      # Push the chatbot images (commit SHA and latest)
       - name: Push the Chatbot Docker image
         run: |
 
           docker push '${{secrets.DOCKER_LOGIN}}'/chatbot-service:latest
 
-      # Push both the server images (commit SHA and latest)
+      # Push  the server images (commit SHA and latest)
       - name: Push the Server Docker image
         run: |
 
