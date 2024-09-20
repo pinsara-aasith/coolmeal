@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
-import firebase_db_helper
+import mongodb_helper
 import uuid
 import memory_helper
 from models.session_response import SessionResponse
