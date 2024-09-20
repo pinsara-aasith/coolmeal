@@ -1,8 +1,11 @@
 import asyncio
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from createContext import createContext
 from pydantic import BaseModel
-import firebase_db_helper
+import mongodb_helper
+import uuid
+import memory_helper
+from models.session_response import SessionResponse
 
 
 app = FastAPI()
@@ -18,8 +21,6 @@ firebase_config_path = "./firebase_private_key.json"
 app = FastAPI()
 
 
-# print("Initialize Firebase Admin SDK Successfully --------------------- ")
-
 # create LLM chain ()
 chain = createContext()
 print("Load Chain Successfully --------------------- ")
@@ -27,6 +28,7 @@ print("Load Chain Successfully --------------------- ")
 
 class ChatRequest(BaseModel):
     query: str
+    session_id: str
 
 
 @app.get("/")
@@ -36,19 +38,61 @@ def read_root():
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
+    print("Session id : ", request.session_id)
+    session_id = request.session_id
     response = chain.invoke(request.query)
-    print(response)
-    chat_template_data = {
-        "id": "1223",
-        "request": request.query,
-        "response": response["result"],
+
+    if session_id not in memory_helper.memory_store:
+        memory_helper.memory_store[session_id] = [
+            "Assistant: Hi! I am specialized AI assistant for food data."
+        ]
+
+    memory_helper.memory_store[session_id] = memory_helper.update_memory_stack(
+        question=request.query,
+        response=response["result"],
+        memory_stack=memory_helper.memory_store[session_id],
+    )
+    print("memory Updated Sucessfully --------------------- ")
+
+    print("Memory Store : ", memory_helper.memory_store)
+    return {"response": response["result"]}
+
+
+@app.post("/getSession", response_model=SessionResponse)
+async def get_session(user_id: str):
+    session_id = str(uuid.uuid4())
+    memory_helper.memory_store[session_id] = memory_helper.clear_memory_stack()
+    session_template_data = {
+        "user_id": user_id,
+        "session_id": session_id,
     }
     print("storage function called *-** ")
-    # Run the Firebase operation asynchronously without blocking the response
-    asyncio.create_task(
-        firebase_db_helper.create_item(chat_template=chat_template_data)
-    )
-    return {"response": response["result"]}
+    # add session to database with user id
+    await mongodb_helper.create_session(session_template_data)
+    return {"session_id": session_id}
+
+
+@app.post("/insertSessionData")
+async def end_session(session_id: str):
+    if session_id not in memory_helper.memory_store:
+        raise HTTPException(status_code=404, detail="Session not found.")
+    chat_history = memory_helper.memory_store[session_id]
+    chat_history_data = {
+        "session_id": session_id,
+        "data": chat_history,
+    }
+    await mongodb_helper.insert_chat_history(chat_history_data)
+    print("Chat history inserted successfully --------------------- ")
+    return {"message": "Chat history inserted successfully."}, 200
+
+
+# create get endpoint for get all sessions coressponding to user id
+@app.get("/gethistory")
+async def get_history(user_id: str):
+    print("get history function called *-** ")
+    # get session ids --------------------------
+    history = await mongodb_helper.getAllChatsForUser(user_id)
+    return {"history": history}
 
 
 # mention running port
