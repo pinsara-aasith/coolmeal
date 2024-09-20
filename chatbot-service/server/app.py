@@ -45,7 +45,7 @@ async def chat(request: ChatRequest):
 
     if session_id not in memory_helper.memory_store:
         memory_helper.memory_store[session_id] = [
-            "Assistant: Hi! I am specialized AI assistant for food data."
+            "'User: Hi ', Assistant: Hi! I am a specialized AI assistant for food data."
         ]
 
     memory_helper.memory_store[session_id] = memory_helper.update_memory_stack(
