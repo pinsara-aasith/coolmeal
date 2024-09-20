@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 from models.session_template import SessionTemplate
 from models.chat_history import ChatHistory
+from models.chat_history import convert_to_chat_dict
 from dotenv import load_dotenv
 
 
@@ -91,3 +92,17 @@ def get_chat_history_by_session_id(session_id: str):
     except OperationFailure as e:
         print(f"Find operation failed: {e}")
         return None
+
+
+def getAllChatsForUser(user_id: str):
+    try:
+        session_id_list = find_session(user_id)
+        chat_history_list = []
+        for session_id in session_id_list:
+            chat_history = get_chat_history_by_session_id(session_id)
+            if chat_history:
+                chat_history_dict = convert_to_chat_dict(chat_history["data"])
+                chat_history_list.append(chat_history_dict)
+    except OperationFailure as e:
+        print(f"Find operation failed: {e}")
+    return chat_history_list

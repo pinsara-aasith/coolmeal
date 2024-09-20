@@ -1,5 +1,5 @@
 import asyncio
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from createContext import createContext
 from pydantic import BaseModel
 import mongodb_helper
@@ -75,13 +75,27 @@ async def get_session(user_id: str):
     return {"session_id": session_id}
 
 
+@app.post("/insertSessionData")
+async def end_session(session_id: str):
+    if session_id not in memory_helper.memory_store:
+        raise HTTPException(status_code=404, detail="Session not found.")
+    chat_history = memory_helper.memory_store[session_id]
+    chat_history_data = {
+        "session_id": session_id,
+        "data": chat_history,
+    }
+    await mongodb_helper.insert_chat_history(chat_history_data)
+    print("Chat history inserted successfully --------------------- ")
+    return {"message": "Chat history inserted successfully."}, 200
+
+
 # create get endpoint for get all sessions coressponding to user id
 @app.get("/gethistory")
 async def get_history(user_id: str):
     print("get history function called *-** ")
     # get session ids --------------------------
-    sessions = await mongodb_helper.find_session(user_id)
-    return {"sessions": sessions}
+    history = await mongodb_helper.getAllChatsForUser(user_id)
+    return {"history": history}
 
 
 # mention running port
