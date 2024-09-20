@@ -3,6 +3,9 @@ from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
 import firebase_db_helper
+import uuid
+import memory_helper
+from models.session_response import SessionResponse
 
 
 app = FastAPI()
@@ -39,7 +42,7 @@ async def chat(request: ChatRequest):
     response = chain.invoke(request.query)
     print(response)
     chat_template_data = {
-        "id": "456",
+        "id": "1225",
         "request": request.query,
         "response": response["result"],
     }
@@ -49,6 +52,19 @@ async def chat(request: ChatRequest):
         firebase_db_helper.create_item(chat_template=chat_template_data)
     )
     return {"response": response["result"]}
+
+
+@app.post("/getSession", response_model=SessionResponse)
+async def get_session(user_id: str):
+    session_id = str(uuid.uuid4())
+    memory_helper.memory_store[session_id] = memory_helper.clear_memory_stack()
+    session_template_data = {
+        "user_id": user_id,
+        "session_id": session_id,
+    }
+    print("storage function called *-** ")
+    await firebase_db_helper.create_session(session_template_data)
+    return {"session_id": session_id}
 
 
 # mention running port
