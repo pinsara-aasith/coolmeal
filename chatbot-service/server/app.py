@@ -1,17 +1,8 @@
+import asyncio
 from fastapi import FastAPI
 from createContext import createContext
 from pydantic import BaseModel
-
-from firebase_admin import credentials
-import firebase_admin
-
-
-# Initialize fire base
-cred = credentials.Certificate(
-    r"D:\DSE project\coolmeal\chatbot-service\server\firebase_private_key.json"
-)
-firebase_admin.initialize_app(cred)
-print("Initialize Firebase Admin SDK Successfully --------------------- ")
+import firebase_db_helper
 
 
 app = FastAPI()
@@ -44,10 +35,20 @@ def read_root():
 
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+async def chat(request: ChatRequest):
     response = chain.invoke(request.query)
-    # print("response", )
-    return {"response": response}
+    print(response)
+    chat_template_data = {
+        "id": "456",
+        "request": request.query,
+        "response": response["result"],
+    }
+    print("storage function called *-** ")
+    # Run the Firebase operation asynchronously without blocking the response
+    asyncio.create_task(
+        firebase_db_helper.create_item(chat_template=chat_template_data)
+    )
+    return {"response": response["result"]}
 
 
 # mention running port

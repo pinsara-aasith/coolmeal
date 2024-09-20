@@ -1,0 +1,40 @@
+name: Build and Push FastAPI Docker Images
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from the GitHub repository
+      - uses: actions/checkout@v3
+
+      # Build the chatbot Docker image with 'latest' tag and commit SHA
+      - name: Build the Chatbot Docker image
+        run: |
+          docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
+
+      # Build the server Docker image with 'latest' tag and commit SHA
+      - name: Build the Server Docker image
+        run: |
+          docker build -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
+
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        run: |
+          docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
+
+      # Push the chatbot images (commit SHA and latest)
+      - name: Push the Chatbot Docker image
+        run: |
+
+          docker push '${{secrets.DOCKER_LOGIN}}'/chatbot-service:latest
+
+      # Push  the server images (commit SHA and latest)
+      - name: Push the Server Docker image
+        run: |
+
+          docker push '${{secrets.DOCKER_LOGIN}}'/server-service:latest
