@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
 from models.session_template import SessionTemplate
+from models.chat_history import ChatHistory
 from dotenv import load_dotenv
 
 
@@ -63,3 +64,30 @@ async def get_user(session_id: str):
         print(f"User found: {result}")
     except OperationFailure as e:
         print(f"Find operation failed: {e}")
+
+
+# add chat history to database
+# Insert chat history
+def insert_chat_history(chat_history: ChatHistory):
+    try:
+        result = history_collection.insert_one(
+            chat_history
+        )  # Convert Pydantic model to dict
+        print(f"Chat history inserted with session ID: {result.inserted_id}")
+    except OperationFailure as e:
+        print(f"Insert operation failed: {e}")
+
+
+# Retrieve chat history by session ID
+def get_chat_history_by_session_id(session_id: str):
+    try:
+        document = history_collection.find_one({"session_id": session_id})
+        if document:
+            print(f"Chat history found for session ID: {session_id}")
+            return document  # Convert dict back to Pydantic model
+        else:
+            print(f"No chat history found for session ID: {session_id}")
+            return None
+    except OperationFailure as e:
+        print(f"Find operation failed: {e}")
+        return None

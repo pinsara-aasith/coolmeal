@@ -5,7 +5,9 @@ from typing import Dict, List
 memory_store: Dict[str, List[str]] = {}
 
 # Initialize custom memory stack (empty at first)
-DEFAULT_MEMORY = ["Assistant: Hi! I am a specialized AI assistant for food data."]
+DEFAULT_MEMORY = [
+    "'User: Hi ', Assistant: Hi! I am a specialized AI assistant for food data."
+]
 STACK_SIZE_LIMIT = 20
 
 
