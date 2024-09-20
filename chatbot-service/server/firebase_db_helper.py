@@ -1,7 +1,7 @@
 from firebase_admin import credentials, firestore
 import firebase_admin
 from models.chat_template import ChatTemplate
-
+from models.session_template import SessionTemplate
 import asyncio
 
 # Initialize fire base
@@ -14,6 +14,7 @@ db = firestore.client()
 
 #  Collection for storing chat data
 COLLECTION_NAME = "chat_store"
+SESSION_COLLECTION_NAME = "session_store"
 
 
 async def create_item(chat_template: ChatTemplate):
@@ -25,8 +26,8 @@ async def create_item(chat_template: ChatTemplate):
 
 
 async def create_session(session_template: SessionTemplate):
-    print("chat_template -------------- ", chat_template)
-    doc_ref = db.collection(COLLECTION_NAME).document(chat_template["id"])
-    doc_ref.set(chat_template)
-    print("Document written with ID: ", chat_template["id"])
+    print("userId -------------- ", session_template)
+    doc_ref = db.collection(SESSION_COLLECTION_NAME).document(session_id["session_id"])
+    doc_ref.set(session_template)
+    print("Document written with ID: ", session_template["session_id"])
     return {"message": "Item created successfully"}

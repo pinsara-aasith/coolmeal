@@ -58,7 +58,12 @@ async def chat(request: ChatRequest):
 async def get_session(user_id: str):
     session_id = str(uuid.uuid4())
     memory_helper.memory_store[session_id] = memory_helper.clear_memory_stack()
-
+    session_template_data = {
+        "user_id": user_id,
+        "session_id": session_id,
+    }
+    print("storage function called *-** ")
+    await firebase_db_helper.create_session(session_template_data)
     return {"session_id": session_id}
 
 
