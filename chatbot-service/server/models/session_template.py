@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 
-class SessionRequest(BaseModel):
+class SessionTemplate(BaseModel):
     user_id: str
