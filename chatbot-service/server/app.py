@@ -21,8 +21,6 @@ firebase_config_path = "./firebase_private_key.json"
 app = FastAPI()
 
 
-# print("Initialize Firebase Admin SDK Successfully --------------------- ")
-
 # create LLM chain ()
 chain = createContext()
 print("Load Chain Successfully --------------------- ")

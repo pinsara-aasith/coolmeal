@@ -69,7 +69,7 @@ async def get_user(session_id: str):
 
 # add chat history to database
 # Insert chat history
-def insert_chat_history(chat_history: ChatHistory):
+async def insert_chat_history(chat_history: ChatHistory):
     try:
         result = history_collection.insert_one(
             chat_history
@@ -94,7 +94,7 @@ def get_chat_history_by_session_id(session_id: str):
         return None
 
 
-def getAllChatsForUser(user_id: str):
+async def getAllChatsForUser(user_id: str):
     try:
         session_id_list = find_session(user_id)
         chat_history_list = []
