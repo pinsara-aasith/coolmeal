@@ -57,7 +57,7 @@ async def chat(request: ChatRequest):
     )
     print("memory Updated Sucessfully --------------------- ")
 
-    print(memory_helper.memory_store)
+    print("Memory Store : ", memory_helper.memory_store)
     return {"response": response["result"]}
 
 
@@ -79,7 +79,7 @@ async def get_session(user_id: str):
 @app.get("/gethistory")
 async def get_history(user_id: str):
     print("get history function called *-** ")
-    # get all sessions coressponding to user id
+    # get session ids --------------------------
     sessions = await mongodb_helper.find_session(user_id)
     return {"sessions": sessions}
 
