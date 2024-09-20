@@ -48,9 +48,9 @@ async def chat(request: ChatRequest):
     }
     print("storage function called *-** ")
     # Run the Firebase operation asynchronously without blocking the response
-    asyncio.create_task(
-        firebase_db_helper.create_item(chat_template=chat_template_data)
-    )
+    # asyncio.create_task(
+    #     firebase_db_helper.create_item(chat_template=chat_template_data)
+    # )
     return {"response": response["result"]}
 
 
@@ -63,7 +63,7 @@ async def get_session(user_id: str):
         "session_id": session_id,
     }
     print("storage function called *-** ")
-    await firebase_db_helper.create_session(session_template_data)
+
     return {"session_id": session_id}
 
 
