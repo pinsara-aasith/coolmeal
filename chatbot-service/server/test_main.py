@@ -52,14 +52,13 @@ def test_get_session():
         pytest.fail("session_id is not a valid UUID")
 
 
-@pytest.mark.asyncio
-async def test_insert_session_data():
+def test_insert_session_data():
     # Setup: Create a session in memory_helper for testing
     session_id = "test_session"
     memory_helper.memory_store[session_id] = ["message 1", "message 2"]
 
     # Make a POST request to the /insertSessionData endpoint
-    response = await client.post("/insertSessionData", json={"session_id": session_id})
+    response = client.post("/insertSessionData", json={"session_id": session_id})
 
     # Assert that the response status code is 200 (OK)
     assert response.status_code == 200
