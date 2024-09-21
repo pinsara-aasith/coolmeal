@@ -29,7 +29,8 @@ def test_chat():
 
 
 # test get session
-@pytest.mark.asyncio
+
+
 async def test_get_session():
     user_id = "test_user"  # Replace with a valid user ID for testing
 

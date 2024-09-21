@@ -84,7 +84,7 @@ async def end_session(session_id: str):
     }
     await mongodb_helper.insert_chat_history(chat_history_data)
     print("Chat history inserted successfully --------------------- ")
-    return {"message": "Chat history inserted successfully."}, 200
+    return {"message": "Chat history inserted successfully."}
 
 
 # create get endpoint for get all sessions coressponding to user id
