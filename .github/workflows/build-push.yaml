@@ -5,6 +5,31 @@ on:
     branches: [release]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from the GitHub repository
+      - uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11" # set python version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd chatbot-service/server 
+          pip install -r requirements.txt
+
+      # Run tests
+      - name: Run tests
+        run: |
+          cd chatbot-service/server  
+          pytest
+
   build:
     runs-on: ubuntu-latest
 
