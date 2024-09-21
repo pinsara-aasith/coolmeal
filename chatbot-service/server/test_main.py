@@ -13,8 +13,18 @@ def test_check_root():
 
 def test_chat():
     response = client.post("/chat", json={"query": "Hi", "session_id": "123"})
+
+    # Assert that the response status code is 200
     assert response.status_code == 200
-    assert isinstance(response.json(), str)
+
+    # Get the response JSON
+    response_data = response.json()
+
+    # Assert that "response" is in the JSON response
+    assert "response" in response_data
+
+    # Check if the "response" field is a string
+    assert isinstance(response_data["response"], str)
 
 
 # def test_list_users():
