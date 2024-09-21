@@ -1,6 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from app import app
+import memory_helper
 import uuid
 
 client = TestClient(app)
@@ -12,6 +13,7 @@ def test_check_root():
     assert response.json() == {"Hello": "Food chat bot Service"}
 
 
+# Test chat
 def test_chat():
     response = client.post("/chat", json={"query": "Hi", "session_id": "123"})
 
@@ -29,8 +31,6 @@ def test_chat():
 
 
 # test get session
-
-
 def test_get_session():
     user_id = "test_user"  # Replace with a valid user ID for testing
 
@@ -50,6 +50,22 @@ def test_get_session():
         assert str(uuid_obj) == response_data["session_id"]
     except ValueError:
         pytest.fail("session_id is not a valid UUID")
+
+
+@pytest.mark.asyncio
+async def test_insert_session_data():
+    # Setup: Create a session in memory_helper for testing
+    session_id = "test_session"
+    memory_helper.memory_store[session_id] = ["message 1", "message 2"]
+
+    # Make a POST request to the /insertSessionData endpoint
+    response = await client.post("/insertSessionData", json={"session_id": session_id})
+
+    # Assert that the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Assert that the message is as expected
+    assert response.json() == {"message": "Chat history inserted successfully."}
 
 
 # def test_list_users():
