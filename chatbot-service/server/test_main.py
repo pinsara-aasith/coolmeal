@@ -11,10 +11,11 @@ def test_check_root():
     assert response.json() == {"Hello": "Food chat bot Service"}
 
 
-# def test_create_user_with_duplicate_id():
-#     response = client.post("/users/", json={"id": 1, "name": "Doe", "age": 25})
-#     assert response.status_code == 400
-#     assert response.json() == {"detail": "User ID already exists"}
+def test_chat():
+    response = client.post("/chat", json={"query": "Hi", "session_id": "123"})
+    assert response.status_code == 200
+    assert isinstance(response.json(), str)
+
 
 # def test_list_users():
 #     response = client.get("/users/")
