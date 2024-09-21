@@ -12,6 +12,13 @@ jobs:
       # Checkout the code from the GitHub repository
       - uses: actions/checkout@v3
 
+      - name: Set up environment  variables
+        run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
+          - name: Set up environment variables
+            run: |
+              echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
