@@ -1,6 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from app import app
+import uuid
 
 client = TestClient(app)
 
@@ -25,6 +26,29 @@ def test_chat():
 
     # Check if the "response" field is a string
     assert isinstance(response_data["response"], str)
+
+
+# test get session
+@pytest.mark.asyncio
+async def test_get_session():
+    user_id = "test_user"  # Replace with a valid user ID for testing
+
+    # Make a POST request to the /getSession endpoint with user_id in the query string
+    response = await client.post("/getSession", params={"user_id": user_id})
+
+    # Assert that the response status code is 200 (OK)
+    assert response.status_code == 200
+
+    # Assert that the response contains a session_id
+    response_data = response.json()
+    assert "session_id" in response_data
+
+    # Optionally, verify that the session_id is a valid UUID
+    try:
+        uuid_obj = uuid.UUID(response_data["session_id"])
+        assert str(uuid_obj) == response_data["session_id"]
+    except ValueError:
+        pytest.fail("session_id is not a valid UUID")
 
 
 # def test_list_users():
