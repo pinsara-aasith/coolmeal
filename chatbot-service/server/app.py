@@ -23,7 +23,7 @@ app = FastAPI()
 
 # create LLM chain ()
 chain = createContext()
-print("Load Chain Successfully --------------------- ")
+print("Load Chain Successfully ------------")
 
 
 class ChatRequest(BaseModel):
