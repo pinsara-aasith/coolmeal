@@ -42,6 +42,10 @@ async def chat(request: ChatRequest):
     session_id = request.session_id
     response = chain.invoke(request.query)
 
+    # if sessio id is empty raise a error
+    if session_id == "":
+        raise HTTPException(status_code=404, detail="Session not found.")
+
     if session_id not in memory_helper.memory_store:
         memory_helper.memory_store[session_id] = [
             "'User: Hi ', Assistant: Hi! I am a specialized AI assistant for food data."
