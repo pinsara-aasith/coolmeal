@@ -12,6 +12,11 @@ jobs:
       # Checkout the code from the GitHub repository
       - uses: actions/checkout@v3
 
+      - name: Set up environment  variables
+        run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -32,10 +37,16 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       # Checkout the code from the GitHub repository
       - uses: actions/checkout@v3
+
+      - name: Set up environment  variables
+        run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
 
       # Build the chatbot Docker image with 'latest' tag and commit SHA
       - name: Build the Chatbot Docker image

@@ -23,7 +23,7 @@ app = FastAPI()
 
 # create LLM chain ()
 chain = createContext()
-print("Load Chain Successfully --------------------- ")
+print("Load Chain Successfully ------------")
 
 
 class ChatRequest(BaseModel):
@@ -41,7 +41,10 @@ async def chat(request: ChatRequest):
     print("Session id : ", request.session_id)
     session_id = request.session_id
     response = chain.invoke(request.query)
-    print(response)
+
+    # if sessio id is empty raise a error
+    if session_id == "":
+        raise HTTPException(status_code=404, detail="Session not found.")
 
     if session_id not in memory_helper.memory_store:
         memory_helper.memory_store[session_id] = [
