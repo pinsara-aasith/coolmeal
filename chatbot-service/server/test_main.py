@@ -31,11 +31,11 @@ def test_chat():
 # test get session
 
 
-async def test_get_session():
+def test_get_session():
     user_id = "test_user"  # Replace with a valid user ID for testing
 
     # Make a POST request to the /getSession endpoint with user_id in the query string
-    response = await client.post("/getSession", params={"user_id": user_id})
+    response = client.post("/getSession", params={"user_id": user_id})
 
     # Assert that the response status code is 200 (OK)
     assert response.status_code == 200
