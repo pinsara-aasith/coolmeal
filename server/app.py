@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
+from week_prediction import week_prediction
 import pandas as pd
 
 app = FastAPI()
@@ -42,8 +43,8 @@ def read_prediction(request: UserRequest):
     ]
     print(input_data)
     prediction = predict_knn("knn_model.pkl", input_data)
-    print(prediction)
     output = df.iloc[prediction[0]].to_dict(orient="records")
+    week_prediction(nut_result, output)
     return JSONResponse(status_code=200, content={"prediction": output})
 
 
