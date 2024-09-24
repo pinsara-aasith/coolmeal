@@ -49,10 +49,13 @@ def week_prediction(net_result, total_calories, output, meal_plans):
     print("week_prediction function called")
     for i in range(6):
         differences = calculate_difference(net_result, output)
-        print(differences)
         net_result = calculateNewNetResult(net_result, differences)
         print("New Net Results ------------------------------------ ")
         print(net_result)
+        print(
+            "Calory difference ------------------------------------ ",
+            total_calories - output["Total Energy (Kcal)"],
+        )
         total_calories = total_calories + (
             total_calories - output["Total Energy (Kcal)"]
         )
