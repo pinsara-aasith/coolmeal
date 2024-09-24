@@ -40,6 +40,7 @@ def read_prediction(request: UserRequest):
             nut_result["starch"],
         ]
     ]
+    print(input_data)
     prediction = predict_knn("knn_model.pkl", input_data)
     print(prediction)
     output = df.iloc[prediction[0]].to_dict(orient="records")
