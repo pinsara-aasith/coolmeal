@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,10 +12,21 @@ class ChatbotScreen extends StatefulWidget {
 
 class _ChatbotScreenState extends State<ChatbotScreen> {
   final TextEditingController _controller = TextEditingController();
+
   final List<String> _messages = ['Hi !'];
   final List<String> _responses = ["Hi !! I am food related chat bot . "];
   // For set circular process indicater
   bool _isLoading = false;
+
+  // get current user id from firebase
+  final String user = FirebaseAuth.instance.currentUser!.uid;
+
+  //print user id
+  @override
+  void initState() {
+    print("User" + user);
+    super.initState();
+  }
 
   Future<void> _sendMessage() async {
     final userMessage = _controller.text;
