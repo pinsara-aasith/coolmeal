@@ -7,7 +7,7 @@ import pickle
 
 
 def train_knn_model(
-    n_neighbors=7,
+    n_neighbors=1,
     metric="cosine",
     algorithm="brute",
     model_filename="knn_model.pkl",

@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
+from week_prediction import week_prediction
 import pandas as pd
 
 app = FastAPI()
@@ -21,6 +22,7 @@ def read_root():
 
 @app.post("/prediction")
 def read_prediction(request: UserRequest):
+    meal_plans = []
     nut_result = fuzzy_recommend_nutrients(request.age, request.weight, request.height)
     tot_bmr = calculate_bmr(request.weight, request.height, request.age, request.gender)
     tot_kalories = calculate_daily_calories(tot_bmr, request.activity_level)
@@ -40,10 +42,12 @@ def read_prediction(request: UserRequest):
             nut_result["starch"],
         ]
     ]
+
     prediction = predict_knn("knn_model.pkl", input_data)
-    print(prediction)
     output = df.iloc[prediction[0]].to_dict(orient="records")
-    return JSONResponse(status_code=200, content={"prediction": output})
+    meal_plans.append(output[0])
+    week_plan = week_prediction(nut_result, tot_kalories, output[0], meal_plans)
+    return JSONResponse(status_code=200, content={"prediction": week_plan})
 
 
 # Train the model and save it
