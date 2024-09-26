@@ -43,15 +43,26 @@ jobs:
       # Checkout the code from the GitHub repository
       - uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Set up environment  variables
         run: |
-          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
-          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> ./chatbot-service/server/.env
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >>  ./chatbot-service/server/.env
 
       # Build the chatbot Docker image with 'latest' tag and commit SHA
       - name: Build the Chatbot Docker image
         run: |
-          docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
+          docker build \
+          --build-arg  "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" \
+          --build-arg  "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
+          -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
+
+      # # Build the chatbot Docker image with 'latest' tag and commit SHA
+      # - name: Build the Chatbot Docker image
+      #   run: |
+      #     docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
       # Build the server Docker image with 'latest' tag and commit SHA
       - name: Build the Server Docker image

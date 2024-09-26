@@ -3,16 +3,17 @@ import 'package:coolmeal/models/user_profile.dart';
 import 'package:coolmeal/repositories/user_profile_repository.dart';
 import 'package:equatable/equatable.dart';
 
-
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final UserProfileRepository userProfileRepository;
 
-  UserProfileBloc({required this.userProfileRepository}) : super(UserProfileInitial()) {
+  UserProfileBloc({required this.userProfileRepository})
+      : super(UserProfileInitial()) {
     on<SaveUserProfile>(_onSaveUserProfile);
     on<LoadUserProfile>(_onLoadUserProfile);
   }
 
-  void _onSaveUserProfile(SaveUserProfile event, Emitter<UserProfileState> emit) async {
+  void _onSaveUserProfile(
+      SaveUserProfile event, Emitter<UserProfileState> emit) async {
     emit(UserProfileSaving());
     try {
       await userProfileRepository.saveUserProfile(event.userProfile);
@@ -22,7 +23,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     }
   }
 
-  void _onLoadUserProfile(LoadUserProfile event, Emitter<UserProfileState> emit) async {
+  void _onLoadUserProfile(
+      LoadUserProfile event, Emitter<UserProfileState> emit) async {
     emit(UserProfileLoading());
     try {
       final profile = await userProfileRepository.loadUserProfile(event.email);
@@ -32,7 +34,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         emit(const UserProfileError('Profile not found'));
       }
     } catch (e) {
-      print(e);
       emit(const UserProfileError('Failed to load profile'));
     }
   }
@@ -95,4 +96,3 @@ class UserProfileError extends UserProfileState {
   @override
   List<Object> get props => [message];
 }
-
