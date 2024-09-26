@@ -51,10 +51,9 @@ jobs:
       # Build the chatbot Docker image with 'latest' tag and commit SHA
       - name: Build the Chatbot Docker image
         run: |
-          docker buildx  build \
-                        --build-arg GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
-                        --build-arg MONGODB_URI=${{ secrets.MONGODB_URI }} \
-                        -t ${{ secrets.DOCKER_LOGIN }}/chatbot-service:latest ./chatbot-service/server
+          docker build --build-arg GOOGLE_API_KEY=${{secrets.GOOGLE_API_KEY}} \
+                       --build-arg MONGODB_URI=${{secrets.MONGODB_URI}} \
+                       -t '${{secrets.DOCKER_LOGIN}}/chatbot-service:latest' ./chatbot-service/server
 
       # Build the server Docker image with 'latest' tag and commit SHA
       - name: Build the Server Docker image
