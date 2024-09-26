@@ -1,0 +1,5 @@
+Include pricing to the Datasets
+Include pricing into the KNN
+Update logics for diseases & allergies
+Convert fastapi to lambda
+Budget notificaiton
