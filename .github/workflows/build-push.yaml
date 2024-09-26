@@ -45,13 +45,13 @@ jobs:
 
       - name: Set up environment  variables
         run: |
-          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
-          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> ./chatbot-service/server/.env
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >>  ./chatbot-service/server/.env
 
       # Build the chatbot Docker image with 'latest' tag and commit SHA
       - name: Build the Chatbot Docker image
         run: |
-          docker build -t '${{secrets.DOCKER_LOGIN}}/chatbot-service:latest' --build-arg GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} --build-arg MONGODB_URI=${{secrets.MONGODB_URI}} ./chatbot-service/server
+          docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
       # Build the server Docker image with 'latest' tag and commit SHA
       - name: Build the Server Docker image
