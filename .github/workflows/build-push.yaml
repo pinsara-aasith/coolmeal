@@ -1,0 +1,87 @@
+name: Build and Push FastAPI Docker Images
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from the GitHub repository
+      - uses: actions/checkout@v3
+
+      - name: Set up environment  variables
+        run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11" # set python version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd chatbot-service/server 
+          pip install -r requirements.txt
+
+      # Run tests
+      - name: Run tests
+        run: |
+          cd chatbot-service/server  
+          pytest
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      # Checkout the code from the GitHub repository
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Set up environment  variables
+        run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> ./chatbot-service/server/.env
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >>  ./chatbot-service/server/.env
+
+      # Build the chatbot Docker image with 'latest' tag and commit SHA
+      - name: Build the Chatbot Docker image
+        run: |
+          docker build \
+          --build-arg  "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" \
+          --build-arg  "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
+          -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
+
+      # # Build the chatbot Docker image with 'latest' tag and commit SHA
+      # - name: Build the Chatbot Docker image
+      #   run: |
+      #     docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
+
+      # Build the server Docker image with 'latest' tag and commit SHA
+      - name: Build the Server Docker image
+        run: |
+          docker build -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
+
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        run: |
+          docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
+
+      # Push the chatbot images (commit SHA and latest)
+      - name: Push the Chatbot Docker image
+        run: |
+
+          docker push '${{secrets.DOCKER_LOGIN}}'/chatbot-service:latest
+
+      # Push  the server images (commit SHA and latest)
+      - name: Push the Server Docker image
+        run: |
+
+          docker push '${{secrets.DOCKER_LOGIN}}'/server-service:latest
