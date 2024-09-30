@@ -738,21 +738,21 @@ def fuzzy_recommend_nutrients(age_input, weight_input, height_input):
 
         # Output the recommendations
         return {
-            "protein": round(food_simulation.output["protein"], 2),
-            "fat": round(food_simulation.output["fat"], 2),
-            "carbohydrates": round(food_simulation.output["carbohydrates"], 2),
-            "magnesium": round(food_simulation.output["magnesium"], 2),
-            "sodium": round(food_simulation.output["sodium"], 2),
-            "potassium": round(food_simulation.output["potassium"], 2),
-            "saturated_fats": round(food_simulation.output["saturated_fats"], 2),
+            "protein": round(food_simulation.output.get("protein", 0), 2),
+            "fat": round(food_simulation.output.get("fat", 0), 2),
+            "carbohydrates": round(food_simulation.output.get("carbohydrates", 0), 2),
+            "magnesium": round(food_simulation.output.get("magnesium", 0), 2),
+            "sodium": round(food_simulation.output.get("sodium", 0), 2),
+            "potassium": round(food_simulation.output.get("potassium", 0), 2),
+            "saturated_fats": round(food_simulation.output.get("saturated_fats", 0), 2),
             "monounsaturated_fats": round(
-                food_simulation.output["monounsaturated_fats"], 2
+                food_simulation.output.get("monounsaturated_fats", 0), 2
             ),
             "polyunsaturated_fats": round(
-                food_simulation.output["polyunsaturated_fats"], 2
+                food_simulation.output.get("polyunsaturated_fats", 0), 2
             ),
-            "free_sugar": round(food_simulation.output["free_sugar"], 2),
-            "starch": round(food_simulation.output["starch"], 2),
+            "free_sugar": round(food_simulation.output.get("free_sugar", 0), 2),
+            "starch": round(food_simulation.output.get("starch", 0), 2),
         }
 
         # Repeat for other nutrients...
