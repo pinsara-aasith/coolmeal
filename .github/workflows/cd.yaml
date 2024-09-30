@@ -27,12 +27,12 @@ jobs:
       - name: Remove old Server container
         run: sudo docker rm -f server-service-container || true
 
-      # Run the chatbot container (Map port 8081 on host to 8000 in container)
+      # Run the chatbot container (Map port 8001 on host to 8000 in container)
       - name: Run Chatbot Docker container
         run: |
           sudo docker run -d -p 8001:8000 --name chatbot-service-container ${{secrets.DOCKER_LOGIN}}/chatbot-service:latest
 
-      # Run the server container (Map port 8082 on host to 8000 in container)
+      # Run the server container (Map port 8002 on host to 8000 in container)
       - name: Run Server Docker container
         run: |
           sudo docker run -d -p 8000:8000 --name server-service-container ${{secrets.DOCKER_LOGIN}}/server-service:latest
