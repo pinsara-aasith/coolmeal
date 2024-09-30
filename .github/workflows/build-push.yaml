@@ -1,8 +1,9 @@
-name: Build and Push FastAPI Docker Images
+name: Build, Push, and Deploy FastAPI Docker Images
 
 on:
   push:
     branches: [release]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -12,7 +13,7 @@ jobs:
       # Checkout the code from the GitHub repository
       - uses: actions/checkout@v3
 
-      - name: Set up environment  variables
+      - name: Set up environment variables
         run: |
           echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> $GITHUB_ENV
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
@@ -46,12 +47,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Set up environment  variables
+      - name: Set up environment variables
         run: |
           echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> ./chatbot-service/server/.env
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >>  ./chatbot-service/server/.env
 
-      # Build the chatbot Docker image with 'latest' tag and commit SHA
+      # Build the chatbot Docker image
       - name: Build the Chatbot Docker image
         run: |
           docker build \
@@ -59,12 +60,7 @@ jobs:
           --build-arg  "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
-      # # Build the chatbot Docker image with 'latest' tag and commit SHA
-      # - name: Build the Chatbot Docker image
-      #   run: |
-      #     docker build -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
-
-      # Build the server Docker image with 'latest' tag and commit SHA
+      # Build the server Docker image
       - name: Build the Server Docker image
         run: |
           docker build -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
@@ -74,14 +70,43 @@ jobs:
         run: |
           docker login --username '${{secrets.DOCKER_LOGIN}}' --password '${{secrets.DOCKER_PASSWORD}}'
 
-      # Push the chatbot images (commit SHA and latest)
+      # Push the chatbot image to Docker Hub
       - name: Push the Chatbot Docker image
         run: |
-
           docker push '${{secrets.DOCKER_LOGIN}}'/chatbot-service:latest
 
-      # Push  the server images (commit SHA and latest)
+      # Push the server image to Docker Hub
       - name: Push the Server Docker image
         run: |
-
           docker push '${{secrets.DOCKER_LOGIN}}'/server-service:latest
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      # Pull the chatbot Docker image from Docker Hub
+      - name: Pull Chatbot Docker image
+        run: sudo docker pull ${{secrets.DOCKER_LOGIN}}/chatbot-service:latest
+
+      # Pull the server Docker image from Docker Hub
+      - name: Pull Server Docker image
+        run: sudo docker pull ${{secrets.DOCKER_LOGIN}}/server-service:latest
+
+      # Remove any existing chatbot container if it exists
+      - name: Remove old Chatbot container
+        run: sudo docker rm -f chatbot-service-container || true
+
+      # Remove any existing server container if it exists
+      - name: Remove old Server container
+        run: sudo docker rm -f server-service-container || true
+
+      # Run the chatbot container (Map port 8001 on host to 8000 in container)
+      - name: Run Chatbot Docker container
+        run: |
+          sudo docker run -d -p 8001:8000 --name chatbot-service-container ${{secrets.DOCKER_LOGIN}}/chatbot-service:latest
+
+      # Run the server container (Map port 8002 on host to 8000 in container)
+      - name: Run Server Docker container
+        run: |
+          sudo docker run -d -p 8000:8000 --name server-service-container ${{secrets.DOCKER_LOGIN}}/server-service:latest
