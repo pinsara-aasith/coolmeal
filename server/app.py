@@ -46,8 +46,8 @@ def read_prediction(request: UserRequest):
 
     prediction = predict_knn("knn_model.pkl", input_data)
     output = df.iloc[prediction[0]].to_dict(orient="records")
-    # meal_plans.append(output[0])
-    # week_plan = week_prediction(nut_result, tot_kalories, output[0], meal_plans)
+    meal_plans.append(output[0])
+    week_plan = week_prediction(nut_result, tot_kalories, output[0], meal_plans)
     return JSONResponse(status_code=200, content={"prediction": output[0]})
 
 
