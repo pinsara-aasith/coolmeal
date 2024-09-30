@@ -3,8 +3,7 @@ name: CD Pipeline
 on:
   workflow_run:
     workflows: ["Build and Push FastAPI Docker Images"]
-    types:
-      - completed
+    types: [success]
 
 jobs:
   deploy:
