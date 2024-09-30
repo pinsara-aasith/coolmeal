@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["Build and Push FastAPI Docker Images"]
     types:
-      - Success
+      - success
 
 jobs:
   deploy:
