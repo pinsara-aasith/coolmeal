@@ -138,37 +138,49 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         ],
       ),
       drawer: Drawer(
-        child: Column(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.teal,
-              ),
-              child: Text(
-                'Message History',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _historyMessages.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: const Icon(Icons.message),
-                    title: Text(
-                      _historyMessages[index],
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 0),
+          color: Colors.white, // Background color of the drawer
+          child: ListView.builder(
+            itemCount: _historyMessages.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: 8, horizontal: 10), // Margin around each item
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(
+                      255, 238, 245, 255), // Light blue background color
+                  borderRadius: BorderRadius.circular(12), // Rounded corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2), // Shadow color
+                      spreadRadius: 2, // Spread radius of the shadow
+                      blurRadius: 5, // Blur radius of the shadow
+                      offset: const Offset(0, 3), // Shadow offset
                     ),
-                  );
-                },
-              ),
-            ),
-          ],
+                  ],
+                ),
+                child: ListTile(
+                  leading: const Icon(Icons.message,
+                      color: Colors.teal), // Icon color
+                  title: Text(
+                    _historyMessages[index],
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400, // Medium font weight
+                      fontFamily: 'Roboto',
+                      color: Colors.black87, // Text color
+                    ),
+                  ),
+                  // Optionally, you can add a subtitle for additional information
+                  // subtitle: Text('Subtitle here', style: TextStyle(fontSize: 14)),
+                  onTap: () {
+                    // Optional: Handle tap events
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
       body: Stack(
