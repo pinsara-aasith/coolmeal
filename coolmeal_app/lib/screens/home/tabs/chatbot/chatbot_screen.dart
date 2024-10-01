@@ -67,6 +67,36 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     _postRequest();
   }
 
+  @override
+  void dispose() {
+    // Call your method here when leaving the tab
+    _triggerMethodOnLeave();
+    super.dispose();
+  }
+
+  void _triggerMethodOnLeave() async {
+    print('Leaving ChatbotScreen tab');
+    await _insertSessionData(); // Call the method to perform the GET request
+  }
+
+  Future<void> _insertSessionData() async {
+    print("Caalling insert session data");
+    final String url =
+        'http://13.60.182.147/insertSessionData?session_id=$sessionId';
+
+    try {
+      final response = await http.post(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        print('Session data inserted successfully.');
+      } else {
+        print('Failed to insert session data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error while inserting session data: $e');
+    }
+  }
+
   Future<void> _sendMessage() async {
     final userMessage = _controller.text;
 
@@ -113,6 +143,10 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     "User: How does state management work?",
     "AI: There are various methods, like Provider, Riverpod, etc."
   ];
+
+  void printPop() {
+    print('Popping the screen');
+  }
 
   @override
   Widget build(BuildContext context) {
