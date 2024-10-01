@@ -17,7 +17,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   final List<String> _responses = ["Hi !! I am food related chat bot . "];
   // For set circular process indicater
   bool _isLoading = false;
-
+  var historyMessages = [];
   String sessionId = '';
 
   // get current user id from firebase
@@ -53,6 +53,32 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       } else {
         // Handle error response
         print('Failed to get data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  // Method to call the API
+  Future<void> fetchChatHistory() async {
+    final url =
+        'http://13.60.182.147/gethistory?user_id=$user'; // Replace with your actual API URL
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        // If the server returns a successful response
+        final data = jsonDecode(response.body);
+
+        // Parse the "history" array
+        List history = data['history'];
+        setState(() {
+          historyMessages = history;
+        });
+      } else {
+        // Handle error
+        print('Failed to load chat history');
       }
     } catch (e) {
       print('Error: $e');
@@ -136,13 +162,13 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     }
   }
 
-  //Dummy history data
-  final List<String> _historyMessages = [
-    "User: What is Flutter?",
-    "AI: Flutter is an open-source UI software development kit.",
-    "User: How does state management work?",
-    "AI: There are various methods, like Provider, Riverpod, etc."
-  ];
+  // //Dummy history data
+  // final List<String> _historyMessages = [
+  //   "User: What is Flutter?",
+  //   "AI: Flutter is an open-source UI software development kit.",
+  //   "User: How does state management work?",
+  //   "AI: There are various methods, like Provider, Riverpod, etc."
+  // ];
 
   void printPop() {
     print('Popping the screen');
@@ -176,7 +202,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           margin: const EdgeInsets.symmetric(vertical: 0),
           color: Colors.white, // Background color of the drawer
           child: ListView.builder(
-            itemCount: _historyMessages.length,
+            itemCount: historyMessages.length,
             itemBuilder: (context, index) {
               return Container(
                 margin: const EdgeInsets.symmetric(
@@ -198,7 +224,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   leading: const Icon(Icons.message,
                       color: Colors.teal), // Icon color
                   title: Text(
-                    _historyMessages[index],
+                    historyMessages[index],
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400, // Medium font weight
