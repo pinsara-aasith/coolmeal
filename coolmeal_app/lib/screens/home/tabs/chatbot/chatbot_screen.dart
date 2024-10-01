@@ -24,7 +24,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   //print user id
   @override
   void initState() {
-    print("User" + user);
+    print("User$user");
     super.initState();
   }
 
@@ -199,7 +199,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           ),
           // Display the loading indicator when _isLoading is true
           if (_isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             ),
         ],

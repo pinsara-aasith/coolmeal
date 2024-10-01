@@ -47,7 +47,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   final _heightController = TextEditingController();
   final _ageController = TextEditingController();
   final _budgetController = TextEditingController();
-  String _selectedGender = 'male';
+  final String _selectedGender = 'male';
   String _selectedActivityLevel = 'very active';
 
   String? selectedGender;
@@ -86,11 +86,11 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
     LoadingScreen.instance().hide();
     if (response.statusCode == 200) {
       final prediction = jsonDecode(response.body);
-      
+
       var mpc = MealPlanCollection(
-        name: "Meal plan on ${DateTime.now().toString()}",
-        description: '',
-        generatedTime: DateTime.now().toString(),
+          name: "Meal plan on ${DateTime.now().toString()}",
+          description: '',
+          generatedTime: DateTime.now().toString(),
           mealPlans: (prediction["prediction"] as List)
               .map<MealPlan>((m) => MealPlan.fromJson(m))
               .toList());
@@ -231,7 +231,8 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                     CMToggleButtons(
                       selectedKey: _selectedActivityLevel,
                       hideIcon: true,
-                      onSelected: (key) => setState(() => _selectedActivityLevel = key),
+                      onSelected: (key) =>
+                          setState(() => _selectedActivityLevel = key),
                       keyValueMap: const {
                         'sedentary': ["Sedentary", Icons.run_circle],
                         'very active': ["Very Active", Icons.female],
