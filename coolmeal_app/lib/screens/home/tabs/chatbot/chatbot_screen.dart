@@ -63,6 +63,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   @override
   void initState() {
     super.initState();
+    print('User ID: $user');
     _postRequest();
   }
 
@@ -105,6 +106,14 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     }
   }
 
+  //Dummy history data
+  final List<String> _historyMessages = [
+    "User: What is Flutter?",
+    "AI: Flutter is an open-source UI software development kit.",
+    "User: How does state management work?",
+    "AI: There are various methods, like Provider, Riverpod, etc."
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +137,40 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           ),
         ],
       ),
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.teal,
+              ),
+              child: Text(
+                'Message History',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _historyMessages.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: const Icon(Icons.message),
+                    title: Text(
+                      _historyMessages[index],
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           Column(
@@ -147,15 +189,15 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       crossAxisAlignment: CrossAxisAlignment
                           .stretch, // Allows full-width alignment
                       children: [
+                        // User's message aligned to the right
                         Align(
-                          alignment: Alignment
-                              .centerLeft, // Aligns the message to the left
+                          alignment: Alignment.centerRight,
                           child: Container(
                             margin: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 10),
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 211, 232, 231),
+                              color: const Color.fromARGB(255, 124, 246, 134),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
@@ -164,31 +206,21 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                             ),
                           ),
                         ),
+                        // AI response aligned to the left if available
                         if (index < _responses.length)
                           Align(
-                            alignment: Alignment
-                                .centerRight, // Aligns the response to the right
+                            alignment: Alignment.centerLeft,
                             child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              padding: const EdgeInsets.all(3),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 124, 246, 134),
+                                color: const Color.fromARGB(255, 211, 232, 231),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 124, 246, 134),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  _responses[index],
-                                  style: const TextStyle(color: Colors.black87),
-                                ),
+                              child: Text(
+                                _responses[index],
+                                style: const TextStyle(color: Colors.black87),
                               ),
                             ),
                           ),
