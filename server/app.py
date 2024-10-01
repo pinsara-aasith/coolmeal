@@ -26,6 +26,7 @@ def read_prediction(request: UserRequest):
     nut_result = fuzzy_recommend_nutrients(request.age, request.weight, request.height)
     tot_bmr = calculate_bmr(request.weight, request.height, request.age, request.gender)
     tot_kalories = calculate_daily_calories(tot_bmr, request.activity_level)
+    print("Proteiiinnnnn :::::::: ", nut_result["protein"])
     input_data = [
         [
             tot_kalories,
@@ -47,7 +48,7 @@ def read_prediction(request: UserRequest):
     output = df.iloc[prediction[0]].to_dict(orient="records")
     meal_plans.append(output[0])
     week_plan = week_prediction(nut_result, tot_kalories, output[0], meal_plans)
-    return JSONResponse(status_code=200, content={"prediction": week_plan})
+    return JSONResponse(status_code=200, content={"prediction": output[0]})
 
 
 # Train the model and save it
