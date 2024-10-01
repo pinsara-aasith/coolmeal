@@ -6,6 +6,7 @@ import mongodb_helper
 import uuid
 import memory_helper
 from models.session_response import SessionResponse
+from createContext import summarize_chat
 
 
 app = FastAPI()
@@ -85,6 +86,7 @@ async def end_session(session_id: str):
         "session_id": session_id,
         "data": chat_history,
     }
+
     await mongodb_helper.insert_chat_history(chat_history_data)
     print("Chat history inserted successfully --------------------- ")
     return {"message": "Chat history inserted successfully."}
