@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
+from createContext import summarize_chat
 
 
 # Define a model for each chat entry (User/Assistant pair)
@@ -12,6 +13,7 @@ class ChatEntry(BaseModel):
 class ChatHistory(BaseModel):
     session_id: str
     data: List[str]  # List of chat entries
+    title: str
 
 
 # Function to convert the list into a list of dicts
@@ -33,5 +35,5 @@ def convert_to_chat_dict(chat_list):
             chat_history.append(
                 {"User": user_msg_content, "Assistant": assistant_msg_content}
             )
-
-    return chat_history
+    chat_summery = summarize_chat(chat_history)
+    return chat_history, chat_summery

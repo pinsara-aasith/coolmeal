@@ -14,8 +14,7 @@ class PopularMealBloc extends Bloc<PopularMealEvent, PopularMealState> {
       FetchPopularMeals event, Emitter<PopularMealState> emit) async {
     emit(PopularMealLoading());
     try {
-      Query<Map<String, dynamic>> q = firestore
-          .collection('meals');
+      Query<Map<String, dynamic>> q = firestore.collection('meals');
 
       if (event.mealTime != null) {
         q = q.where('mealTime', isEqualTo: event.mealTime);
@@ -80,7 +79,7 @@ class FetchPopularMeals extends PopularMealEvent {
   final String? searchQuery;
   final String? mealTime;
 
-  FetchPopularMeals({this.searchQuery, this.mealTime});
+  const FetchPopularMeals({this.searchQuery, this.mealTime});
 
   @override
   List<Object> get props => [];
