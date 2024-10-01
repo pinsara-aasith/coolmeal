@@ -18,14 +18,52 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   // For set circular process indicater
   bool _isLoading = false;
 
+  String sessionId = '';
+
   // get current user id from firebase
   final String user = FirebaseAuth.instance.currentUser!.uid;
+
+  // Function to make a POST request
+  Future<void> _postRequest() async {
+    String url = 'http://13.60.182.147/getSession?user_id=$user';
+
+    try {
+      // Replace the body map with your desired request payload
+      Map<String, String> body = {
+        'key1': 'value1',
+        'key2': 'value2',
+      };
+
+      // Making the POST request
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        // Successful response, extract the data
+        final data = jsonDecode(response.body);
+
+        setState(() {
+          sessionId =
+              data['session_id']; // Assuming the response contains 'userId'
+        });
+        print('Session ID: $sessionId');
+      } else {
+        // Handle error response
+        print('Failed to get data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   //print user id
   @override
   void initState() {
-    print("User$user");
     super.initState();
+    _postRequest();
   }
 
   Future<void> _sendMessage() async {
@@ -40,13 +78,13 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       _isLoading = true; // Show the loading indicator
     });
 
-    // Send POST request to the backend
-    final url = Uri.parse('http://13.61.4.28/chat?query=$userMessage');
+    final url = Uri.parse('http://13.60.182.147/chat');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'query': userMessage, // Add the userMessage to the request body
+        "query": userMessage, // Correctly formatted JSON
+        "session_id": sessionId // Single set of curly braces for the map
       }),
     );
 
@@ -55,8 +93,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       final responseBody = json.decode(response.body);
 
       setState(() {
-        _responses.add(responseBody['response']
-            ['result']); // Assuming 'result' contains the string you want
+        _responses.add(responseBody['response']);
         _isLoading = false; // Hide the loading indicator
       });
     } else {
