@@ -83,5 +83,4 @@ jobs:
       # Push  the server images (commit SHA and latest)
       - name: Push the Server Docker image
         run: |
-
           docker push '${{secrets.DOCKER_LOGIN}}'/server-service:latest
