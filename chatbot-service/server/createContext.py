@@ -16,6 +16,7 @@ llm = GoogleGenerativeAI(
 )
 print("Load LLM model Successfully --------------------- ")
 
+
 google_embeddings = GoogleGenerativeAIEmbeddings(
     model="models/embedding-001", google_api_key=os.environ["GOOGLE_API_KEY"]
 )
@@ -78,3 +79,22 @@ def createContext():
     )
 
     return chain
+
+
+def summarize_chat(chat_history):
+
+    # Format the chat history into a string
+    formatted_history = "\n".join(
+        [
+            f"User: {entry['User']}\nAssistant: {entry['Assistant']}"
+            for entry in chat_history
+        ]
+    )
+
+    # Create a prompt for summarization
+    summary_prompt = f"Please summarize the following chat history restrict to one sentence:\n{formatted_history}"
+
+    # Get the summary from the LLM
+    summary = llm(summary_prompt)
+
+    return summary

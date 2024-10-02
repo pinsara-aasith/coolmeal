@@ -66,7 +66,7 @@ abstract class GeneratedMealEvent extends Equatable {
 }
 
 class FetchGeneratedMeals extends GeneratedMealEvent {
-  FetchGeneratedMeals();
+  const FetchGeneratedMeals();
 
   @override
   List<Object> get props => [];
