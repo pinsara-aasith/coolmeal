@@ -97,10 +97,7 @@ jobs:
             sudo docker pull '${{secrets.DOCKER_LOGIN}}'/chatbot-service:latest
             sudo docker stop chatbot-service-container || true
             sudo docker rm chatbot-service-container || true
-            sudo docker run -d --name chatbot-service-container -p 8000:8000 \
-            -e GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} \
-            -e MONGODB_URI=${{ secrets.MONGODB_URI }} \
-            ${{ secrets.DOCKER_LOGIN }}/chatbot-service:latest
+            sudo docker run -d --name chatbot-service-container -p 8000:8000 -e GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} -e MONGODB_URI=${{ secrets.MONGODB_URI }} ${{ secrets.DOCKER_LOGIN }}/chatbot-service:latest
 
   deploy_server_service:
     runs-on: ubuntu-latest
@@ -119,5 +116,4 @@ jobs:
             sudo docker pull '${{secrets.DOCKER_LOGIN}}'/server-service:latest
             sudo docker stop server-service-container || true
             sudo docker rm server-service-container || true
-            sudo docker run -d --name server-service-container -p 8000:8000 \
-            ${{ secrets.DOCKER_LOGIN }}/server-service:latest
+            sudo docker run -d --name server-service-container -p 8000:8000 ${{ secrets.DOCKER_LOGIN }}/server-service:latest
