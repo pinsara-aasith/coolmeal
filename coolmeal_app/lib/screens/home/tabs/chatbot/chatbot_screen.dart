@@ -61,6 +61,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   // Method to call the API
   Future<void> fetchChatHistory() async {
+    print('Fetching chat history...');
     final url =
         'http://13.60.182.147/gethistory?user_id=$user'; // Replace with your actual API URL
 
@@ -68,6 +69,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
+        print("Response: ${response.body}");
         // If the server returns a successful response
         final data = jsonDecode(response.body);
 
@@ -76,6 +78,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         setState(() {
           historyMessages = history;
         });
+        print(historyMessages);
       } else {
         // Handle error
         print('Failed to load chat history');
@@ -91,6 +94,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     super.initState();
     print('User ID: $user');
     _postRequest();
+    fetchChatHistory();
   }
 
   @override
@@ -102,7 +106,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   void _triggerMethodOnLeave() async {
     print('Leaving ChatbotScreen tab');
-    await _insertSessionData(); // Call the method to perform the GET request
+    if (_messages.length > 1) {
+      await _insertSessionData();
+    }
   }
 
   Future<void> _insertSessionData() async {
@@ -224,7 +230,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   leading: const Icon(Icons.message,
                       color: Colors.teal), // Icon color
                   title: Text(
-                    historyMessages[index],
+                    historyMessages[index][1],
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400, // Medium font weight
