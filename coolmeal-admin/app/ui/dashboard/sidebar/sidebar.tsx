@@ -7,7 +7,7 @@ import { IoIosSettings } from "react-icons/io";
 import { MdDashboard, MdNoMeals } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import Menulink from "./menulink/menulink";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { logOut } from "@/app/lib/actions";
 
 const Sidebar = async () => {
@@ -64,7 +64,7 @@ const Sidebar = async () => {
           <div className="mb-2">{item.title}</div>
           <Flex direction="column">
             {item.list.map((subItem) => (
-              <Menulink item={subItem} />
+              <Menulink key={subItem.title} item={subItem} />
             ))}
           </Flex>
         </div>
