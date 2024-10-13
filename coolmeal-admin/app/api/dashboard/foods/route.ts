@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
       id: doc.id, // Firestore document ID
       ...doc.data(),
     }));
-    console.log(foodItemDetails);
     return NextResponse.json(foodItemDetails);
   } catch (error) {
     console.error("Error fetching food details: ", error);

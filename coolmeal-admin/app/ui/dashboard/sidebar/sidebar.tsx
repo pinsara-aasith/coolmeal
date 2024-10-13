@@ -7,12 +7,11 @@ import { IoIosSettings } from "react-icons/io";
 import { MdDashboard, MdNoMeals } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import Menulink from "./menulink/menulink";
-import { auth } from "@/auth";
-import { logOut } from "@/app/lib/actions";
+import useToast from "@/hooks/use-snackbar";
+import { useRouter } from "next/navigation";
+import { logout } from "@/lib/auth";
 
-const Sidebar = async () => {
-  const session = await auth();
-  console.log(session);
+const Sidebar = (props: any) => {
   const menuItems = [
     {
       title: "pages",
@@ -50,6 +49,11 @@ const Sidebar = async () => {
       ],
     },
   ];
+
+  const toast = useToast()
+  const router = useRouter()
+
+
   return (
     <div className="m-5">
       <Flex align="center" gap="4" className="mb-5">
@@ -69,8 +73,8 @@ const Sidebar = async () => {
           </Flex>
         </div>
       ))}
-      <form action={logOut}>
-        <Button>Logout</Button>
+      <form action={logout}>
+        <Button type="submit">Logout</Button>
       </form>
     </div>
   );

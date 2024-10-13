@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
       id: doc.id, // Firestore document ID
       ...doc.data(),
     }));
-    console.log(userDetails);
     return NextResponse.json(userDetails);
   } catch (error) {
     console.error("Error fetching user details: ", error);

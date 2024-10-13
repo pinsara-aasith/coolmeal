@@ -28,7 +28,6 @@ const UserProfile = ({ params }: Props) => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/dashboard/users/" + params.id);
-        console.log(response.data);
         setUser(response.data); // Set the correct data
       } catch (error) {
         console.error("Error fetching user details: ", error);

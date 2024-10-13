@@ -1,5 +1,5 @@
 "use client";
-import { addFood } from "@/app/lib/actions";
+import { addFood } from "@/lib/actions";
 import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
