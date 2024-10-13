@@ -7,12 +7,12 @@ import { IoIosSettings } from "react-icons/io";
 import { MdDashboard, MdNoMeals } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import Menulink from "./menulink/menulink";
-import { auth } from "@/auth";
-import { logOut } from "@/app/lib/actions";
+// import { auth } from "@/auth";
+// import { logOut } from "@/app/lib/actions";
 
 const Sidebar = async () => {
-  const session = await auth();
-  console.log(session);
+  // const session = await auth();
+  // console.log(session);
   const menuItems = [
     {
       title: "pages",
@@ -20,7 +20,7 @@ const Sidebar = async () => {
         { title: "Dashboard", url: "/dashboard", icon: <MdDashboard /> },
         { title: "Users", url: "/dashboard/users", icon: <FaUserAlt /> },
         {
-          title: "Nutritions",
+          title: "Food item",
           url: "/dashboard/nutrition",
           icon: <FaNutritionix />,
         },
@@ -46,7 +46,6 @@ const Sidebar = async () => {
           url: "/dashboard/settting",
           icon: <IoIosSettings />,
         },
-        { title: "Logout", url: "/", icon: <RiLogoutBoxFill /> },
       ],
     },
   ];
@@ -69,8 +68,11 @@ const Sidebar = async () => {
           </Flex>
         </div>
       ))}
-      <form action={logOut}>
-        <Button>Logout</Button>
+      <form action="">
+        <Flex align="center" gap="2" className="ml-2">
+          <RiLogoutBoxFill />
+          <Button color="gray">Logout</Button>
+        </Flex>
       </form>
     </div>
   );

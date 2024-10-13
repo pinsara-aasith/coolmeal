@@ -1,14 +1,13 @@
 import NutritionTable from "@/app/ui/food/nutritionTable";
-import { Button } from "@radix-ui/themes";
+import CustomButton from "@/component/CustomButton";
 import Link from "next/link";
-import React from "react";
 
 const Nutritions = () => {
   return (
     <div>
       <Link href="/dashboard/nutrition/add">
-        <div className="m-5 ">
-          <Button>Add new food item</Button>
+        <div className="m-5">
+          <CustomButton color="red" name="Add new food item" />
         </div>
       </Link>
       <NutritionTable />

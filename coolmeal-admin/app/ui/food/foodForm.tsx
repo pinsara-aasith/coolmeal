@@ -1,202 +1,161 @@
 "use client";
-import { addFood } from "@/app/lib/actions";
-import { Button, Flex, Text, TextField } from "@radix-ui/themes";
+import CustomButton from "@/component/CustomButton";
+import { Flex, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Foods {
   foodName: string;
   foodId: string;
-  energyKcal: number; // Use number to accept float values
+  foodCode: string;
+  priceCode: string;
+  energyKcal: number;
   proteinG: number;
   totalFatG: number;
   carbohydratesG: number;
-  totalDietaryFibreG: number;
+  totalDietaryFibreG: string;
   freeSugarG: number;
   starchG: number;
-  viatminKUg: number; // Corrected the spelling from 'viatminK' to 'vitaminK'
-  vitaminDUg: number;
-  vitaminAUg: number;
-  vitaminEMg: number;
+  viatminKUg: string;
+  vitaminDUg: string;
+  vitaminAUg: string;
+  vitaminEMg: string;
   calciumMg: number;
   phosphorusMg: number;
   magnesiumMg: number;
   sodiumMg: number;
   potassiumMg: number;
-  monounsaturatedFattyAcidsMg: number;
-  polyunsaturatedFattyAcidsMg: number;
+  monounsaturatedFattyAcidsMg: string;
+  polyunsaturatedFattyAcidsMg: string;
   saturatedFattyAcidsMg: number;
 }
+
 interface Props {
   params?: {
     id: string;
   };
 }
+interface FoodName {
+  foodName: string;
+}
 
 const FoodForm = ({ params }: Props) => {
   const [food, setFood] = useState<Foods | null>(null);
-  const nutritions = [
-    {
-      title: "Macronutrients",
-      list: [
-        {
-          title: "Energy",
-          placeholder: "add energy in Kcal",
-          key: "energyKcal",
-        },
-        { title: "Protein", placeholder: "add protein in g", key: "proteinG" },
-        {
-          title: "Total fat",
-          placeholder: "add total fat in g",
-          key: "totalFatG",
-        },
-        {
-          title: "Carbohydrates",
-          placeholder: "add carbohydrate in g",
-          key: "carbohydratesG",
-        },
-        {
-          title: "Total Dietary Fibre",
-          placeholder: "add total dietary fibre in g",
-          key: "totalDietaryFibreG",
-        },
-        {
-          title: "Free sugar",
-          placeholder: "add free sugar in g",
-          key: "freeSugarG",
-        },
-        { title: "Starch", placeholder: "add starch in g", key: "starchG" },
-      ],
-    },
-    {
-      title: "Vitamins",
-      list: [
-        {
-          title: "Vitamin A",
-          placeholder: "add vitamin A in µg",
-          key: "vitaminAUg",
-        },
-        {
-          title: "Vitamin D",
-          placeholder: "add vitamin D in µg",
-          key: "vitaminDUg",
-        },
-        {
-          title: "Vitamin K",
-          placeholder: "add vitamin K in µg",
-          key: "viatminKUg",
-        },
-        {
-          title: "Vitamin E",
-          placeholder: "add vitamin E in mg",
-          key: "vitaminEMg",
-        },
-      ],
-    },
-    {
-      title: "Minerals",
-      list: [
-        {
-          title: "Calcium",
-          placeholder: "add calcium in mg",
-          key: "calciumMg",
-        },
-        {
-          title: "Phosphorus",
-          placeholder: "add phosphorus in mg",
-          key: "phosphorusMg",
-        },
-        {
-          title: "Magnesium",
-          placeholder: "add magnesium in mg",
-          key: "magnesiumMg",
-        },
-        { title: "Sodium", placeholder: "add sodium in mg", key: "sodiumMg" },
-        {
-          title: "Potassium",
-          placeholder: "add potassium in mg",
-          key: "potassiumMg",
-        },
-      ],
-    },
-    {
-      title: "Fatty Acids",
-      list: [
-        {
-          title: "Saturated Fatty Acids",
-          placeholder: "add saturated fatty acid amount in mg",
-          key: "saturatedFattyAcidsMg",
-        },
-        {
-          title: "Monounsaturated Fatty Acids",
-          placeholder: "add monounsaturated fatty acids in mg",
-          key: "monounsaturatedFattyAcidsMg",
-        },
-        {
-          title: "Polyunsaturated Fatty Acids",
-          placeholder: "add polyunsaturated fatty acids in mg",
-          key: "polyunsaturatedFattyAcidsMg",
-        },
-      ],
-    },
-  ];
+  const [foodName, setFoodName] = useState<FoodName[]>([]);
+  const router = useRouter();
+  // console.log("foods", foodName);
 
+  // Fetch food data when component mounts
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchFood = async () => {
       const id = params?.id;
       try {
         const response = await axios.get("/api/dashboard/foods/" + id);
-        console.log(response.data);
-        setFood(response.data); // Set the correct data
+        setFood(response.data); // Set the fetched data
+      } catch (error) {
+        console.error("Error fetching food details: ", error);
+      }
+    };
+
+    if (params?.id) {
+      fetchFood();
+    }
+  }, [params?.id]);
+
+  useEffect(() => {
+    const fetchFoodList = async () => {
+      try {
+        const response = await axios.get("/api/dashboard/foods");
+        const foodName = response.data.map(
+          (food: { foodName: string }) => food.foodName
+        );
+        setFoodName(foodName);
       } catch (error) {
         console.error("Error fetching user details: ", error);
       }
     };
 
-    fetchUsers();
-  }, [params?.id]);
+    fetchFoodList();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form data:", data);
+
+    try {
+      const response = await axios.post("/api/dashboard/foods", data);
+      console.log("Response from server:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Form data:", data);
+
+    try {
+      const response = await axios.patch(
+        "/api/dashboard/foods/" + params?.id,
+        data
+      );
+      router.push("/dashboard/nutrition/" + params?.id);
+      console.log("Response from server:", response.data);
+    } catch (error) {
+      console.error("Error updating form:", error);
+    }
+  };
 
   return (
     <div className="ml-5 mt-5 mr-5">
-      <form action={addFood}>
+      <form onSubmit={params?.id ? handleUpdate : handleSubmit}>
         <Flex align="center" gap="5" className="mb-5 " justify="between">
           <Flex wrap="wrap" gap="5">
             <Text>Food item</Text>
+
             <TextField.Root
-              defaultValue={food ? food.foodName : ""}
-              placeholder="enter name of food"
+              defaultValue={food?.foodName || ""}
+              placeholder="Enter name of food"
+              name="foodName"
+              required
             >
-              <TextField.Slot></TextField.Slot>
+              <TextField.Slot />
             </TextField.Root>
           </Flex>
-          <Button type="submit">Submit</Button>
+          <CustomButton
+            color="blue"
+            name={params?.id ? "Update food" : "Add food"}
+            type="submit"
+          />
         </Flex>
 
-        {/* Map through each category */}
         {nutritions.map((nutrition) => (
           <div key={nutrition.title} className="mb-6">
             <Text weight="bold" className="mb-2">
               {nutrition.title}
             </Text>
-
-            {/* Loop through the list items and ensure even layout */}
             {nutrition.list.map((item, index) => {
               if (index % 2 === 0) {
                 return (
                   <Flex key={item.title} align="center" className="mb-3 gap-5">
-                    {/* First item in the row */}
                     <Flex className="w-1/2 items-center gap-5">
                       <Text className="w-[150px]">{item.title}</Text>
                       <TextField.Root
-                        defaultValue={food ? food[item.key as keyof Foods] : ""}
+                        defaultValue={
+                          food ? String(food[item.key as keyof Foods]) : ""
+                        }
                         className="flex-grow"
                         placeholder={item.placeholder}
+                        name={item.name} // Add name attribute
                       >
-                        <TextField.Slot></TextField.Slot>
+                        <TextField.Slot />
                       </TextField.Root>
                     </Flex>
-
-                    {/* Second item in the row */}
                     {nutrition.list[index + 1] && (
                       <Flex className="w-1/2 items-center gap-5">
                         <Text className="w-[150px]">
@@ -204,12 +163,19 @@ const FoodForm = ({ params }: Props) => {
                         </Text>
                         <TextField.Root
                           defaultValue={
-                            food ? food[item.key as keyof Foods] : ""
+                            food
+                              ? String(
+                                  food[
+                                    nutrition.list[index + 1].key as keyof Foods
+                                  ]
+                                )
+                              : ""
                           }
                           className="flex-grow"
                           placeholder={nutrition.list[index + 1].placeholder}
+                          name={nutrition.list[index + 1].name} // Add name attribute
                         >
-                          <TextField.Slot></TextField.Slot>
+                          <TextField.Slot />
                         </TextField.Root>
                       </Flex>
                     )}
@@ -224,5 +190,142 @@ const FoodForm = ({ params }: Props) => {
     </div>
   );
 };
+
+export const nutritions = [
+  {
+    title: "Macronutrients",
+    list: [
+      {
+        title: "Energy",
+        placeholder: "add energy in Kcal",
+        key: "energyKcal",
+        name: "energyKcal",
+      },
+      {
+        title: "Protein",
+        placeholder: "add protein in g",
+        key: "proteinG",
+        name: "proteinG",
+      },
+      {
+        title: "Total fat",
+        placeholder: "add total fat in g",
+        key: "totalFatG",
+        name: "totalFatG",
+      },
+      {
+        title: "Carbohydrates",
+        placeholder: "add carbohydrate in g",
+        key: "carbohydratesG",
+        name: "carbohydratesG",
+      },
+      {
+        title: "Total Dietary Fibre",
+        placeholder: "add dietary fibre in g",
+        key: "totalDietaryFibreG",
+        name: "totalDietaryFibreG",
+      },
+      {
+        title: "Free sugar",
+        placeholder: "add free sugar in g",
+        key: "freeSugarG",
+        name: "freeSugarG",
+      },
+      {
+        title: "Starch",
+        placeholder: "add starch in g",
+        key: "starchG",
+        name: "starchG",
+      },
+    ],
+  },
+  {
+    title: "Vitamins",
+    list: [
+      {
+        title: "Vitamin A",
+        placeholder: "add vitamin A in µg",
+        key: "vitaminAUg",
+        name: "vitaminAUg",
+      },
+      {
+        title: "Vitamin D",
+        placeholder: "add vitamin D in µg",
+        key: "vitaminDUg",
+        name: "vitaminDUg",
+      },
+      {
+        title: "Vitamin K",
+        placeholder: "add vitamin K in µg",
+        key: "viatminKUg",
+        name: "viatminKUg",
+      },
+      {
+        title: "Vitamin E",
+        placeholder: "add vitamin E in mg",
+        key: "vitaminEMg",
+        name: "vitaminEMg",
+      },
+    ],
+  },
+  {
+    title: "Minerals",
+    list: [
+      {
+        title: "Calcium",
+        placeholder: "add calcium in mg",
+        key: "calciumMg",
+        name: "calciumMg",
+      },
+      {
+        title: "Phosphorus",
+        placeholder: "add phosphorus in mg",
+        key: "phosphorusMg",
+        name: "phosphorusMg",
+      },
+      {
+        title: "Magnesium",
+        placeholder: "add magnesium in mg",
+        key: "magnesiumMg",
+        name: "magnesiumMg",
+      },
+      {
+        title: "Sodium",
+        placeholder: "add sodium in mg",
+        key: "sodiumMg",
+        name: "sodiumMg",
+      },
+      {
+        title: "Potassium",
+        placeholder: "add potassium in mg",
+        key: "potassiumMg",
+        name: "potassiumMg",
+      },
+    ],
+  },
+  {
+    title: "Fatty Acids",
+    list: [
+      {
+        title: "Saturated Fatty Acids",
+        placeholder: "add saturated fatty acids in mg",
+        key: "saturatedFattyAcidsMg",
+        name: "saturatedFattyAcidsMg",
+      },
+      {
+        title: "Monounsaturated Fatty Acids",
+        placeholder: "add monounsaturated fatty acids in mg",
+        key: "monounsaturatedFattyAcidsMg",
+        name: "monounsaturatedFattyAcidsMg",
+      },
+      {
+        title: "Polyunsaturated Fatty Acids",
+        placeholder: "add polyunsaturated fatty acids in mg",
+        key: "polyunsaturatedFattyAcidsMg",
+        name: "polyunsaturatedFattyAcidsMg",
+      },
+    ],
+  },
+];
 
 export default FoodForm;

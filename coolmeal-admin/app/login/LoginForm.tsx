@@ -2,7 +2,7 @@
 import { Card } from "@radix-ui/themes";
 import { useState } from "react";
 import axios from "axios";
-import { authenticate } from "../lib/actions";
+// import { authenticate } from "../lib/actions";
 
 export default function AdminLogin() {
   // const [email, setEmail] = useState("");
@@ -43,7 +43,7 @@ export default function AdminLogin() {
       <Card className="w-full max-w-sm bg-white shadow-lg ">
         <form
           className="space-y-6 p-5"
-          action={authenticate}
+          // action={authenticate}
           method="POST"
           // onSubmit={handleSubmit}
         >
