@@ -7,7 +7,7 @@ import { MdMessage } from "react-icons/md";
 const Navbar = () => {
   const path = usePathname();
   return (
-    <Flex align="center" justify="between" p="4" className="bg-slate-100 ml-5">
+    <Flex align="center" justify="between" p="4" className="bg-slate-100">
       <Text>{path.split("/").pop()?.toUpperCase()}</Text>
       <Flex align="center" gap="3">
         <TextField.Root placeholder="Search">

@@ -2,53 +2,60 @@
 import { Card } from "@radix-ui/themes";
 import { useState } from "react";
 import axios from "axios";
-// import { authenticate } from "../lib/actions";
-
+import { useForm } from "react-hook-form";
+import useToast from "@/hooks/use-snackbar";
+import { useRouter } from "next/navigation";
+import { CredentialsLoginData, credentialLogin } from "@/lib/auth";
+import Image from "next/image";
 export default function AdminLogin() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setError(""); // Clear any previous errors
+  const toast = useToast();
+  const router = useRouter();
 
-  //   try {
-  //     const res = await axios.post("/api/auth/login", {
-  //       email,
-  //       password,
-  //     });
+  const onSubmit = async (loginData: CredentialsLoginData) => {
+    try {
+      const response = await credentialLogin(loginData);
 
-  //     const { token } = res.data;
+      if (!!response.error) {
+        console.error(response.error);
+        toast.showSnackbarError(response.error.message);
+      } else {
+        toast.showSnackbarSuccess("Login successful!");
+        router.push("/dashboard");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.showSnackbarError("Check your Credentials");
+    }
+  };
 
-  //     // Store the token in localStorage (or cookies) for future use
-  //     localStorage.setItem("token", token);
-
-  //     // Redirect to the admin dashboard or another page
-  //     window.location.href = "/dashboard";
-  //   } catch (error: any) {
-  //     console.error("Error logging in:", error);
-  //     setError(
-  //       error.response?.data?.message || "An error occurred. Please try again."
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<CredentialsLoginData>();
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
       <Card className="w-full max-w-sm bg-white shadow-lg ">
         <form
           className="space-y-6 p-5"
-          // action={authenticate}
-          method="POST"
-          // onSubmit={handleSubmit}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit(onSubmit)}
         >
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {!!errors.email && (
+            <div className="text-red-500 text-sm">{!!errors.email}</div>
+          )}
           <div>
+            <Image
+              className="mb-8"
+              src="/admin_panel_logo.png"
+              width={500}
+              height={500}
+              alt="Picture of the author"
+            />
             <label
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -58,12 +65,14 @@ export default function AdminLogin() {
             <div className="mt-2">
               <input
                 id="email"
-                name="email"
                 type="email"
                 autoComplete="email"
+                {...register("email", {
+                  required: "Email is required",
+                })}
                 // onChange={(e) => setEmail(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 bg-gray-200 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="px-3 block w-full rounded-md border-0 py-1.5 bg-gray-200 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -85,19 +94,24 @@ export default function AdminLogin() {
                 </a>
               </div>
             </div>
+
+            {!!errors.password && (
+              <div className="text-red-500 text-sm">{!!errors.password}</div>
+            )}
             <div className="mt-2">
               <input
                 id="password"
-                name="password"
                 type="password"
+                {...register("password", {
+                  required: "Password is required",
+                })}
                 autoComplete="current-password"
                 // onChange={(e) => setPassword(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 bg-gray-200 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="px-3 block w-full rounded-md border-0 py-1.5 bg-gray-200 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-
           <div>
             <button
               type="submit"

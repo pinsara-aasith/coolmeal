@@ -1,28 +1,43 @@
+import { NextRequest, NextResponse } from "next/server";
 import NextAuth from "next-auth";
-// import { authConfig } from "./auth.config";
+import { authOptions } from "./lib/authOptions";
 
-// export default NextAuth(authConfig).auth;
+const { auth } = NextAuth(authOptions);
 
-// export const config = {
-//   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-//   matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-// };
-import { NextResponse } from "next/server";
+export const LOGIN = "/login";
+export const ROOT = "/";
 
-export default function middleware(req: {
-  cookies: { get: (arg0: string) => any };
-  url: string | URL | undefined;
-}) {
-  // Example: Redirect user to login if not authenticated
-  const token = req.cookies.get("authjs.session-token");
+export const PUBLIC_ROUTES = [
+  "/login",
+  "/register",
+  "/api/auth/callback/google",
+  "/api/auth/callback/github",
+];
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
+export const PROTECTED_SUB_ROUTES = ["/dashboard"];
 
-  return NextResponse.next(); // Proceed to the requested route
+export async function middleware(request: NextRequest) {
+  const { nextUrl } = request;
+  const session = await auth();
+  const isAuthenticated = !!session?.user;
+
+  const isPublicRoute =
+    PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) &&
+    !PROTECTED_SUB_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) &&
+    nextUrl.pathname != ROOT;
+
+  if (!isAuthenticated && !isPublicRoute)
+    return Response.redirect(new URL(LOGIN, nextUrl));
 }
 
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard/:path*"], // Apply middleware to specific routes
+  /*
+   * Match all request paths except for the ones starting with:
+   * - api (API routes)
+   * - _next/static (static files)
+   * - favicon.ico (favicon file)
+   */
+  matcher:
+    "/((?!api|_next/static|_next/images|static|favicon.ico|favicon.png).*)",
 };

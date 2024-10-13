@@ -1,16 +1,16 @@
 // app/api/auth/register.ts
 
-import { db } from "@/app/lib/db";
-import userModel from "@/app/lib/userModel";
+import { User } from "@/database/schema";
+import connectToDatabase from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  await db();
+  await connectToDatabase();
   try {
-    const { email, password } = await req.json();
+    const { email, password, name } = await req.json();
 
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "User already exists" },
@@ -19,11 +19,12 @@ export async function POST(req: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new userModel({ email, password: hashedPassword });
+    const newUser = new User({ email, password: hashedPassword, name });
 
     await newUser.save();
     return NextResponse.json({ message: "User registered successfully" });
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { message: "An error occurred. Please try again.", error },
       { status: 500 }
