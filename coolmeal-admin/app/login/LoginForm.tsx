@@ -1,12 +1,11 @@
 "use client";
-import { Card } from "@radix-ui/themes";
-import { useState } from "react";
-import axios from "axios";
-import { useForm } from "react-hook-form";
 import useToast from "@/hooks/use-snackbar";
-import { useRouter } from "next/navigation";
 import { CredentialsLoginData, credentialLogin } from "@/lib/auth";
+import { Card } from "@radix-ui/themes";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +20,7 @@ export default function AdminLogin() {
         console.error(response.error);
         toast.showSnackbarError(response.error.message);
       } else {
+        setLoading(true);
         toast.showSnackbarSuccess("Login successful!");
         router.push("/dashboard");
       }
@@ -51,7 +51,7 @@ export default function AdminLogin() {
           <div>
             <Image
               className="mb-8"
-              src="/admin_panel_logo.png"
+              src="/Logo.png"
               width={500}
               height={500}
               alt="Picture of the author"

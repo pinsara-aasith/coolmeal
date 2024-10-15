@@ -73,6 +73,7 @@ export async function POST(req: NextRequest) {
     });
 
     console.log("Food item added with ID:", docRef.id);
+    console.log(docRef);
     return NextResponse.json({
       message: "Food item successfully added",
       id: docRef.id,

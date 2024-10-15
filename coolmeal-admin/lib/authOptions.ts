@@ -1,11 +1,7 @@
-
-
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import connectToDatabase from "./db";
 import { User } from "@/database/schema";
+import bcrypt from "bcryptjs";
 import NextAuth, { NextAuthConfig } from "next-auth";
-
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthConfig = {
   providers: [
@@ -21,8 +17,8 @@ export const authOptions: NextAuthConfig = {
 
         try {
           const user = await User.findOne({
-            email: credentials?.email
-          })
+            email: credentials?.email,
+          });
           if (user) {
             const isMatch = await bcrypt.compare(
               credentials.password,
@@ -54,4 +50,3 @@ export const {
   signIn,
   signOut,
 } = NextAuth(authOptions);
-
