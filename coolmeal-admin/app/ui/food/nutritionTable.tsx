@@ -62,72 +62,84 @@ const NutritionTable = () => {
         <Search placeholder="search food items" />
       </div>
 
-      <Table.Root className="m-5">
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeaderCell>Food Name</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Energy (Kcal)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Protein (g)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Total Fat (g)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Carbohydrates (g)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>
-              Total Dietary Fibre (g)
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Free Sugar (g)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Starch (g)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Vitamin A (µg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Vitamin D (µg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Vitamin K (µg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Vitamin E (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Calcium (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Phosphorus (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Magnesium (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Sodium (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Potassium (mg)</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>
-              Saturated Fatty Acids (mg)
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>
-              Monounsaturated Fatty Acids (mg)
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>
-              Polyunsaturated Fatty Acids (mg)
-            </Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {filteredfoods.map((food) => (
-            <Table.Row key={food.id}>
-              <Link href={"/dashboard/nutrition/" + food.id}>
-                <Table.Cell>{food.foodName}</Table.Cell>
-              </Link>
-
-              <Table.Cell>{food.energyKcal}</Table.Cell>
-              <Table.Cell>{food.proteinG}</Table.Cell>
-              <Table.Cell>{food.totalFatG}</Table.Cell>
-              <Table.Cell>{food.carbohydratesG}</Table.Cell>
-              <Table.Cell>{food.totalDietaryFibreG}</Table.Cell>
-              <Table.Cell>{food.freeSugarG}</Table.Cell>
-              <Table.Cell>{food.starchG}</Table.Cell>
-              <Table.Cell>{food.vitaminAUg}</Table.Cell>
-              <Table.Cell>{food.vitaminDUg}</Table.Cell>
-              <Table.Cell>{food.viatminKUg}</Table.Cell>
-              <Table.Cell>{food.vitaminEMg}</Table.Cell>
-              <Table.Cell>{food.calciumMg}</Table.Cell>
-              <Table.Cell>{food.phosphorusMg}</Table.Cell>
-              <Table.Cell>{food.magnesiumMg}</Table.Cell>
-              <Table.Cell>{food.sodiumMg}</Table.Cell>
-              <Table.Cell>{food.potassiumMg}</Table.Cell>
-              <Table.Cell>{food.saturatedFattyAcidsMg}</Table.Cell>
-              <Table.Cell>{food.monounsaturatedFattyAcidsMg}</Table.Cell>
-              <Table.Cell>{food.polyunsaturatedFattyAcidsMg}</Table.Cell>
+      {/* Scrollable container for the table */}
+      <div className="overflow-auto max-h-[500px] max-w-full">
+        <Table.Root className="m-5 min-w-[1000px]">
+          <Table.Header>
+            <Table.Row>
+              {mealTableHeader.map((item) => (
+                <Table.ColumnHeaderCell
+                  key={item.id}
+                  className="sticky top-0 bg-white z-10"
+                >
+                  {item.header}
+                </Table.ColumnHeaderCell>
+              ))}
             </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+          </Table.Header>
+
+          <Table.Body>
+            {filteredfoods.map((food) => (
+              <Table.Row key={food.id}>
+                <Link href={"/dashboard/nutrition/" + food.id}>
+                  <Table.Cell>{food.foodName}</Table.Cell>
+                </Link>
+
+                <Table.Cell>{food.energyKcal}</Table.Cell>
+                <Table.Cell>{food.proteinG}</Table.Cell>
+                <Table.Cell>{food.totalFatG}</Table.Cell>
+                <Table.Cell>{food.carbohydratesG}</Table.Cell>
+                <Table.Cell>{food.totalDietaryFibreG}</Table.Cell>
+                <Table.Cell>{food.freeSugarG}</Table.Cell>
+                <Table.Cell>{food.starchG}</Table.Cell>
+                <Table.Cell>{food.vitaminAUg}</Table.Cell>
+                <Table.Cell>{food.vitaminDUg}</Table.Cell>
+                <Table.Cell>{food.viatminKUg}</Table.Cell>
+                <Table.Cell>{food.vitaminEMg}</Table.Cell>
+                <Table.Cell>{food.calciumMg}</Table.Cell>
+                <Table.Cell>{food.phosphorusMg}</Table.Cell>
+                <Table.Cell>{food.magnesiumMg}</Table.Cell>
+                <Table.Cell>{food.sodiumMg}</Table.Cell>
+                <Table.Cell>{food.potassiumMg}</Table.Cell>
+                <Table.Cell>{food.saturatedFattyAcidsMg}</Table.Cell>
+                <Table.Cell>{food.monounsaturatedFattyAcidsMg}</Table.Cell>
+                <Table.Cell>{food.polyunsaturatedFattyAcidsMg}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
+      </div>
     </div>
   );
 };
+
+const mealTableHeader = [
+  { id: "foodName", header: "Food Name" },
+  { id: "energyKcal", header: "Energy (Kcal)" },
+  { id: "proteinG", header: "Protein (g)" },
+  { id: "totalFatG", header: "Total Fat (g)" },
+  { id: "carbohydratesG", header: "Carbohydrates (g)" },
+  { id: "totalDietaryFibreG", header: "Total Dietary Fibre (g)" },
+  { id: "freeSugarG", header: "Free Sugar (g)" },
+  { id: "starchG", header: "Starch (g)" },
+  { id: "vitaminAUg", header: "Vitamin A (µg)" },
+  { id: "vitaminDUg", header: "Vitamin D (µg)" },
+  { id: "viatminKUg", header: "Vitamin K (µg)" },
+  { id: "vitaminEMg", header: "Vitamin E (mg)" },
+  { id: "calciumMg", header: "Calcium (mg)" },
+  { id: "phosphorusMg", header: "Phosphorus (mg)" },
+  { id: "magnesiumMg", header: "Magnesium (mg)" },
+  { id: "sodiumMg", header: "Sodium (mg)" },
+  { id: "potassiumMg", header: "Potassium (mg)" },
+  { id: "saturatedFattyAcidsMg", header: "Saturated Fatty Acids (mg)" },
+  {
+    id: "monounsaturatedFattyAcidsMg",
+    header: "Monounsaturated Fatty Acids (mg)",
+  },
+  {
+    id: "polyunsaturatedFattyAcidsMg",
+    header: "Polyunsaturated Fatty Acids (mg)",
+  },
+];
 
 export default NutritionTable;
