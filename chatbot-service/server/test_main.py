@@ -52,47 +52,43 @@ def test_get_session():
         pytest.fail("session_id is not a valid UUID")
 
 
-# def test_insert_session_data():
-#     # Setup: Create a session in memory_helper for testing
-#     session_id = "test_session"
-#     memory_helper.memory_store[session_id] = ["message 1", "message 2"]
+# test insert session data
+def test_insert_session_data():
+    user_id = "test_user"
+    # First, create a session to get a session_id
+    response = client.post("/getSession", params={"user_id": user_id})
+    session_id = response.json()["session_id"]
 
-#     # Make a POST request to the /insertSessionData endpoint
-#     response = client.post("/insertSessionData", json={"session_id": session_id})
+    # Now, insert session data
+    response = client.post(f"/insertSessionData?session_id={session_id}")
 
-#     # Assert that the response status code is 200 (OK)
+    assert response.status_code == 200
+    data = response.json()
+    print("Data : ", data)
+    assert data["message"] == "Chat history inserted successfully."
+
+
+def test_insert_session_data_not_found():
+    response = client.post("/insertSessionData?session_id=invalid_session_id")
+
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Session not found."}
+
+
+# def test_get_history():
+#     user_id = "test_user"
+
+#     # Simulate creating sessions for the user (you might want to mock this part if necessary)
+#     session_id_1 = str(uuid.uuid4())
+#     session_id_2 = str(uuid.uuid4())
+
+#     # Now, call the endpoint to get history
+#     response = client.get(f"/gethistory?user_id={user_id}")
+
 #     assert response.status_code == 200
-
-#     # Assert that the message is as expected
-#     assert response.json() == {"message": "Chat history inserted successfully."}
-
-
-# def test_list_users():
-#     response = client.get("/users/")
-#     assert response.status_code == 200
-#     assert len(response.json()) == 1
-
-# def test_get_user():
-#     response = client.get("/users/1")
-#     assert response.status_code == 200
-#     assert response.json() == {"id": 1, "name": "John", "age": 30}
-
-# def test_get_non_existing_user():
-#     response = client.get("/users/999")
-#     assert response.status_code == 404
-#     assert response.json() == {"detail": "User not found"}
-
-# def test_update_user():
-#     response = client.put("/users/1", json={"id": 1, "name": "Jane", "age": 32})
-#     assert response.status_code == 200
-#     assert response.json() == {"id": 1, "name": "Jane", "age": 32}
-
-# def test_delete_user():
-#     response = client.delete("/users/1")
-#     assert response.status_code == 200
-#     assert response.json() == {"id": 1, "name": "Jane", "age": 32}
-
-# def test_delete_non_existing_user():
-#     response = client.delete("/users/999")
-#     assert response.status_code == 404
-#     assert response.json() == {"detail": "User not found"}
+#     data = response.json()
+#     print("Data : ", data)
+#     assert "history" in data
+#     assert len(data["history"]) == 2
+#     assert data["history"][0]["session_id"] == session_id_1
+#     assert data["history"][1]["session_id"] == session_id_2
