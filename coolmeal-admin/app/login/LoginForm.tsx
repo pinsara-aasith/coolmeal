@@ -1,17 +1,16 @@
 "use client";
-import { Card } from "@radix-ui/themes";
-import { useState } from "react";
-import axios from "axios";
-import { useForm } from "react-hook-form";
 import useToast from "@/hooks/use-snackbar";
-import { useRouter } from "next/navigation";
 import { CredentialsLoginData, credentialLogin } from "@/lib/auth";
+import { Card } from "@radix-ui/themes";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
 
-  const toast = useToast()
-  const router = useRouter()
+  const toast = useToast();
+  const router = useRouter();
 
   const onSubmit = async (loginData: CredentialsLoginData) => {
     try {
@@ -21,7 +20,8 @@ export default function AdminLogin() {
         console.error(response.error);
         toast.showSnackbarError(response.error.message);
       } else {
-        toast.showSnackbarSuccess('Login successful!')
+        setLoading(true);
+        toast.showSnackbarSuccess("Login successful!");
         router.push("/dashboard");
       }
     } catch (e) {
@@ -29,7 +29,6 @@ export default function AdminLogin() {
       toast.showSnackbarError("Check your Credentials");
     }
   };
-
 
   const {
     register,
@@ -46,11 +45,13 @@ export default function AdminLogin() {
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {!!errors.email && <div className="text-red-500 text-sm">{!!errors.email}</div>}
+          {!!errors.email && (
+            <div className="text-red-500 text-sm">{!!errors.email}</div>
+          )}
           <div>
             <Image
               className="mb-8"
-              src="/admin_panel_logo.png"
+              src="/Logo.png"
               width={500}
               height={500}
               alt="Picture of the author"
@@ -66,8 +67,8 @@ export default function AdminLogin() {
                 id="email"
                 type="email"
                 autoComplete="email"
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                 })}
                 // onChange={(e) => setEmail(e.target.value)}
                 required
@@ -94,13 +95,15 @@ export default function AdminLogin() {
               </div>
             </div>
 
-            {!!errors.password && <div className="text-red-500 text-sm">{!!errors.password}</div>}
+            {!!errors.password && (
+              <div className="text-red-500 text-sm">{!!errors.password}</div>
+            )}
             <div className="mt-2">
               <input
                 id="password"
                 type="password"
-                {...register('password', {
-                  required: 'Password is required',
+                {...register("password", {
+                  required: "Password is required",
                 })}
                 autoComplete="current-password"
                 // onChange={(e) => setPassword(e.target.value)}
@@ -113,8 +116,9 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               {loading ? "Logging in..." : "Login"}
             </button>

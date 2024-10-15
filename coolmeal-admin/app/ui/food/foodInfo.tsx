@@ -1,7 +1,9 @@
 "use client";
-import { Button, Flex, Text } from "@radix-ui/themes";
+import CustomButton from "@/component/CustomButton";
+import { AlertDialog, Button, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -35,59 +37,13 @@ interface Food {
 
 const FoodInfo = ({ params }: Props) => {
   const [food, setFood] = useState<Food | null>(null);
-
-  const nutritions = [
-    {
-      title: "Macronutrients",
-      list: [
-        { title: "Energy", key: "energyKcal" },
-        { title: "Protein", key: "proteinG" },
-        { title: "Total fat", key: "totalFatG" },
-        { title: "Carbohydrates", key: "carbohydratesG" },
-        { title: "Total Dietary Fibre", key: "totalDietaryFibreG" },
-        { title: "Free sugar", key: "freeSugarG" },
-        { title: "Starch", key: "starchG" },
-      ],
-    },
-    {
-      title: "Vitamins",
-      list: [
-        { title: "Vitamin A", key: "vitaminAUg" },
-        { title: "Vitamin D", key: "vitaminDUg" },
-        { title: "Vitamin K", key: "viatminKUg" },
-        { title: "Vitamin E", key: "vitaminEMg" },
-      ],
-    },
-    {
-      title: "Minerals",
-      list: [
-        { title: "Calcium", key: "calciumMg" },
-        { title: "Phosphorus", key: "phosphorusMg" },
-        { title: "Magnesium", key: "magnesiumMg" },
-        { title: "Sodium", key: "sodiumMg" },
-        { title: "Potassium", key: "potassiumMg" },
-      ],
-    },
-    {
-      title: "Fatty Acids",
-      list: [
-        { title: "Saturated Fatty Acids", key: "saturatedFattyAcidsMg" },
-        {
-          title: "Monounsaturated Fatty Acids",
-          key: "monounsaturatedFattyAcidsMg",
-        },
-        {
-          title: "Polyunsaturated Fatty Acids",
-          key: "polyunsaturatedFattyAcidsMg",
-        },
-      ],
-    },
-  ];
+  const router = useRouter();
 
   useEffect(() => {
     const fetchFood = async () => {
       try {
         const response = await axios.get("/api/dashboard/foods/" + params.id);
+        console.log(params.id);
         setFood(response.data);
       } catch (error) {
         console.error("Error fetching food details: ", error);
@@ -95,6 +51,15 @@ const FoodInfo = ({ params }: Props) => {
     };
     fetchFood();
   }, [params]);
+  const deleteFood = async (id: string) => {
+    try {
+      const response = await axios.put("/api/dashboard/foods/" + id);
+      router.push("/dashboard/nutrition");
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching food details: ", error);
+    }
+  };
 
   return (
     <div className="m-5">
@@ -105,10 +70,45 @@ const FoodInfo = ({ params }: Props) => {
         </Flex>
         <Flex gap="5">
           <Link href={"/dashboard/nutrition/add/" + params.id}>
-            <Button type="submit">Edit Food item</Button>
+            <CustomButton type="submit" name="Edit Food item" color="blue" />
           </Link>
+          <AlertDialog.Root>
+            <AlertDialog.Trigger>
+              <Button
+                color="red"
+                type="submit"
+                className="hover:cursor-pointer"
+              >
+                Delete Food item
+              </Button>
+            </AlertDialog.Trigger>
+            <AlertDialog.Content maxWidth="450px">
+              <AlertDialog.Title>Confirm Delete</AlertDialog.Title>
 
-          <Button color="red">Delete Food item</Button>
+              <AlertDialog.Description size="2">
+                Are you sure you want to delete this food item? This action
+                cannot be undone, and the food item will be permanently removed
+                from the database.
+              </AlertDialog.Description>
+
+              <Flex gap="3" mt="4" justify="end">
+                <AlertDialog.Cancel>
+                  <Button variant="soft" color="gray">
+                    Cancel
+                  </Button>
+                </AlertDialog.Cancel>
+                <AlertDialog.Action>
+                  <Button
+                    variant="solid"
+                    color="red"
+                    onClick={() => deleteFood(params.id)}
+                  >
+                    Delete Food item
+                  </Button>
+                </AlertDialog.Action>
+              </Flex>
+            </AlertDialog.Content>
+          </AlertDialog.Root>
         </Flex>
       </Flex>
 
@@ -160,5 +160,53 @@ const FoodInfo = ({ params }: Props) => {
     </div>
   );
 };
+
+export const nutritions = [
+  {
+    title: "Macronutrients",
+    list: [
+      { title: "Energy", key: "energyKcal" },
+      { title: "Protein", key: "proteinG" },
+      { title: "Total fat", key: "totalFatG" },
+      { title: "Carbohydrates", key: "carbohydratesG" },
+      { title: "Total Dietary Fibre", key: "totalDietaryFibreG" },
+      { title: "Free sugar", key: "freeSugarG" },
+      { title: "Starch", key: "starchG" },
+    ],
+  },
+  {
+    title: "Vitamins",
+    list: [
+      { title: "Vitamin A", key: "vitaminAUg" },
+      { title: "Vitamin D", key: "vitaminDUg" },
+      { title: "Vitamin K", key: "viatminKUg" },
+      { title: "Vitamin E", key: "vitaminEMg" },
+    ],
+  },
+  {
+    title: "Minerals",
+    list: [
+      { title: "Calcium", key: "calciumMg" },
+      { title: "Phosphorus", key: "phosphorusMg" },
+      { title: "Magnesium", key: "magnesiumMg" },
+      { title: "Sodium", key: "sodiumMg" },
+      { title: "Potassium", key: "potassiumMg" },
+    ],
+  },
+  {
+    title: "Fatty Acids",
+    list: [
+      { title: "Saturated Fatty Acids", key: "saturatedFattyAcidsMg" },
+      {
+        title: "Monounsaturated Fatty Acids",
+        key: "monounsaturatedFattyAcidsMg",
+      },
+      {
+        title: "Polyunsaturated Fatty Acids",
+        key: "polyunsaturatedFattyAcidsMg",
+      },
+    ],
+  },
+];
 
 export default FoodInfo;
