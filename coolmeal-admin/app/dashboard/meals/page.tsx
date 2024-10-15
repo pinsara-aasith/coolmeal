@@ -3,7 +3,7 @@ import React from "react";
 
 const Meals = () => {
   return (
-    <div>
+    <div data-testid="meal-table">
       <MealTable />
     </div>
   );
