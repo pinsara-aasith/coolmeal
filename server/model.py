@@ -1,16 +1,41 @@
-import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
 import pickle
+from sklearn.model_selection import train_test_split
+import requests
+import pandas as pd
 
+weights = {
+    'Price': 2.5,
+    'Total Energy(Kcal)': 2,
+    'Total Protein(g)': 2.2,
+    'Total Total fat(g)': 0.5,
+    'Total Carbohydrates(g)': 0.5,
+    'Total Magnesium(mg)': 0.05,
+    'Total Sodium(mg)': 0.05,
+    'Total Potassium(mg)': 0.05,
+    'Total Saturated Fatty Acids(mg)': 0.2,
+    'Total Monounsaturated Fatty Acids(mg)': 0.05,
+    'Total Polyunsaturated Fatty Acids(mg)': 0.1,
+    'Total Free sugar(g)': 0.5,
+    'Total Starch(g)': 0.1
+}
+
+
+def apply_weights(X, columns = []):
+    X = pd.DataFrame(X, columns=columns)
+    for feature, weight in weights.items():
+        if feature in columns:
+            X[feature] *= weight
+    return X
 
 def train_knn_model(
     n_neighbors=1,
     metric="cosine",
     algorithm="brute",
-    model_filename="knn_model.pkl",
+    model_filename="ml_model.pkl",
 ):
     """
     Trains a K-Nearest Neighbors model, saves it as a pickle file, and returns the pipeline.
@@ -24,28 +49,30 @@ def train_knn_model(
     """
 
     # Load the data
-    df = pd.read_csv("./final_meal_combinations_dataset.csv")
-    print("data set  loaded successfully --------------------- ")
+    df_final = pd.read_csv('./FinalPermutations.csv')
+    columns = list(weights.keys())
 
-    # Standarize the nutrient data
+    df_final["Meal_Plan"] = df_final.apply(lambda x : f'{x["Breakfast"]} / {x["Lunch"]} / {x["Dinner"]}', axis=1)
+
+    X = df_final[columns]
+    y = df_final['Meal_Plan']
+
     scaler = StandardScaler()
-    prep_data = scaler.fit_transform(df.iloc[:, 4:].to_numpy())
+    prep_data = scaler.fit_transform(df_final[columns].to_numpy())
+    prep_data = apply_weights(prep_data, columns=columns)
+    weight_transformer = FunctionTransformer(apply_weights, validate=False, kw_args={"columns": columns})
 
-    # Initialize KNN model
-    neigh = NearestNeighbors(
-        metric=metric, algorithm=algorithm, n_neighbors=n_neighbors
-    )
+    neigh = NearestNeighbors(metric=metric, algorithm=algorithm, n_neighbors=n_neighbors)
     neigh.fit(prep_data)
-    print("KNN model trained successfully --------------------- ")
-
-    # Create a transformer for KNN
-    transformer = FunctionTransformer(
-        neigh.kneighbors, kw_args={"return_distance": False}
-    )
-
-    # Create the pipeline
-    pipeline = Pipeline([("std_scaler", scaler), ("NN", transformer)])
-    print("pipeline created successfully --------------------- ")
+    
+    nn_transformer = FunctionTransformer(neigh.kneighbors, kw_args={"return_distance": False})
+  
+    pipeline = Pipeline(steps=[
+        ('std_scaler', scaler),
+        ('weighting', weight_transformer ),
+        ('NN', nn_transformer)
+    ])
+    print("pipeline created successfully... ")
 
     # Save the pipeline to a pickle file
     with open(model_filename, "wb") as f:
@@ -55,7 +82,7 @@ def train_knn_model(
     return pipeline
 
 
-def predict_knn(model_filename, input_data):
+def predict_knn(model_filename="kmm_model.pkl", input_data=[]):
     """
     Loads a KNN model from a pickle file and makes predictions on the input data.
 
