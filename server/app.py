@@ -26,7 +26,7 @@ def read_prediction(request: UserRequest):
     nut_result = fuzzy_recommend_nutrients(request.age, request.weight, request.height)
     tot_bmr = calculate_bmr(request.weight, request.height, request.age, request.gender)
     tot_kalories = calculate_daily_calories(tot_bmr, request.activity_level)
-    print("Proteiiinnnnn :::::::: ", nut_result["protein"])
+    
     input_data = [
         [
             tot_kalories,
