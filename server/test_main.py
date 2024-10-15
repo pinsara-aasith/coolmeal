@@ -21,7 +21,8 @@ def test_read_prediction():
         "height": 175.0,
         "age": 30,
         "gender": "male",
-        "activity_level": "",
+        "activity_level": "sedentary",
+        "price": 10000.00,
     }
 
     # Send a POST request to the /prediction endpoint
@@ -67,7 +68,8 @@ def test_read_prediction_check_all_attr():
         "height": 175.0,
         "age": 30,
         "gender": "male",
-        "activity_level": "moderate",  # Assuming valid activity level
+        "activity_level": "sedentary",
+        "price": 10000.00,
     }
 
     # Send a POST request to the /prediction endpoint
@@ -138,6 +140,7 @@ def test_invalid_input_data():
         "age": 30,
         "gender": "male",
         "activity_level": "moderate",
+        "price": 10000.00,
     }
 
     # Send a POST request to the /prediction endpoint
