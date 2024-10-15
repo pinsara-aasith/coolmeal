@@ -120,4 +120,5 @@ dmypy.json
 .vscode/
 .DS_Store
 
+FinalPermutations.csv
 # End of list
