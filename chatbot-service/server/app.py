@@ -88,7 +88,7 @@ async def end_session(session_id: str):
     }
 
     await mongodb_helper.insert_chat_history(chat_history_data)
-    print("Chat history inserted successfully --------------------- ")
+    print("Chat history inserted successfully ---------------------")
     return {"message": "Chat history inserted successfully."}
 
 

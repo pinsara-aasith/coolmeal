@@ -17,7 +17,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   final List<String> _responses = ["Hi !! I am food related chat bot . "];
   // For set circular process indicater
   bool _isLoading = false;
-
+  var historyMessages = [];
   String sessionId = '';
 
   // get current user id from firebase
@@ -59,12 +59,42 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     }
   }
 
+  // Method to call the API
+  Future<void> fetchChatHistory() async {
+    print('Fetching chat history...');
+    final url =
+        'http://13.60.182.147/gethistory?user_id=$user'; // Replace with your actual API URL
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        print("Response: ${response.body}");
+        // If the server returns a successful response
+        final data = jsonDecode(response.body);
+
+        // Parse the "history" array
+        List history = data['history'];
+        setState(() {
+          historyMessages = history;
+        });
+        print(historyMessages);
+      } else {
+        // Handle error
+        print('Failed to load chat history');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   //print user id
   @override
   void initState() {
     super.initState();
     print('User ID: $user');
     _postRequest();
+    fetchChatHistory();
   }
 
   @override
@@ -76,7 +106,9 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   void _triggerMethodOnLeave() async {
     print('Leaving ChatbotScreen tab');
-    await _insertSessionData(); // Call the method to perform the GET request
+    if (_messages.length > 1) {
+      await _insertSessionData();
+    }
   }
 
   Future<void> _insertSessionData() async {
@@ -136,13 +168,13 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     }
   }
 
-  //Dummy history data
-  final List<String> _historyMessages = [
-    "User: What is Flutter?",
-    "AI: Flutter is an open-source UI software development kit.",
-    "User: How does state management work?",
-    "AI: There are various methods, like Provider, Riverpod, etc."
-  ];
+  // //Dummy history data
+  // final List<String> _historyMessages = [
+  //   "User: What is Flutter?",
+  //   "AI: Flutter is an open-source UI software development kit.",
+  //   "User: How does state management work?",
+  //   "AI: There are various methods, like Provider, Riverpod, etc."
+  // ];
 
   void printPop() {
     print('Popping the screen');
@@ -176,7 +208,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
           margin: const EdgeInsets.symmetric(vertical: 0),
           color: Colors.white, // Background color of the drawer
           child: ListView.builder(
-            itemCount: _historyMessages.length,
+            itemCount: historyMessages.length,
             itemBuilder: (context, index) {
               return Container(
                 margin: const EdgeInsets.symmetric(
@@ -198,7 +230,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   leading: const Icon(Icons.message,
                       color: Colors.teal), // Icon color
                   title: Text(
-                    _historyMessages[index],
+                    historyMessages[index][1],
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400, // Medium font weight
