@@ -1,37 +1,32 @@
 from model import predict_knn
 import pandas as pd
 
-# To get the actual rows from the dataframe corresponding to the predictions:
-df = pd.read_csv("./final_meal_combinations_dataset.csv")
-
-
 # Function to calculate differences
 def calculate_difference(net_result, output):
     differences = {}
-
-    differences["protein"] = net_result["protein"] - output["Total Protein (g)"]
-    differences["fat"] = net_result["fat"] - output["Total Fat (g)"]
+    differences["protein"] = net_result["protein"] - output["Total Protein(g)"]
+    differences["fat"] = net_result["fat"] - output["Total Total fat(g)"]
     differences["carbohydrates"] = (
-        net_result["carbohydrates"] - output["Total Carbohydrates (g)"]
+        net_result["carbohydrates"] - output["Total Carbohydrates(g)"]
     )
-    differences["magnesium"] = net_result["magnesium"] - output["Total Magnesium (mg)"]
-    differences["sodium"] = net_result["sodium"] - output["Total Sodium (mg)"]
-    differences["potassium"] = net_result["potassium"] - output["Total Potassium (mg)"]
+    differences["magnesium"] = net_result["magnesium"] - output["Total Magnesium(mg)"]
+    differences["sodium"] = net_result["sodium"] - output["Total Sodium(mg)"]
+    differences["potassium"] = net_result["potassium"] - output["Total Potassium(mg)"]
     differences["saturated_fats"] = (
-        net_result["saturated_fats"] - output["Total Saturated Fatty Acids (mg)"]
+        net_result["saturated_fats"] - output["Total Saturated Fatty Acids(mg)"]
     )
     differences["monounsaturated_fats"] = (
         net_result["monounsaturated_fats"]
-        - output["Total Monounsaturated Fatty Acids (mg)"]
+        - output["Total Monounsaturated Fatty Acids(mg)"]
     )
     differences["polyunsaturated_fats"] = (
         net_result["polyunsaturated_fats"]
-        - output["Total Polyunsaturated Fatty Acids (mg)"]
+        - output["Total Polyunsaturated Fatty Acids(mg)"]
     )
     differences["free_sugar"] = (
-        net_result["free_sugar"] - output["Total Free Sugar (g)"]
+        net_result["free_sugar"] - output["Total Free sugar(g)"]
     )
-    differences["starch"] = net_result["starch"] - output["Total Starch (g)"]
+    differences["starch"] = net_result["starch"] - output["Total Starch(g)"]
 
     return differences
 
@@ -45,8 +40,7 @@ def calculateNewNetResult(net_result, difference):
     return new_net_result
 
 
-def week_prediction(net_result, total_calories, output, meal_plans):
-    print("week_prediction function called")
+def week_prediction(df, price,net_result, total_calories, output, meal_plans):
     for i in range(6):
         differences = calculate_difference(net_result, output)
         net_result = calculateNewNetResult(net_result, differences)
@@ -54,15 +48,16 @@ def week_prediction(net_result, total_calories, output, meal_plans):
         print(net_result)
         print(
             "Calory difference ------------------------------------ ",
-            total_calories - output["Total Energy (Kcal)"],
+            total_calories - output["Total Energy(Kcal)"],
         )
         total_calories = total_calories + (
-            total_calories - output["Total Energy (Kcal)"]
+            total_calories - output["Total Energy(Kcal)"]
         )
         print("Total Calories ------------------------------------ ")
         print(total_calories)
         input_data = [
             [
+                price,
                 total_calories,
                 net_result["protein"],
                 net_result["fat"],
@@ -77,7 +72,9 @@ def week_prediction(net_result, total_calories, output, meal_plans):
                 net_result["starch"],
             ]
         ]
-        prediction = predict_knn("knn_model.pkl", input_data)
+
+        prediction = predict_knn("ml_model.pkl", input_data)
+
         output = df.iloc[prediction[0]].to_dict(orient="records")
         output = output[0]
         meal_plans.append(output)
