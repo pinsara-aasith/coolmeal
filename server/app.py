@@ -63,9 +63,12 @@ def read_prediction(request: UserRequest):
         ]
     ]
 
+    print(input_data)
     prediction = predict_knn("ml_model.pkl", input_data)
+    print(prediction)
     output = df.iloc[prediction[0]].to_dict(orient="records")
 
+    print(output[0])
     meal_plans.append(output[0])
 
     week_plan = week_prediction(

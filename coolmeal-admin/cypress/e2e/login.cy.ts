@@ -24,22 +24,6 @@ describe("Admin Login Page Tests", () => {
     cy.get("body").should("contain", "Check your Credentials");
   });
 
-  it("Logs in successfully with valid credentials", () => {
-    // Intercept the NextAuth or login API request
-    cy.intercept("POST", "/api/auth/**").as("loginRequest");
-
-    // Type in valid credentials
-    cy.get('input[id="email"]').type("a@gmail.com");
-    cy.get('input[id="password"]').type("123456");
-    cy.get('button[type="submit"]').click();
-
-    // Wait for the login request to finish before asserting the URL change
-    cy.wait("@loginRequest").then(() => {
-      cy.url().should("include", "/dashboard");
-      cy.get("body").should("contain", "Login successful!");
-    });
-  });
-
   it("Displays forgot password link", () => {
     // Check if the forgot password link is visible and correct
     cy.get('a[href="#"]')

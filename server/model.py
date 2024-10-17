@@ -8,28 +8,29 @@ import requests
 import pandas as pd
 
 weights = {
-    'Price': 2.5,
-    'Total Energy(Kcal)': 2,
-    'Total Protein(g)': 2.2,
-    'Total Total fat(g)': 0.5,
-    'Total Carbohydrates(g)': 0.5,
-    'Total Magnesium(mg)': 0.05,
-    'Total Sodium(mg)': 0.05,
-    'Total Potassium(mg)': 0.05,
-    'Total Saturated Fatty Acids(mg)': 0.2,
-    'Total Monounsaturated Fatty Acids(mg)': 0.05,
-    'Total Polyunsaturated Fatty Acids(mg)': 0.1,
-    'Total Free sugar(g)': 0.5,
-    'Total Starch(g)': 0.1
+    "Price": 0.5,
+    "Total Energy(Kcal)": 2,
+    "Total Protein(g)": 2.2,
+    "Total Total fat(g)": 0.5,
+    "Total Carbohydrates(g)": 0.5,
+    "Total Magnesium(mg)": 0.05,
+    "Total Sodium(mg)": 0.05,
+    "Total Potassium(mg)": 0.05,
+    "Total Saturated Fatty Acids(mg)": 0.2,
+    "Total Monounsaturated Fatty Acids(mg)": 0.05,
+    "Total Polyunsaturated Fatty Acids(mg)": 0.1,
+    "Total Free sugar(g)": 0.5,
+    "Total Starch(g)": 0.1,
 }
 
 
-def apply_weights(X, columns = []):
+def apply_weights(X, columns=[]):
     X = pd.DataFrame(X, columns=columns)
     for feature, weight in weights.items():
         if feature in columns:
             X[feature] *= weight
     return X
+
 
 def train_knn_model(
     n_neighbors=1,
@@ -49,29 +50,39 @@ def train_knn_model(
     """
 
     # Load the data
-    df_final = pd.read_csv('./FinalPermutations.csv')
+    df_final = pd.read_csv("./FinalPermutations.csv")
     columns = list(weights.keys())
 
-    df_final["Meal_Plan"] = df_final.apply(lambda x : f'{x["Breakfast"]} / {x["Lunch"]} / {x["Dinner"]}', axis=1)
+    df_final["Meal_Plan"] = df_final.apply(
+        lambda x: f'{x["Breakfast"]} / {x["Lunch"]} / {x["Dinner"]}', axis=1
+    )
 
     X = df_final[columns]
-    y = df_final['Meal_Plan']
+    y = df_final["Meal_Plan"]
 
     scaler = StandardScaler()
     prep_data = scaler.fit_transform(df_final[columns].to_numpy())
     prep_data = apply_weights(prep_data, columns=columns)
-    weight_transformer = FunctionTransformer(apply_weights, validate=False, kw_args={"columns": columns})
+    weight_transformer = FunctionTransformer(
+        apply_weights, validate=False, kw_args={"columns": columns}
+    )
 
-    neigh = NearestNeighbors(metric=metric, algorithm=algorithm, n_neighbors=n_neighbors)
+    neigh = NearestNeighbors(
+        metric=metric, algorithm=algorithm, n_neighbors=n_neighbors
+    )
     neigh.fit(prep_data)
-    
-    nn_transformer = FunctionTransformer(neigh.kneighbors, kw_args={"return_distance": False})
-  
-    pipeline = Pipeline(steps=[
-        ('std_scaler', scaler),
-        ('weighting', weight_transformer ),
-        ('NN', nn_transformer)
-    ])
+
+    nn_transformer = FunctionTransformer(
+        neigh.kneighbors, kw_args={"return_distance": False}
+    )
+
+    pipeline = Pipeline(
+        steps=[
+            ("std_scaler", scaler),
+            ("weighting", weight_transformer),
+            ("NN", nn_transformer),
+        ]
+    )
     print("pipeline created successfully... ")
 
     # Save the pipeline to a pickle file

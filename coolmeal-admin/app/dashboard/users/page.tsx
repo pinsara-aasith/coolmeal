@@ -3,7 +3,7 @@ import UserTable from "../../ui/user/usertable";
 
 const Users = () => {
   return (
-    <div>
+    <div data-testid="user-table">
       <UserTable />
     </div>
   );

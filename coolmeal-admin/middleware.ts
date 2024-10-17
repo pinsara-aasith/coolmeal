@@ -12,9 +12,10 @@ export const PUBLIC_ROUTES = [
   "/register",
   "/api/auth/callback/google",
   "/api/auth/callback/github",
+  "/dashboard",
 ];
 
-export const PROTECTED_SUB_ROUTES = ["/dashboard"];
+export const PROTECTED_SUB_ROUTES = [""];
 
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
