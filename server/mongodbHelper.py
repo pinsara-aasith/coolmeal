@@ -143,7 +143,7 @@ async def get_top_50_dinner_meals():
 
 
 # Add method to insert new meal plan to the database  meal_plan_collection
-async def insert_meal_plan(meal_plan):
+async def insert_new_meal_plan(meal_plan):
     try:
         result = meal_plan_collection.insert_one(meal_plan)
         print(f"Meal plan inserted with ID: {result}")
@@ -162,3 +162,13 @@ async def get_last_index():
     except OperationFailure as e:
         print(f"Find operation failed: {e}")
         return None
+
+
+# create method for insert new final meal to the database  final_meals_collection
+async def insert_new_final_meal(final_meal):
+    try:
+        result = final_meals_collection.insert_one(final_meal)
+        print(f"Final meal inserted with ID: {result}")
+    except OperationFailure as e:
+        print(f"Insert operation failed: {e}")
+    return result

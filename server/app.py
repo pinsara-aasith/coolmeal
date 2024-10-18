@@ -1,9 +1,10 @@
 import os
 import requests
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
+from schema.meal_plan import MealPlan
 from fastapi import FastAPI, HTTPException
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
@@ -20,6 +21,7 @@ from mongodbHelper import (
     get_top_50_dinner_meals,
     get_total_meal_plans_count,
     get_last_index,
+    insert_new_meal_plan,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -272,8 +274,27 @@ async def get_last_meal_plan_api():
         )
 
 
+@app.post(
+    "/add-new-meal-plan", response_description="Add new meal plan", status_code=201
+)
+async def create_meal_plan(meal_plan: MealPlan):
+    try:
+        meal_plan_dict = meal_plan.dict()
+        new_meal_plan_result = await insert_new_meal_plan(meal_plan_dict)
+        return JSONResponse(status_code=201, content={"data": new_meal_plan_result})
 
-
+    except ValueError as ve:
+        # Handle specific ValueError exceptions
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(ve),  # Include the error message
+        )
+    except Exception as e:
+        # Handle any other exceptions
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred while creating the meal plan.",  # General error message
+        )
 
 
 print("App is running on port 8000 ****************************************")
