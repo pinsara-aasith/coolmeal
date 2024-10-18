@@ -5,6 +5,7 @@ from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
 from schema.meal_plan import MealPlan
+from schema.meal import Meal
 from fastapi import FastAPI, HTTPException
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
@@ -22,6 +23,7 @@ from mongodbHelper import (
     get_total_meal_plans_count,
     get_last_index,
     insert_new_meal_plan,
+    insert_new_final_meal,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -280,8 +282,8 @@ async def get_last_meal_plan_api():
 async def create_meal_plan(meal_plan: MealPlan):
     try:
         meal_plan_dict = meal_plan.dict()
-        new_meal_plan_result = await insert_new_meal_plan(meal_plan_dict)
-        return JSONResponse(status_code=201, content={"data": new_meal_plan_result})
+        print(meal_plan_dict)
+        return JSONResponse(status_code=201, content={"data": "---"})
 
     except ValueError as ve:
         # Handle specific ValueError exceptions
@@ -295,6 +297,23 @@ async def create_meal_plan(meal_plan: MealPlan):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An error occurred while creating the meal plan.",  # General error message
         )
+
+
+@app.post("/add-new-meal", response_description="Add new meal", status_code=201)
+async def add_meal(meal: Meal):
+    try:
+        # Convert Pydantic model to dictionary
+        meal_data = meal.dict()
+
+        # Simulate inserting meal to the database
+        new_meal = await insert_new_final_meal(meal_data)
+
+        # Return the inserted meal as a response
+        return {"status": "success", "data": new_meal}
+
+    except Exception as e:
+        # Handle any unexpected errors
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
 print("App is running on port 8000 ****************************************")
