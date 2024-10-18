@@ -1,15 +1,18 @@
 import os
 import requests
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
+from schema.meal_plan import MealPlan
+from schema.meal import Meal
 from fastapi import FastAPI, HTTPException
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
 from model import train_knn_model
 from model import predict_knn
 from week_prediction import week_prediction
+from admin_helper import add_new_meal_plan
 from mongodbHelper import (
     get_meal_plan_by_index,
     serialize_meal_plan,
@@ -18,6 +21,10 @@ from mongodbHelper import (
     get_top_50_breakfast_meals,
     get_top_50_lunch_meals,
     get_top_50_dinner_meals,
+    get_total_meal_plans_count,
+    get_last_index,
+    insert_new_meal_plan,
+    insert_new_final_meal,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -238,6 +245,79 @@ async def get_top_50_dinner_meals_api():
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
+
+
+# add get api end point for get all meal plans count
+@app.get("/get-total-meal-plans-count")
+async def get_total_meal_plans_count_api():
+    try:
+
+        count = await get_total_meal_plans_count()
+
+        return JSONResponse(status_code=200, content={"count": count})
+
+    except Exception as e:
+        # Catch any exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+# create method for last meal plan index
+@app.get("/get-last-meal-plan-index")
+async def get_last_meal_plan_api():
+    try:
+        last_index = await get_last_index()
+        return JSONResponse(status_code=200, content={"last_index": last_index})
+
+    except Exception as e:
+        # Catch any exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+@app.post(
+    "/add-new-meal-plan", response_description="Add new meal plan", status_code=201
+)
+async def create_meal_plan(meal_plan: MealPlan):
+    try:
+        meal_plan_dict = meal_plan.dict()
+        print(meal_plan_dict)
+        await add_new_meal_plan(meal_plan_dict)
+        return JSONResponse(status_code=201, content={"data": "Success"})
+
+    except ValueError as ve:
+        # Handle specific ValueError exceptions
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(ve),  # Include the error message
+        )
+    except Exception as e:
+        # Handle any other exceptions
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred while creating the meal plan.",  # General error message
+        )
+
+
+@app.post("/add-new-meal", response_description="Add new meal", status_code=201)
+async def add_meal(meal: Meal):
+    print(meal)
+
+    try:
+        # Convert Pydantic model to dictionary
+        meal_data = meal.dict()
+        print(meal_data)
+        # Simulate inserting meal to the database
+        new_meal = await insert_new_final_meal(meal_data)
+
+        # Return the inserted meal as a response
+        return {"status": "success", "data": str(new_meal["_id"])}
+
+    except Exception as e:
+        # Handle any unexpected errors
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
 print("App is running on port 8000 ****************************************")

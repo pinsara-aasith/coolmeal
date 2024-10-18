@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from fastapi import HTTPException
 from pymongo.errors import ConnectionFailure, OperationFailure
 from dotenv import load_dotenv
 
@@ -140,3 +141,39 @@ async def get_top_50_dinner_meals():
     except OperationFailure as e:
         print(f"Find operation failed: {e}")
     return meals
+
+
+# Add method to insert new meal plan to the database  meal_plan_collection
+async def insert_new_meal_plan(meal_plan):
+    try:
+        result = meal_plan_collection.insert_one(meal_plan)
+        print(f"Meal plan inserted with ID: {result}")
+    except OperationFailure as e:
+        print(f"Insert operation failed: {e}")
+    return result
+
+
+# create method for get last document 'index' value in meal_plan_collection
+async def get_last_index():
+    try:
+        result = meal_plan_collection.find().sort("index", -1).limit(1)
+        print(f"Last index found: {result}")
+        for document in result:
+            return document["index"]
+    except OperationFailure as e:
+        print(f"Find operation failed: {e}")
+        return None
+
+
+# Create method for insert new final meal to the database final_meals_collection
+async def insert_new_final_meal(final_meal):
+    try:
+        result = final_meals_collection.insert_one(final_meal)
+        # Retrieve the inserted meal using the ID
+        inserted_meal = final_meals_collection.find_one({"_id": result.inserted_id})
+        return inserted_meal
+    except OperationFailure as e:
+        print(f"Insert operation failed: {e}")
+        raise HTTPException(
+            status_code=500, detail=f"Insert operation failed: {str(e)}"
+        )
