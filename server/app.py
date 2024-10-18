@@ -15,6 +15,9 @@ from mongodbHelper import (
     serialize_meal_plan,
     get_all_meal_plans,
     get_meal_by_name,
+    get_top_50_breakfast_meals,
+    get_top_50_lunch_meals,
+    get_top_50_dinner_meals,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -157,4 +160,84 @@ async def get_meal_by_name_api(name: str):
         )
 
 
-print("App is running on port 8000")
+# Get Breakfast top 50 meals
+@app.get("/get-top-50-breakfast-meals")
+async def get_top_50_breakfast_meals_api():
+    try:
+        # Assuming get_top_50_breakfast_meals is a function that returns a list of MongoDB documents
+        meals = await get_top_50_breakfast_meals()
+
+        if not meals:
+            # If meals is None or empty, raise a 404 exception
+            raise HTTPException(status_code=404, detail="Meals not found")
+
+        # Serialize ObjectId to make it JSON serializable
+        serialized_meals = [serialize_meal_plan(meal) for meal in meals]
+
+        return JSONResponse(status_code=200, content={"meals": serialized_meals})
+
+    except HTTPException as e:
+        # Catch HTTP exceptions like the one raised above
+        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+
+    except Exception as e:
+        # Catch any other exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+# Get Lunch top 50 meals
+@app.get("/get-top-50-lunch-meals")
+async def get_top_50_lunch_meals_api():
+    try:
+        # Assuming get_top_50_lunch_meals is a function that returns a list of MongoDB documents
+        meals = await get_top_50_lunch_meals()
+
+        if not meals:
+            # If meals is None or empty, raise a 404 exception
+            raise HTTPException(status_code=404, detail="Meals not found")
+
+        # Serialize ObjectId to make it JSON serializable
+        serialized_meals = [serialize_meal_plan(meal) for meal in meals]
+
+        return JSONResponse(status_code=200, content={"meals": serialized_meals})
+
+    except HTTPException as e:
+        # Catch HTTP exceptions like the one raised above
+        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+
+    except Exception as e:
+        # Catch any other exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+@app.get("/get-top-50-dinner-meals")
+async def get_top_50_dinner_meals_api():
+    try:
+        # Assuming get_top_50_dinner_meals is a function that returns a list of MongoDB documents
+        meals = await get_top_50_dinner_meals()
+
+        if not meals:
+            # If meals is None or empty, raise a 404 exception
+            raise HTTPException(status_code=404, detail="Meals not found")
+
+        # Serialize ObjectId to make it JSON serializable
+        serialized_meals = [serialize_meal_plan(meal) for meal in meals]
+
+        return JSONResponse(status_code=200, content={"meals": serialized_meals})
+
+    except HTTPException as e:
+        # Catch HTTP exceptions like the one raised above
+        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+
+    except Exception as e:
+        # Catch any other exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+print("App is running on port 8000 ****************************************")
