@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from fastapi import HTTPException
 from pymongo.errors import ConnectionFailure, OperationFailure
 from dotenv import load_dotenv
 
@@ -164,11 +165,15 @@ async def get_last_index():
         return None
 
 
-# create method for insert new final meal to the database  final_meals_collection
+# Create method for insert new final meal to the database final_meals_collection
 async def insert_new_final_meal(final_meal):
     try:
         result = final_meals_collection.insert_one(final_meal)
-        print(f"Final meal inserted with ID: {result}")
+        # Retrieve the inserted meal using the ID
+        inserted_meal = final_meals_collection.find_one({"_id": result.inserted_id})
+        return inserted_meal
     except OperationFailure as e:
         print(f"Insert operation failed: {e}")
-    return result
+        raise HTTPException(
+            status_code=500, detail=f"Insert operation failed: {str(e)}"
+        )

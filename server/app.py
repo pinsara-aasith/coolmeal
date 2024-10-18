@@ -303,15 +303,17 @@ async def create_meal_plan(meal_plan: MealPlan):
 
 @app.post("/add-new-meal", response_description="Add new meal", status_code=201)
 async def add_meal(meal: Meal):
+    print(meal)
+
     try:
         # Convert Pydantic model to dictionary
         meal_data = meal.dict()
-
+        print(meal_data)
         # Simulate inserting meal to the database
         new_meal = await insert_new_final_meal(meal_data)
 
         # Return the inserted meal as a response
-        return {"status": "success", "data": new_meal}
+        return {"status": "success", "data": str(new_meal["_id"])}
 
     except Exception as e:
         # Handle any unexpected errors
