@@ -14,6 +14,7 @@ from mongodbHelper import (
     get_meal_plan_by_index,
     serialize_meal_plan,
     get_all_meal_plans,
+    get_meal_by_name,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -110,6 +111,36 @@ async def getMealPlanByIndex(index: int):
 
         # Serialize ObjectId to make it JSON serializable
         serialized_meal_plan = serialize_meal_plan(meal_plan)
+
+        return JSONResponse(
+            status_code=200, content={"meal_plan": serialized_meal_plan}
+        )
+
+    except HTTPException as e:
+        # Catch HTTP exceptions like the one raised above
+        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+
+    except Exception as e:
+        # Catch any other exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+# create a new endpoint for getting get_meal_by_name
+@app.get("/get-mealplan-name")
+async def get_meal_by_name_api(name: str):
+    try:
+        print("name  ::::  ", name)
+        # Assuming get_meal_by_name is a function that returns a MongoDB document
+        meal = await get_meal_by_name(name)
+
+        if not meal:
+            # If meal_plan is None or empty, raise a 404 exception
+            raise HTTPException(status_code=404, detail="Meal plan not found")
+
+        # Serialize ObjectId to make it JSON serializable
+        serialized_meal_plan = serialize_meal_plan(meal)
 
         return JSONResponse(
             status_code=200, content={"meal_plan": serialized_meal_plan}
