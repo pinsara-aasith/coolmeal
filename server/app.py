@@ -4,12 +4,17 @@ import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from schema.userRequest import UserRequest
+from fastapi import FastAPI, HTTPException
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
 from model import train_knn_model
 from model import predict_knn
 from week_prediction import week_prediction
-from mongodbHelper import get_meal_plan_by_index
+from mongodbHelper import (
+    get_meal_plan_by_index,
+    serialize_meal_plan,
+    get_all_meal_plans,
+)
 
 if not os.path.exists("./FinalPermutations.csv"):
     s3_url = "https://coolmeal.s3.amazonaws.com/FinalPermutations.csv"
@@ -43,6 +48,10 @@ app = FastAPI()
 
 df = pd.read_csv("./FinalPermutations.csv")
 print("Data set read successfully --------------------- ")
+
+
+model = train_knn_model()
+print("Model trained successfully --------------------- ")
 
 
 @app.get("/")
@@ -89,12 +98,32 @@ def read_prediction(request: UserRequest):
     return JSONResponse(status_code=200, content={"prediction": week_plan})
 
 
-model = train_knn_model()
-print("Model trained successfully --------------------- ")
+@app.get("/get-mealplan-index")
+async def getMealPlanByIndex(index: int):
+    try:
+        # Assuming get_meal_plan_by_index is a function that returns a MongoDB document
+        meal_plan = await get_meal_plan_by_index(index)
 
-print("----///////////////////////////----------------------")
+        if not meal_plan:
+            # If meal_plan is None or empty, raise a 404 exception
+            raise HTTPException(status_code=404, detail="Meal plan not found")
 
-get_meal_plan_by_index(500)
+        # Serialize ObjectId to make it JSON serializable
+        serialized_meal_plan = serialize_meal_plan(meal_plan)
+
+        return JSONResponse(
+            status_code=200, content={"meal_plan": serialized_meal_plan}
+        )
+
+    except HTTPException as e:
+        # Catch HTTP exceptions like the one raised above
+        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+
+    except Exception as e:
+        # Catch any other exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
 
 
 print("App is running on port 8000")
