@@ -12,6 +12,7 @@ from bmr import calculate_bmr, calculate_daily_calories
 from model import train_knn_model
 from model import predict_knn
 from week_prediction import week_prediction
+from admin_helper import add_new_meal_plan
 from mongodbHelper import (
     get_meal_plan_by_index,
     serialize_meal_plan,
@@ -283,7 +284,8 @@ async def create_meal_plan(meal_plan: MealPlan):
     try:
         meal_plan_dict = meal_plan.dict()
         print(meal_plan_dict)
-        return JSONResponse(status_code=201, content={"data": "---"})
+        await add_new_meal_plan(meal_plan_dict)
+        return JSONResponse(status_code=201, content={"data": "Success"})
 
     except ValueError as ve:
         # Handle specific ValueError exceptions

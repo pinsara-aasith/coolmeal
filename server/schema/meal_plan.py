@@ -77,6 +77,6 @@ class MealPlan(BaseModel):
                 "Total Polyunsaturated Fatty Acids(mg)": 5152.7615,
                 "Total Free sugar(g)": 11.7442,
                 "Total Starch(g)": 151.1037,
-                "index": 100,
+                "index": 2,
             }
         }
