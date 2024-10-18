@@ -9,6 +9,7 @@ from bmr import calculate_bmr, calculate_daily_calories
 from model import train_knn_model
 from model import predict_knn
 from week_prediction import week_prediction
+from mongodbHelper import get_meal_plan_by_index
 
 if not os.path.exists("./FinalPermutations.csv"):
     s3_url = "https://coolmeal.s3.amazonaws.com/FinalPermutations.csv"
@@ -21,6 +22,17 @@ if not os.path.exists("./FinalPermutations.csv"):
         print(
             f"File downloaded successfully from S3 and saved to ./FinalPermutations.csv."
         )
+        csv_file_path = "./FinalPermutations.csv"
+        # Read the CSV into a DataFrame
+        print(f"Reading data from {csv_file_path}...")
+        df = pd.read_csv(csv_file_path)
+
+        # Add 'index' column to the DataFrame
+        df["index"] = range(len(df))
+
+        # Save the updated DataFrame back to the same CSV file
+        df.to_csv(csv_file_path, index=False)
+        print(f"Index column added and CSV file saved back to {csv_file_path}.")
     else:
         raise FileNotFoundError(
             f"Failed to download file from {s3_url}. HTTP status code: {response.status_code}"
@@ -79,4 +91,10 @@ def read_prediction(request: UserRequest):
 
 model = train_knn_model()
 print("Model trained successfully --------------------- ")
+
+print("----///////////////////////////----------------------")
+
+get_meal_plan_by_index(500)
+
+
 print("App is running on port 8000")
