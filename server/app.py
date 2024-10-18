@@ -18,6 +18,8 @@ from mongodbHelper import (
     get_top_50_breakfast_meals,
     get_top_50_lunch_meals,
     get_top_50_dinner_meals,
+    get_total_meal_plans_count,
+    get_last_index,
 )
 
 if not os.path.exists("./FinalPermutations.csv"):
@@ -238,6 +240,40 @@ async def get_top_50_dinner_meals_api():
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
+
+
+# add get api end point for get all meal plans count
+@app.get("/get-total-meal-plans-count")
+async def get_total_meal_plans_count_api():
+    try:
+
+        count = await get_total_meal_plans_count()
+
+        return JSONResponse(status_code=200, content={"count": count})
+
+    except Exception as e:
+        # Catch any exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+# create method for last meal plan index
+@app.get("/get-last-meal-plan-index")
+async def get_last_meal_plan_api():
+    try:
+        last_index = await get_last_index()
+        return JSONResponse(status_code=200, content={"last_index": last_index})
+
+    except Exception as e:
+        # Catch any exceptions and return a 500 response
+        return JSONResponse(
+            status_code=500, content={"detail": "An error occurred", "error": str(e)}
+        )
+
+
+
+
 
 
 print("App is running on port 8000 ****************************************")
