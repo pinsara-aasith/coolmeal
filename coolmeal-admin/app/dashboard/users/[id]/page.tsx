@@ -35,7 +35,7 @@ const UserProfile = ({ params }: Props) => {
     };
 
     fetchUsers();
-  }, []);
+  }, [params]);
   return (
     <DataList.Root>
       <DataList.Item>

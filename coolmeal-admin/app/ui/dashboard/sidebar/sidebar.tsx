@@ -19,7 +19,7 @@ const Sidebar = (props: any) => {
         { title: "Dashboard", url: "/dashboard", icon: <MdDashboard /> },
         { title: "Users", url: "/dashboard/users", icon: <FaUserAlt /> },
         {
-          title: "Nutritions",
+          title: "Food item",
           url: "/dashboard/nutrition",
           icon: <FaNutritionix />,
         },
@@ -45,14 +45,12 @@ const Sidebar = (props: any) => {
           url: "/dashboard/settting",
           icon: <IoIosSettings />,
         },
-        { title: "Logout", url: "/", icon: <RiLogoutBoxFill /> },
       ],
     },
   ];
 
-  const toast = useToast()
-  const router = useRouter()
-
+  const toast = useToast();
+  const router = useRouter();
 
   return (
     <div className="m-5">

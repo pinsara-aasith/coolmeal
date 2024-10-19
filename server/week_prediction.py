@@ -1,6 +1,7 @@
 from model import predict_knn
 import pandas as pd
 
+
 # Function to calculate differences
 def calculate_difference(net_result, output):
     differences = {}
@@ -23,9 +24,7 @@ def calculate_difference(net_result, output):
         net_result["polyunsaturated_fats"]
         - output["Total Polyunsaturated Fatty Acids(mg)"]
     )
-    differences["free_sugar"] = (
-        net_result["free_sugar"] - output["Total Free sugar(g)"]
-    )
+    differences["free_sugar"] = net_result["free_sugar"] - output["Total Free sugar(g)"]
     differences["starch"] = net_result["starch"] - output["Total Starch(g)"]
 
     return differences
@@ -40,21 +39,15 @@ def calculateNewNetResult(net_result, difference):
     return new_net_result
 
 
-def week_prediction(df, price,net_result, total_calories, output, meal_plans):
+def week_prediction(df, price, net_result, total_calories, output, meal_plans):
     for i in range(6):
         differences = calculate_difference(net_result, output)
         net_result = calculateNewNetResult(net_result, differences)
-        print("New Net Results ------------------------------------ ")
-        print(net_result)
-        print(
-            "Calory difference ------------------------------------ ",
-            total_calories - output["Total Energy(Kcal)"],
-        )
+
         total_calories = total_calories + (
             total_calories - output["Total Energy(Kcal)"]
         )
-        print("Total Calories ------------------------------------ ")
-        print(total_calories)
+
         input_data = [
             [
                 price,
