@@ -68,7 +68,7 @@ jobs:
       - name: Build the Server Docker image
         run: |
           docker build \
-          --build-arg "MONGO_URI=${{ secrets.MONGO_URI }}" \
+          --build-arg "MONGO_URI=${{ secrets.SERVER_MONGO_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
 
       # Login to Docker Hub
