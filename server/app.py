@@ -247,9 +247,7 @@ async def get_last_meal_plan_api():
         )
 
 
-@app.post(
-    "/mealplans", response_description="Add new meal plan", status_code=201
-)
+@app.post("/mealplans", response_description="Add new meal plan", status_code=201)
 async def create_meal_plan(meal_plan: MealPlan):
     try:
         meal_plan_dict = meal_plan.dict()
@@ -264,7 +262,7 @@ async def create_meal_plan(meal_plan: MealPlan):
             detail=str(ve),  # Include the error message
         )
     except Exception as e:
-        # Handle any other exceptions
+
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An error occurred while creating the meal plan.",  # General error message
