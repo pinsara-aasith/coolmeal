@@ -25,6 +25,7 @@ const Sidebar = (props: any) => {
           icon: <FaNutritionix />,
         },
         { title: "Meals", url: "/dashboard/meals", icon: <MdNoMeals /> },
+        
       ],
     },
     {
