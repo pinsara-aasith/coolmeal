@@ -60,11 +60,12 @@ jobs:
           --build-arg  "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
-      # Build the server Docker image
+      # Build the chatbot Docker image
       - name: Build the Server Docker image
         run: |
           docker build \
-          --build-arg "MONGO_URI=${{ secrets.MONGODB_URI }}" \
+          --build-arg  "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" \
+          --build-arg  "MONGO_URI=${{ secrets.MONGODB_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
 
       # Login to Docker Hub
