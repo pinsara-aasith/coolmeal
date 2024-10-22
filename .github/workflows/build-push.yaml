@@ -60,10 +60,6 @@ jobs:
           --build-arg  "MONGODB_URI=${{ secrets.MONGODB_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/chatbot-service:'latest'  ./chatbot-service/server
 
-      - name: Set up environment variables for server
-        run: |
-          echo "MONGODB_URI=${{ secrets.MONGO_URI }}" >>  ./server/.env
-
       # Build the server Docker image
       - name: Build the Server Docker image
         run: |
