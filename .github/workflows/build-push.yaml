@@ -63,6 +63,7 @@ jobs:
       # Build the chatbot Docker image
       - name: Build the Server Docker image
         run: |
+          echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}"
           docker build \
           --build-arg  "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" \
           --build-arg  "MONGO_URI=${{ secrets.MONGODB_URI }}" \

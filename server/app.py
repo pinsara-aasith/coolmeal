@@ -62,7 +62,7 @@ model = train_knn_model()
 print("Model trained successfully --------------------- ")
 
 
-@app.get("/")
+@app.get("/read")
 def read_root():
     return {"Hello": "World"}
 
