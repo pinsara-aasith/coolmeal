@@ -1,7 +1,7 @@
 "use client";
 import useToast from "@/hooks/use-snackbar";
 import { CredentialsLoginData, credentialLogin } from "@/lib/auth";
-import logoPng from "@/../public/newlogo.png";
+import logoPng from "@/public/newlogo.png";
 import loginBgJpg from "@/public/loginbg.jpg";
 
 import { Card } from "@radix-ui/themes";
