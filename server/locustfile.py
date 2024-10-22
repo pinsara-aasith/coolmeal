@@ -3,10 +3,7 @@ import random
 
 
 class MealPlanUser(HttpUser):
-    # Wait time between tasks (simulating human interaction)
     wait_time = between(1, 5)
-
-    # Example task that simulates a user sending a request to the `/prediction` endpoint
     @task
     def post_prediction(self):
         # Randomized sample data for testing

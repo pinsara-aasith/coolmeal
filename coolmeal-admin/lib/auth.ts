@@ -2,8 +2,6 @@
 'use server'
 
 import { signIn, signOut } from "./authOptions";
-
-
 export interface CredentialsLoginData { email: string, password: string }
 
 

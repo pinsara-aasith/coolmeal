@@ -78,6 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   animType: AnimType.rightSlide,
                   title: 'Error',
                   desc: state.message,
+                  autoDismiss: true,
+                  dismissOnTouchOutside: true,
+                  dismissOnBackKeyPress: true,
                 ).show();
               } else if (state is UserSignIn) {
                 await Future.delayed(const Duration(seconds: 2));

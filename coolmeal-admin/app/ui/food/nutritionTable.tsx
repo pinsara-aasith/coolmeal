@@ -1,23 +1,25 @@
 "use client";
 
-import { Table } from "@radix-ui/themes";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Search from "../dashboard/search/search";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 import Link from "next/link";
+import Search from "../dashboard/search/search"; // Assuming this is the common component
+import LoadingSkeleton from "@/app/ui/common/loadingSkeleton"; // Loading skeleton
+import Table from "../common/table";
+import { Card } from "@radix-ui/themes";
 
 interface Foods {
   foodName: string;
   id: string;
-  energyKcal: number; // Use number to accept float values
+  energyKcal: number;
   proteinG: number;
   totalFatG: number;
   carbohydratesG: number;
   totalDietaryFibreG: number;
   freeSugarG: number;
   starchG: number;
-  viatminKUg: number; // Corrected the spelling from 'viatminK' to 'vitaminK'
+  viatminKUg: number;
   vitaminDUg: number;
   vitaminAUg: number;
   vitaminEMg: number;
@@ -31,115 +33,84 @@ interface Foods {
   saturatedFattyAcidsMg: number;
 }
 
+const columns = [
+  { header: "Food Name", accessor: "foodName", className: 'font-bold' },
+  { header: "Energy (Kcal)", accessor: "energyKcal" },
+  { header: "Protein (g)", accessor: "proteinG" },
+  { header: "Total Fat (g)", accessor: "totalFatG" },
+  { header: "Carbohydrates (g)", accessor: "carbohydratesG" },
+  { header: "Total Dietary Fibre (g)", accessor: "totalDietaryFibreG" },
+  { header: "Free Sugar (g)", accessor: "freeSugarG" },
+  { header: "Starch (g)", accessor: "starchG" },
+  { header: "Vitamin A (µg)", accessor: "vitaminAUg" },
+  { header: "Vitamin D (µg)", accessor: "vitaminDUg" },
+  { header: "Vitamin K (µg)", accessor: "viatminKUg" },
+  { header: "Vitamin E (mg)", accessor: "vitaminEMg" },
+  { header: "Calcium (mg)", accessor: "calciumMg" },
+  { header: "Phosphorus (mg)", accessor: "phosphorusMg" },
+  { header: "Magnesium (mg)", accessor: "magnesiumMg" },
+  { header: "Sodium (mg)", accessor: "sodiumMg" },
+  { header: "Potassium (mg)", accessor: "potassiumMg" },
+  { header: "Saturated Fatty Acids (mg)", accessor: "saturatedFattyAcidsMg" },
+  { header: "Monounsaturated Fatty Acids (mg)", accessor: "monounsaturatedFattyAcidsMg" },
+  { header: "Polyunsaturated Fatty Acids (mg)", accessor: "polyunsaturatedFattyAcidsMg" },
+];
+
 const NutritionTable = () => {
   const [foods, setFoods] = useState<Foods[]>([]);
-  const [filteredfoods, setFilteredFoods] = useState<Foods[]>([]); // New state for filtered users
-  const searchParams = useSearchParams(); // Get search params
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("/api/dashboard/foods");
-        setFoods(response.data); // Set the users data
-      } catch (error) {
-        console.error("Error fetching user details: ", error);
-      }
-    };
+  const [filteredFoods, setFilteredFoods] = useState<Foods[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Loading state
+  const searchParams = useSearchParams();
 
-    fetchUsers();
+  const fetchFoods = async () => {
+    try {
+      const response = await axios.get("/api/dashboard/foods");
+      setFoods(response.data);
+    } catch (error) {
+      console.error("Error fetching foods data: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchFoods();
   }, []);
 
   useEffect(() => {
-    const query = searchParams.get("q") || ""; // Get the search query
+    const query = searchParams.get("q") || "";
     const filtered = foods.filter((food) =>
       food.foodName.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredFoods(filtered); // Update filtered users
-  }, [searchParams, foods]); // Re-run when search query or users data changes
+    setFilteredFoods(filtered);
+  }, [searchParams, foods]);
 
   return (
-    <div>
-      <div className="ml-5">
-        <Search placeholder="search food items" />
-      </div>
-
-      {/* Scrollable container for the table */}
-      <div className="overflow-auto max-h-[500px] max-w-full">
-        <Table.Root className="m-5 min-w-[1000px]">
-          <Table.Header>
-            <Table.Row>
-              {mealTableHeader.map((item) => (
-                <Table.ColumnHeaderCell
-                  key={item.id}
-                  className="sticky top-0 bg-white z-10"
-                >
-                  {item.header}
-                </Table.ColumnHeaderCell>
-              ))}
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            {filteredfoods.map((food) => (
-              <Table.Row key={food.id}>
-                <Link href={"/dashboard/nutrition/" + food.id}>
-                  <Table.Cell>{food.foodName}</Table.Cell>
-                </Link>
-
-                <Table.Cell>{food.energyKcal}</Table.Cell>
-                <Table.Cell>{food.proteinG}</Table.Cell>
-                <Table.Cell>{food.totalFatG}</Table.Cell>
-                <Table.Cell>{food.carbohydratesG}</Table.Cell>
-                <Table.Cell>{food.totalDietaryFibreG}</Table.Cell>
-                <Table.Cell>{food.freeSugarG}</Table.Cell>
-                <Table.Cell>{food.starchG}</Table.Cell>
-                <Table.Cell>{food.vitaminAUg}</Table.Cell>
-                <Table.Cell>{food.vitaminDUg}</Table.Cell>
-                <Table.Cell>{food.viatminKUg}</Table.Cell>
-                <Table.Cell>{food.vitaminEMg}</Table.Cell>
-                <Table.Cell>{food.calciumMg}</Table.Cell>
-                <Table.Cell>{food.phosphorusMg}</Table.Cell>
-                <Table.Cell>{food.magnesiumMg}</Table.Cell>
-                <Table.Cell>{food.sodiumMg}</Table.Cell>
-                <Table.Cell>{food.potassiumMg}</Table.Cell>
-                <Table.Cell>{food.saturatedFattyAcidsMg}</Table.Cell>
-                <Table.Cell>{food.monounsaturatedFattyAcidsMg}</Table.Cell>
-                <Table.Cell>{food.polyunsaturatedFattyAcidsMg}</Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table.Root>
-      </div>
-    </div>
+    <Card className="ml-5 mt-5">
+      <Search placeholder="Search for food ingredients" />
+      <div className="overflow-x-auto mt-5">
+        <div className="overflow-y-auto">
+          <div className="overflow-auto max-h-[550px] max-w-full">
+            {loading ? (
+              <LoadingSkeleton />
+            ) : (
+              <Table
+                columns={columns}
+                data={filteredFoods.map((food) => ({
+                  ...food,
+                  foodName: (
+                    <Link href={`/dashboard/nutrition/${food.id}`} key={food.id}>
+                      {food.foodName}
+                    </Link>
+                  ),
+                }))}
+              />
+            )}
+          </div>
+        </div>
+      </div></Card>
   );
 };
-
-const mealTableHeader = [
-  { id: "foodName", header: "Food Name" },
-  { id: "energyKcal", header: "Energy (Kcal)" },
-  { id: "proteinG", header: "Protein (g)" },
-  { id: "totalFatG", header: "Total Fat (g)" },
-  { id: "carbohydratesG", header: "Carbohydrates (g)" },
-  { id: "totalDietaryFibreG", header: "Total Dietary Fibre (g)" },
-  { id: "freeSugarG", header: "Free Sugar (g)" },
-  { id: "starchG", header: "Starch (g)" },
-  { id: "vitaminAUg", header: "Vitamin A (µg)" },
-  { id: "vitaminDUg", header: "Vitamin D (µg)" },
-  { id: "viatminKUg", header: "Vitamin K (µg)" },
-  { id: "vitaminEMg", header: "Vitamin E (mg)" },
-  { id: "calciumMg", header: "Calcium (mg)" },
-  { id: "phosphorusMg", header: "Phosphorus (mg)" },
-  { id: "magnesiumMg", header: "Magnesium (mg)" },
-  { id: "sodiumMg", header: "Sodium (mg)" },
-  { id: "potassiumMg", header: "Potassium (mg)" },
-  { id: "saturatedFattyAcidsMg", header: "Saturated Fatty Acids (mg)" },
-  {
-    id: "monounsaturatedFattyAcidsMg",
-    header: "Monounsaturated Fatty Acids (mg)",
-  },
-  {
-    id: "polyunsaturatedFattyAcidsMg",
-    header: "Polyunsaturated Fatty Acids (mg)",
-  },
-];
 
 export default NutritionTable;

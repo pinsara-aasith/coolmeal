@@ -21,7 +21,7 @@ const Menulink = ({ item }: Props) => {
         align="center"
         gap="2"
         className={
-          item.url === pathname ? "bg-slate-300 p-4" : "p-4 hover:bg-slate-200"
+          item.url === pathname ? "bg-slate-200 p-3.5 m-0.5 rounded-md" : "p-3.5 m-0.5 rounded-md hover:bg-slate-200"
         }
       >
         <div>{item.icon}</div>
