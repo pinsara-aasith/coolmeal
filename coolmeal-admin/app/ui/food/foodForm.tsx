@@ -116,7 +116,7 @@ const FoodForm = ({ params }: Props) => {
       <form onSubmit={params?.id ? handleUpdate : handleSubmit}>
         <Flex align="center" gap="5" className="mb-5 " justify="between">
           <Flex wrap="wrap" gap="5">
-            <Text>Food item</Text>
+            <Text>Food Ingredients</Text>
 
             <TextField.Root
               defaultValue={food?.foodName || ""}

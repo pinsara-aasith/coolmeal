@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import UserTable from "../../ui/user/usertable";
+import UserTable from "./usertable";
 
 const Users = () => {
   return (

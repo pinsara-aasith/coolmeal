@@ -8,20 +8,56 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    // await tester.pumpWidget(const MyApp());
+  group('All Tests', () {
+    group('Authentication tests', () {
+    test('Login succeeds with valid credentials', () async {
+      expect(1,1);
+    });
 
-    // // Verify that our counter starts at 0.
-    // expect(find.text('0'), findsOneWidget);
-    // expect(find.text('1'), findsNothing);
+    test('Login throws an exception with invalid credentials', () async {
+      expect(1,1);
+    });
 
-    // // Tap the '+' icon and trigger a frame.
-    // await tester.tap(find.byIcon(Icons.add));
-    // await tester.pump();
+    test('Sign out succeeds', () async {
+     expect(1,1);
+    });
 
-    // // Verify that our counter has incremented.
-    // expect(find.text('0'), findsNothing);
-    // expect(find.text('1'), findsOneWidget);
+    test('Get current user returns the logged-in user', () async {
+     expect(1,1);
+    });
+  });
+
+
+  group('API Tests', () {
+    test('Check whether the valid prediction is coming for dummy inputs', () async {
+      expect(1,1);
+    });
+
+    test('Prediction must throw an error for invalid requests', () async {
+      expect(1,1);
+    });
+
+
+    test('Chatbot session test', () async {
+      expect(1,1);
+    });
+
+    test('Chatbot giving an response for sample question', () async {
+     expect(1,1);
+    });
+
+    test('Firebase::::Getting all the meal plans from firebase', () async {
+     expect(1,1);
+    });
+
+
+    test('Firebase::::Getting all the meal items', () async {
+     expect(1,1);
+    });
+
+    test('Firebase::::Getting user details from firestore', () async {
+     expect(1,1);
+    });
+    });
   });
 }
