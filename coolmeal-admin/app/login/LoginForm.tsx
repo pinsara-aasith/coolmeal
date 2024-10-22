@@ -1,6 +1,9 @@
 "use client";
 import useToast from "@/hooks/use-snackbar";
 import { CredentialsLoginData, credentialLogin } from "@/lib/auth";
+import logoPng from "@/public/logo.png";
+import loginBgJpg from "@/public/loginbg.jpg";
+
 import { Card } from "@radix-ui/themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -37,7 +40,7 @@ export default function AdminLogin() {
   } = useForm<CredentialsLoginData>();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundImage: `url(${loginBgJpg.src})`, backgroundSize: 'cover' }}>
       <Card className="w-full max-w-sm bg-white shadow-lg ">
         <form
           className="space-y-6 p-5"
@@ -45,17 +48,21 @@ export default function AdminLogin() {
           autoComplete="off"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <div className="flex items-center justify-between flex-col">
+            <Image
+              className="mb-8"
+              src={logoPng}
+              width={120}
+              height={120}
+              alt="Picture of the author"
+            />
+          </div>
+
           {!!errors.email && (
             <div className="text-red-500 text-sm">{!!errors.email}</div>
           )}
           <div>
-            <Image
-              className="mb-8"
-              src="/Logo.png"
-              width={500}
-              height={500}
-              alt="Picture of the author"
-            />
+
             <label
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -116,9 +123,8 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
