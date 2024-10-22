@@ -68,7 +68,7 @@ jobs:
 
           docker build \
           --build-arg  "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" \
-          --build-arg  "MONGO_URI=${{ secrets.MONGODB_URI }}" \
+          --build-arg  "MONGO_URI=${{ secrets.SERVER_MONGO_URI }}" \
           -t '${{secrets.DOCKER_LOGIN}}'/server-service:'latest'  ./server
 
       # Login to Docker Hub

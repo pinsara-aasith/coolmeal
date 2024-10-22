@@ -125,6 +125,8 @@ async def upload_pdf(file: UploadFile = File(...)):
             content = await file.read()  # Read file content
             f.write(content)  # Write content to file
 
+            createContext()
+
         return {"filename": file.filename, "message": "File uploaded successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
