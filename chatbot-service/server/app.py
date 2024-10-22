@@ -30,7 +30,7 @@ firebase_config_path = "./firebase_private_key.json"
 
 app = FastAPI()
 
-
+global chain
 # create LLM chain ()
 chain = createContext()
 print("Load Chain Successfully ------------")
@@ -124,8 +124,8 @@ async def upload_pdf(file: UploadFile = File(...)):
         with open(file_path, "wb") as f:
             content = await file.read()  # Read file content
             f.write(content)  # Write content to file
-
-            createContext()
+            # global chain
+            # chain = createContext()
 
         return {"filename": file.filename, "message": "File uploaded successfully"}
     except Exception as e:
