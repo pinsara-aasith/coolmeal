@@ -34,7 +34,7 @@ describe("User Table Tests", () => {
     cy.wait("@getUsers");
 
     // Check that the search bar is visible
-    cy.get('input[placeholder="search for user"]').should("be.visible");
+    cy.get('input[placeholder="Search for user"]').should("be.visible");
 
     // Check if the user data table loads correctly
     cy.get("table").should("be.visible");
@@ -55,14 +55,14 @@ describe("User Table Tests", () => {
     cy.wait("@getUsers");
 
     // Search for "Alice"
-    cy.get('input[placeholder="search for user"]').type("Alice");
+    cy.get('input[placeholder="Search for user"]').type("Alice");
 
     // Check that only Alice is displayed
     cy.get("tbody tr").should("have.length", 1);
     cy.get("tbody tr").eq(0).should("contain", "Alice Johnson");
 
     // Search for "Bob"
-    cy.get('input[placeholder="search for user"]').clear().type("Bob");
+    cy.get('input[placeholder="Search for user"]').clear().type("Bob");
 
     // Check that only Bob is displayed
     cy.get("tbody tr").should("have.length", 1);

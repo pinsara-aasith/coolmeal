@@ -39,6 +39,12 @@ export const config = {
    * - _next/static (static files)
    * - favicon.ico (favicon file)
    */
+  runtime: 'nodejs',
+  unstable_allowDynamic: [
+    '/node_modules/mongoose/dist/browser.umd.js'
+  ],
   matcher:
     "/((?!api|_next/static|_next/images|static|favicon.ico|favicon.png).*)",
 };
+
+export const runtime = 'nodejs'

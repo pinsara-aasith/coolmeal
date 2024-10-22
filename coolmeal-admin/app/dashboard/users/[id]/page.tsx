@@ -24,18 +24,23 @@ interface User {
 
 const UserProfile = ({ params }: Props) => {
   const [user, setUser] = useState<User | null>(null); // Change to a single user object
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("/api/dashboard/users/" + params.id);
-        setUser(response.data); // Set the correct data
-      } catch (error) {
-        console.error("Error fetching user details: ", error);
-      }
-    };
+  const [loading, setLoading] = useState<boolean>(true)
 
-    fetchUsers();
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("/api/dashboard/users/" + params.id);
+      setUser(response.data); // Set the correct data
+    } catch (error) {
+      console.error("Error fetching user details: ", error);
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true)
+    
+    fetchUsers().finally(() => setLoading(false));
   }, [params]);
+
   return (
     <DataList.Root>
       <DataList.Item>

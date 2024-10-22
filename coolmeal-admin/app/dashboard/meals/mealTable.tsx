@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Search from "../dashboard/search/search";
 import { Card, Table } from "@radix-ui/themes";
 import axios from "axios";
+import Search from "@/app/ui/dashboard/search/search";
 
 interface MealPlan {
   id: string;
