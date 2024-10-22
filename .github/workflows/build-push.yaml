@@ -118,4 +118,4 @@ jobs:
             sudo docker pull '${{secrets.DOCKER_LOGIN}}'/server-service:latest
             sudo docker stop server-service-container || true
             sudo docker rm server-service-container || true
-            sudo docker run -d --name server-service-container -p 8000:8000 -e MONGO_URI= "${{ secrets.SERVER_MONGO_URI }}"    ${{ secrets.DOCKER_LOGIN }}/server-service:latest
+            sudo docker run -d --name server-service-container -p 8000:8000 -e MONGO_URI= ${{ secrets.SERVER_MONGO_URI }}    ${{ secrets.DOCKER_LOGIN }}/server-service:latest
