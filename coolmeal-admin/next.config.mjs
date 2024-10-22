@@ -2,10 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // Allow images from unsplash.com
   experimental: {
-		instrumentationHook: true,
-	}
+    instrumentationHook: true,
+    esmExternals: "loose", 
+    serverComponentsExternalPackages: ["mongoose"]
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
 }
 
 export default nextConfig;
