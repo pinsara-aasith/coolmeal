@@ -19,7 +19,7 @@ from firebase_admin import credentials, firestore
 
 # Pdf save path
 # Define the directory to save the uploaded files
-UPLOAD_DIRECTORY = Path("./food_data")
+UPLOAD_DIRECTORY = Path("./food_data/pdf")
 
 # Create the directory if it doesn't exist
 if not UPLOAD_DIRECTORY.exists():
@@ -66,9 +66,7 @@ async def chat(request: ChatRequest):
         response=response["result"],
         memory_stack=memory_helper.memory_store[session_id],
     )
-    print("memory Updated Sucessfully --------------------- ")
 
-    print("Memory Store : ", memory_helper.memory_store)
     return {"response": response["result"]}
 
 
