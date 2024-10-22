@@ -7,7 +7,7 @@ import uuid
 import memory_helper
 from models.session_response import SessionResponse
 from createContext import summarize_chat
-
+from pathlib import Path
 
 app = FastAPI()
 
@@ -15,6 +15,10 @@ app = FastAPI()
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+
+# Pdf save path
+# Define the directory to save the uploaded files
+UPLOAD_DIRECTORY = Path("./food_data")
 
 # Path to your Firebase configuration JSON file
 firebase_config_path = "./firebase_private_key.json"
