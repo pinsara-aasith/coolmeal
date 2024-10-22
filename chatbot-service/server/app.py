@@ -124,8 +124,9 @@ async def upload_pdf(file: UploadFile = File(...)):
         with open(file_path, "wb") as f:
             content = await file.read()  # Read file content
             f.write(content)  # Write content to file
-            # global chain
-            # chain = createContext()
+            global chain
+            chain = createContext()
+            print("RE - Load Chain Successfully ------------")
 
         return {"filename": file.filename, "message": "File uploaded successfully"}
     except Exception as e:
