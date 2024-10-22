@@ -1,5 +1,5 @@
 import asyncio
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from createContext import createContext
 from pydantic import BaseModel
 import mongodb_helper
@@ -7,6 +7,7 @@ import uuid
 import memory_helper
 from models.session_response import SessionResponse
 from createContext import summarize_chat
+from pathlib import Path
 
 
 app = FastAPI()
@@ -16,12 +17,20 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 
+# Pdf save path
+# Define the directory to save the uploaded files
+UPLOAD_DIRECTORY = Path("./food_data/pdf")
+
+# Create the directory if it doesn't exist
+if not UPLOAD_DIRECTORY.exists():
+    UPLOAD_DIRECTORY.mkdir(parents=True)
+
 # Path to your Firebase configuration JSON file
 firebase_config_path = "./firebase_private_key.json"
 
 app = FastAPI()
 
-
+global chain
 # create LLM chain ()
 chain = createContext()
 print("Load Chain Successfully ------------")
@@ -32,7 +41,7 @@ class ChatRequest(BaseModel):
     session_id: str
 
 
-@app.get("/")
+@app.get("/read")
 def read_root():
     return {"Hello": "Food chat bot Service"}
 
@@ -57,9 +66,7 @@ async def chat(request: ChatRequest):
         response=response["result"],
         memory_stack=memory_helper.memory_store[session_id],
     )
-    print("memory Updated Sucessfully --------------------- ")
 
-    print("Memory Store : ", memory_helper.memory_store)
     return {"response": response["result"]}
 
 
@@ -99,6 +106,29 @@ async def get_history(user_id: str):
     # get session ids --------------------------
     history = await mongodb_helper.getAllChatsForUser(user_id)
     return {"history": history}
+
+
+@app.post("/upload-pdf/")
+async def upload_pdf(file: UploadFile = File(...)):
+    # Check if the file is a PDF
+    if file.content_type != "application/pdf":
+        raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+
+    # Define the file path
+    file_path = UPLOAD_DIRECTORY / file.filename
+
+    # Write the file to the directory
+    try:
+        with open(file_path, "wb") as f:
+            content = await file.read()  # Read file content
+            f.write(content)  # Write content to file
+            global chain
+            chain = createContext()
+            print("RE - Load Chain Successfully ------------")
+
+        return {"filename": file.filename, "message": "File uploaded successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
 
 
 # mention running port
