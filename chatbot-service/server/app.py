@@ -110,24 +110,24 @@ async def get_history(user_id: str):
     return {"history": history}
 
 
-@app.post("/upload-pdf/")
-async def upload_pdf(file: UploadFile = File(...)):
-    # Check if the file is a PDF
-    if file.content_type != "application/pdf":
-        raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+# @app.post("/upload-pdf/")
+# async def upload_pdf(file: UploadFile = File(...)):
+#     # Check if the file is a PDF
+#     if file.content_type != "application/pdf":
+#         raise HTTPException(status_code=400, detail="Only PDF files are allowed")
 
-    # Define the file path
-    file_path = UPLOAD_DIRECTORY / file.filename
+#     # Define the file path
+#     file_path = UPLOAD_DIRECTORY / file.filename
 
-    # Write the file to the directory
-    try:
-        with open(file_path, "wb") as f:
-            content = await file.read()  # Read file content
-            f.write(content)  # Write content to file
+#     # Write the file to the directory
+#     try:
+#         with open(file_path, "wb") as f:
+#             content = await file.read()  # Read file content
+#             f.write(content)             # Write content to file
 
-        return {"filename": file.filename, "message": "File uploaded successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
+#         return {"filename": file.filename, "message": "File uploaded successfully"}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
 
 
 # mention running port
