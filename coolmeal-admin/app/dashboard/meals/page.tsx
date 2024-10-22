@@ -1,5 +1,5 @@
-import MealTable from "@/app/ui/meals/mealTable";
 import React from "react";
+import MealTable from "./mealTable";
 
 const Meals = () => {
   return (

@@ -1,11 +1,13 @@
-import React from "react";
-import UserTable from "../../ui/user/usertable";
+import React, { Suspense } from "react";
+import UserTable from "./usertable";
 
 const Users = () => {
   return (
-    <div data-testid="user-table">
-      <UserTable />
-    </div>
+    <Suspense>
+      <div data-testid="user-table">
+        <UserTable />
+      </div>
+    </Suspense>
   );
 };
 

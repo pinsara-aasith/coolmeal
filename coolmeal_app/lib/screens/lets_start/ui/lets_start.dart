@@ -43,7 +43,7 @@ class _LetsStartpageState extends State<LetsStartPage> {
                         children: [
                           const SizedBox(height: 40),
                           Image.asset(
-                            'assets/images/Logo.png',
+                            'assets/images/logo.png',
                             height: 200,
                           ),
                           const SizedBox(height:30),

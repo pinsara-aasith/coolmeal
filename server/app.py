@@ -39,14 +39,10 @@ if not os.path.exists("./FinalPermutations.csv"):
             f"File downloaded successfully from S3 and saved to ./FinalPermutations.csv."
         )
         csv_file_path = "./FinalPermutations.csv"
-        # Read the CSV into a DataFrame
         print(f"Reading data from {csv_file_path}...")
         df = pd.read_csv(csv_file_path)
 
-        # Add 'index' column to the DataFrame
         df["index"] = range(len(df))
-
-        # Save the updated DataFrame back to the same CSV file
         df.to_csv(csv_file_path, index=False)
         print(f"Index column added and CSV file saved back to {csv_file_path}.")
     else:
@@ -112,14 +108,11 @@ def read_prediction(request: UserRequest):
 @app.get("/get-mealplan-index")
 async def getMealPlanByIndex(index: int):
     try:
-        # Assuming get_meal_plan_by_index is a function that returns a MongoDB document
         meal_plan = await get_meal_plan_by_index(index)
 
         if not meal_plan:
-            # If meal_plan is None or empty, raise a 404 exception
             raise HTTPException(status_code=404, detail="Meal plan not found")
 
-        # Serialize ObjectId to make it JSON serializable
         serialized_meal_plan = serialize_meal_plan(meal_plan)
 
         return JSONResponse(
@@ -127,29 +120,23 @@ async def getMealPlanByIndex(index: int):
         )
 
     except HTTPException as e:
-        # Catch HTTP exceptions like the one raised above
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except Exception as e:
-        # Catch any other exceptions and return a 500 response
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
 
 
-# create a new endpoint for getting get_meal_by_name
-@app.get("/get-mealplan-name")
+@app.get("/mealplan")
 async def get_meal_by_name_api(name: str):
     try:
-        print("name  ::::  ", name)
-        # Assuming get_meal_by_name is a function that returns a MongoDB document
+        print("getting meal plan by name :::", name)
         meal = await get_meal_by_name(name)
 
         if not meal:
-            # If meal_plan is None or empty, raise a 404 exception
             raise HTTPException(status_code=404, detail="Meal plan not found")
 
-        # Serialize ObjectId to make it JSON serializable
         serialized_meal_plan = serialize_meal_plan(meal)
 
         return JSONResponse(
@@ -157,7 +144,6 @@ async def get_meal_by_name_api(name: str):
         )
 
     except HTTPException as e:
-        # Catch HTTP exceptions like the one raised above
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except Exception as e:
@@ -168,10 +154,9 @@ async def get_meal_by_name_api(name: str):
 
 
 # Get Breakfast top 50 meals
-@app.get("/get-top-50-breakfast-meals")
+@app.get("/meals/breakfast/top50")
 async def get_top_50_breakfast_meals_api():
     try:
-        # Assuming get_top_50_breakfast_meals is a function that returns a list of MongoDB documents
         meals = await get_top_50_breakfast_meals()
 
         if not meals:
@@ -184,87 +169,72 @@ async def get_top_50_breakfast_meals_api():
         return JSONResponse(status_code=200, content={"meals": serialized_meals})
 
     except HTTPException as e:
-        # Catch HTTP exceptions like the one raised above
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except Exception as e:
-        # Catch any other exceptions and return a 500 response
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
 
 
 # Get Lunch top 50 meals
-@app.get("/get-top-50-lunch-meals")
+@app.get("/meals/lunch/top50")
 async def get_top_50_lunch_meals_api():
     try:
-        # Assuming get_top_50_lunch_meals is a function that returns a list of MongoDB documents
         meals = await get_top_50_lunch_meals()
 
         if not meals:
-            # If meals is None or empty, raise a 404 exception
             raise HTTPException(status_code=404, detail="Meals not found")
 
-        # Serialize ObjectId to make it JSON serializable
         serialized_meals = [serialize_meal_plan(meal) for meal in meals]
 
         return JSONResponse(status_code=200, content={"meals": serialized_meals})
 
     except HTTPException as e:
-        # Catch HTTP exceptions like the one raised above
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except Exception as e:
-        # Catch any other exceptions and return a 500 response
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
 
 
-@app.get("/get-top-50-dinner-meals")
+@app.get("/meals/dinner/top50")
 async def get_top_50_dinner_meals_api():
     try:
-        # Assuming get_top_50_dinner_meals is a function that returns a list of MongoDB documents
         meals = await get_top_50_dinner_meals()
 
         if not meals:
-            # If meals is None or empty, raise a 404 exception
             raise HTTPException(status_code=404, detail="Meals not found")
-
-        # Serialize ObjectId to make it JSON serializable
         serialized_meals = [serialize_meal_plan(meal) for meal in meals]
 
         return JSONResponse(status_code=200, content={"meals": serialized_meals})
 
     except HTTPException as e:
-        # Catch HTTP exceptions like the one raised above
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except Exception as e:
-        # Catch any other exceptions and return a 500 response
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
 
 
 # add get api end point for get all meal plans count
-@app.get("/get-total-meal-plans-count")
+@app.get("/mealplans/count")
 async def get_total_meal_plans_count_api():
     try:
 
         count = await get_total_meal_plans_count()
-
         return JSONResponse(status_code=200, content={"count": count})
 
     except Exception as e:
-        # Catch any exceptions and return a 500 response
         return JSONResponse(
             status_code=500, content={"detail": "An error occurred", "error": str(e)}
         )
 
 
 # create method for last meal plan index
-@app.get("/get-last-meal-plan-index")
+@app.get("/mealplans/last")
 async def get_last_meal_plan_api():
     try:
         last_index = await get_last_index()
@@ -278,7 +248,7 @@ async def get_last_meal_plan_api():
 
 
 @app.post(
-    "/add-new-meal-plan", response_description="Add new meal plan", status_code=201
+    "/mealplans", response_description="Add new meal plan", status_code=201
 )
 async def create_meal_plan(meal_plan: MealPlan):
     try:
@@ -301,22 +271,18 @@ async def create_meal_plan(meal_plan: MealPlan):
         )
 
 
-@app.post("/add-new-meal", response_description="Add new meal", status_code=201)
+@app.post("/meals", response_description="Add new meal", status_code=201)
 async def add_meal(meal: Meal):
     print(meal)
 
     try:
-        # Convert Pydantic model to dictionary
         meal_data = meal.dict()
         print(meal_data)
-        # Simulate inserting meal to the database
         new_meal = await insert_new_final_meal(meal_data)
 
-        # Return the inserted meal as a response
         return {"status": "success", "data": str(new_meal["_id"])}
 
     except Exception as e:
-        # Handle any unexpected errors
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 

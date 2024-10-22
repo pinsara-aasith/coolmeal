@@ -1,4 +1,3 @@
-import { User } from "@/database/schema";
 import bcrypt from "bcryptjs";
 import NextAuth, { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -16,23 +15,19 @@ export const authOptions: NextAuthConfig = {
         if (credentials === null) return null;
 
         try {
-          const user = await User.findOne({
-            email: credentials?.email,
-          });
-          if (user) {
-            const isMatch = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
 
-            if (isMatch) {
-              return user;
-            } else {
-              throw new Error("Email or Password is not correct");
-            }
+          const _adminEmail = process.env.COOLMEAL_ADMIN_USER_NAME
+          const _adminPassword = process.env.COOLMEAL_ADMIN_PASSWORD
+          if (credentials.email == _adminEmail && credentials.password == _adminPassword) {
+            return {
+              email: _adminEmail,
+              name: "Cool Admin",
+              id: _adminEmail
+            };
           } else {
-            throw new Error("User not found");
+            throw new Error("Email or Password is not correct");
           }
+
         } catch (error) {
           throw new Error(error as any);
         }

@@ -3,6 +3,8 @@ import Sidebar from "@/app/ui/dashboard/sidebar/sidebar";
 import Navbar from "../ui/dashboard/navbar/navbar";
 import { Grid } from "@radix-ui/themes";
 
+import contentbg from "@/public/contentbg.png";
+
 const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <div className="min-h-screen flex">
@@ -17,7 +19,7 @@ const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         {" "}
         {/* Main content container */}
         <Navbar />
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow bg-cover" style={{ backgroundImage: `url(${contentbg.src})`}}>{children}</div>
       </div>
     </div>
   );
