@@ -41,7 +41,7 @@ class ChatRequest(BaseModel):
     session_id: str
 
 
-@app.get("/")
+@app.get("/read")
 def read_root():
     return {"Hello": "Food chat bot Service"}
 
