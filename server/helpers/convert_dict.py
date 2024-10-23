@@ -7,7 +7,7 @@ def convert_meal_plan_dict(original_dict):
         "Price": original_dict["Price"],
         "Total Energy(Kcal)": original_dict["Total_Energy_Kcal"],
         "Total Protein(g)": original_dict["Total_Protein_g"],
-        "Total Total fat(g)": original_dict["Total_Fat_g"],
+        "Total fat(g)": original_dict["Total_Fat_g"],
         "Total Carbohydrates(g)": original_dict["Total_Carbohydrates_g"],
         "Total Magnesium(mg)": original_dict["Total_Magnesium_mg"],
         "Total Sodium(mg)": original_dict["Total_Sodium_mg"],

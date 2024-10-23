@@ -37,7 +37,17 @@ from mongodb_helper import (
     read_one_meal_item,
     insert_one_meal_item,
     update_one_meal_item,
-    delete_one_meal_item
+    delete_one_meal_item,
+    read_all_meals,
+    read_one_meal,
+    insert_one_meal,
+    update_one_meal,
+    delete_one_meal,
+    read_all_meal_plans,
+    read_one_meal_plan,
+    insert_one_meal_plan,
+    update_one_meal_plan,
+    delete_one_meal_plan
 )
 from typing import List, Optional
 
@@ -142,7 +152,7 @@ async def getMealPlanByIndex(index: int):
         )
 
 
-@app.get("/mealplans")
+@app.get("/meals/byname")
 async def get_meal_by_name_api(name: str):
     try:
         meal = await get_meal_by_name(name)
@@ -277,19 +287,6 @@ async def create_meal_plan(meal_plan: MealPlan):
         )
 
 
-@app.post("/meals", response_description="Add new meal", status_code=201)
-async def add_meal(meal: Meal):
-
-    try:
-        meal_data = meal.dict()
-        new_meal = await insert_new_final_meal(meal_data)
-
-        return {"status": "success", "data": str(new_meal["_id"])}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
-
-
 # Read all ingredients
 @app.get("/ingredients", response_model=List[Ingredient])
 def read_ingredients():
@@ -391,6 +388,107 @@ def delete_meal_item(food_code: str):
     return {"message": "Meal item deleted successfully"}
 
 
+
+
+# Read all meals
+@app.get("/meals", response_model=List[Meal])
+def read_ingredients():
+    meals = read_all_meals()
+    return meals
+
+
+# Read an meal by Food_Code
+@app.get("/meals/{id}", response_model=Meal)
+def read_meal(id: str):
+    meal = read_one_meal(id)
+    if not meal:
+        raise HTTPException(status_code=404, detail="Meal not found")
+    return convert_to_dict(meal)
+
+
+@app.post("/meals", response_description="Add new meal", status_code=201)
+async def add_meal(meal: Meal):
+    try:
+        meal_data = meal.dict()
+        new_meal = await insert_new_final_meal(meal_data)
+
+        return {"status": "success", "data": str(new_meal["_id"])}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
+# Update an meals by Food_Code
+@app.put("/meals/{id}", response_model=Meal)
+def update_meal_item(id: str, updated_meal: Meal):
+    if not read_one(id):
+        raise HTTPException(status_code=404, detail="Meal not found")
+    
+    update_data = updated_meal.dict(by_alias=True)
+    update_one_meal(id, update_data)
+    updated_meal = read_one_meal(id)
+    return convert_to_dict(updated_meal)
+
+
+# Delete an meals
+@app.delete("/meals/{id}")
+def delete_meal(food_code: str):
+    result = delete_one_meal(id)
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Meal not found")
+    return {"message": "Meal deleted successfully"}
+
+
+
+
+# Read all meal plans
+@app.get("/mealplans", response_model=List[MealPlan])
+def read_ingredients():
+    m = read_all_meal_plans()
+    return m
+
+
+# Read an meal plan
+@app.get("/mealplans/{id}", response_model=MealPlan)
+def read_meal_plan(id: str):
+    meal = read_one_meal_plan(id)
+    if not meal:
+        raise HTTPException(status_code=404, detail="Meal not found")
+    return convert_to_dict(meal)
+
+
+@app.post("/mealplans", response_description="Add new meal plan", status_code=201)
+async def add_meal(mealPlan: MealPlan):
+    try:
+        md = mealPlan.dict()
+        new_meal = await insert_one_meal_plan(md)
+
+        return {"status": "success", "data": str(new_meal["_id"])}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
+# Update an meals by Food_Code
+@app.put("/mealplans/{id}", response_model=Meal)
+def update_meal_plan(id: str, updated_meal_plan: Meal):
+    if not read_one(id):
+        raise HTTPException(status_code=404, detail="Meal plan not found")
+    
+    update_data = updated_meal_plan.dict(by_alias=True)
+    update_one_meal_plan(id, update_data)
+    updated_meal_plan = read_one_meal_plan(id)
+    return convert_to_dict(updated_meal)
+
+
+
+# Delete an meals
+@app.delete("/mealplans/{id}")
+def delete_meal(id: str):
+    result = delete_one_meal_plan(id)
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Meal plan not found")
+    return {"message": "Meal deleted successfully"}
 
 
 print("App is running on port 8000 ****************************************")

@@ -218,7 +218,50 @@ def delete_one_meal_item(meal_id: str):
 
 
 
-def convert_to_dict(ingredient):
+meals_collection = db['Final_Meals']  # Collection name
+
+def read_all_meals():
+    meals = list(meals_collection.find().limit(50))
+    return [convert_to_dict(meal) for meal in meals]
+
+def read_one_meal(meal_id: str):
+    return meals_collection.find_one({"_id": meal_id})
+
+def insert_one_meal(meal_data: dict):
+    return meals_collection.insert_one(meal_data)
+
+def update_one_meal(meal_id: str, update_data: dict):
+    return meals_collection.update_one({"_id": meal_id}, {"$set": update_data})
+
+def delete_one_meal(meal_id: str):
+    return meals_collection.delete_one({"_id": meal_id})
+
+
+
+
+meal_plan_collection = db['Meal_plans']  # Collection name
+
+def read_all_meal_plans():
+    ms = list(meal_plan_collection.find().limit(250))
+    return [convert_to_dict(m) for m in ms]
+
+def read_one_meal_plan(id: str):
+    return meal_plan_collection.find_one({"_id": id})
+
+def insert_one_meal_plan(meal_data: dict):
+    return meal_plan_collection.insert_one(meal_data)
+
+def update_one_meal_plan(id: str, update_data: dict):
+    return meal_plan_collection.update_one({"_id": id}, {"$set": update_data})
+
+def delete_one_meal_plan(id: str):
+    return meal_plan_collection.delete_one({"_id": id})
+
+
+
+
+
+def convert_to_dict(s):
     """Converts MongoDB result to a dictionary format."""
-    ingredient["_id"] = str(ingredient["_id"])
-    return ingredient
+    s["_id"] = str(s["_id"])
+    return s
