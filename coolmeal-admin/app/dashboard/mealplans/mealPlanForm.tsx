@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MealPlanForm = ({ params }: Props) => {
-  const [mealPlan, setMealPlan] = useState<any>(null);
+  const [mealIndex, setMealIndex] = useState<any>(null);
   const router = useRouter();
 
   // State to manage which section is currently visible
@@ -37,6 +37,19 @@ const MealPlanForm = ({ params }: Props) => {
       "Carbohydrates(g)": 0,
       "Total Dietary Fibre(g)": null,
       "Vitamin A(µg)": null,
+      "Vitamin D(µg)": null,
+      "Vitamin K(µg)": null,
+      "Vitamin E(mg)": null,
+      "Calcium(mg)": null,
+      "Phosphorus(mg)": null,
+      "Magnesium(mg)": null,
+      "Sodium(mg)": null,
+      "Potassium(mg)": null,
+      "Saturated Fatty Acids(mg)": null,
+      "Monounsaturated Fatty Acids(mg)": null,
+      "Polyunsaturated Fatty Acids(mg)": null,
+      "Free sugar(g)": null,
+      "Starch(g)": null,
     },
     Lunch: {
       Lunch_Main_Meal: "",
@@ -50,6 +63,19 @@ const MealPlanForm = ({ params }: Props) => {
       "Carbohydrates(g)": 0,
       "Total Dietary Fibre(g)": null,
       "Vitamin A(µg)": null,
+      "Vitamin D(µg)": null,
+      "Vitamin K(µg)": null,
+      "Vitamin E(mg)": null,
+      "Calcium(mg)": null,
+      "Phosphorus(mg)": null,
+      "Magnesium(mg)": null,
+      "Sodium(mg)": null,
+      "Potassium(mg)": null,
+      "Saturated Fatty Acids(mg)": null,
+      "Monounsaturated Fatty Acids(mg)": null,
+      "Polyunsaturated Fatty Acids(mg)": null,
+      "Free sugar(g)": null,
+      "Starch(g)": null,
     },
     Dinner: {
       Dinner_Main_Meal: "",
@@ -63,6 +89,24 @@ const MealPlanForm = ({ params }: Props) => {
       "Carbohydrates(g)": 0,
       "Total Dietary Fibre(g)": null,
       "Vitamin A(µg)": null,
+      "Vitamin D(µg)": null,
+      "Vitamin K(µg)": null,
+      "Vitamin E(mg)": null,
+      "Calcium(mg)": null,
+      "Phosphorus(mg)": null,
+      "Magnesium(mg)": null,
+      "Sodium(mg)": null,
+      "Potassium(mg)": null,
+      "Saturated Fatty Acids(mg)": null,
+      "Monounsaturated Fatty Acids(mg)": null,
+      "Polyunsaturated Fatty Acids(mg)": null,
+      "Free sugar(g)": null,
+      "Starch(g)": null,
+    },
+    price: {
+      Breakfast_Price: null,
+      Lunch_Price: null,
+      Dinner_Price: null,
     },
   });
 
@@ -70,10 +114,8 @@ const MealPlanForm = ({ params }: Props) => {
     if (params?.id) {
       const fetchMealPlan = async () => {
         try {
-          const response = await axios.get(
-            `/api/dashboard/meal-items/${params.id}`
-          );
-          setMealPlan(response.data);
+          const response = await axios.get(`/api/mealplans/`);
+          setMealIndex(response.data);
         } catch (error) {
           console.error("Error fetching meal item details: ", error);
         }
@@ -87,6 +129,21 @@ const MealPlanForm = ({ params }: Props) => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
+    // update prices
+    if (
+      name === "Breakfast_Price" ||
+      name === "Lunch_Price" ||
+      name === "Dinner_Price"
+    ) {
+      setMealsData((prevData) => ({
+        ...prevData,
+        price: {
+          ...prevData.price,
+          [name]: value,
+        },
+      }));
+      return;
+    }
 
     const section =
       currentSection === 0
@@ -150,28 +207,73 @@ const MealPlanForm = ({ params }: Props) => {
       Number(mealsData.Lunch["Total fat(g)"]) +
       Number(mealsData.Dinner["Total fat(g)"]);
 
-    const totalCarbs =
+    const totalCarbohydrates =
       Number(mealsData.Breakfast["Carbohydrates(g)"]) +
       Number(mealsData.Lunch["Carbohydrates(g)"]) +
       Number(mealsData.Dinner["Carbohydrates(g)"]);
+
+    const totalMagnesium =
+      Number(mealsData.Breakfast["Magnesium(mg)"]) +
+      Number(mealsData.Lunch["Magnesium(mg)"]) +
+      Number(mealsData.Dinner["Magnesium(mg)"]);
+
+    const totalSodium =
+      Number(mealsData.Breakfast["Sodium(mg)"]) +
+      Number(mealsData.Lunch["Sodium(mg)"]) +
+      Number(mealsData.Dinner["Sodium(mg)"]);
+
+    const totalPotassium =
+      Number(mealsData.Breakfast["Potassium(mg)"]) +
+      Number(mealsData.Lunch["Potassium(mg)"]) +
+      Number(mealsData.Dinner["Potassium(mg)"]);
+
+    const totalSaturatedFattyAcids =
+      Number(mealsData.Breakfast["Saturated Fatty Acids(mg)"]) +
+      Number(mealsData.Lunch["Saturated Fatty Acids(mg)"]) +
+      Number(mealsData.Dinner["Saturated Fatty Acids(mg)"]);
+
+    const totalMonounsaturatedFattyAcids =
+      Number(mealsData.Breakfast["Monounsaturated Fatty Acids(mg)"]) +
+      Number(mealsData.Lunch["Monounsaturated Fatty Acids(mg)"]) +
+      Number(mealsData.Dinner["Monounsaturated Fatty Acids(mg)"]);
+
+    const totalPolyunsaturatedFattyAcids =
+      Number(mealsData.Breakfast["Polyunsaturated Fatty Acids(mg)"]) +
+      Number(mealsData.Lunch["Polyunsaturated Fatty Acids(mg)"]) +
+      Number(mealsData.Dinner["Polyunsaturated Fatty Acids(mg)"]);
+
+    const totalFreeSugar =
+      Number(mealsData.Breakfast["Free sugar(g)"]) +
+      Number(mealsData.Lunch["Free sugar(g)"]) +
+      Number(mealsData.Dinner["Free sugar(g)"]);
+
+    const totalStarch =
+      Number(mealsData.Breakfast["Starch(g)"]) +
+      Number(mealsData.Lunch["Starch(g)"]) +
+      Number(mealsData.Dinner["Starch(g)"]);
+
+    const total_price =
+      Number(mealsData.price["Breakfast_Price"]) +
+      Number(mealsData.price["Lunch_Price"]) +
+      Number(mealsData.price["Dinner_Price"]);
 
     const modelData = {
       Breakfast: breakfastCompleteMeal,
       Lunch: lunchCompleteMeal,
       Dinner: dinnerCompleteMeal,
-      Price: 0, // Add price logic if needed
+      Price: total_price, // Add price logic if needed
       "Total Energy(Kcal)": totalEnergy,
       "Total Protein(g)": totalProtein,
       "Total fat(g)": totalFat,
-      "Total Carbohydrates(g)": totalCarbs,
-      "Total Magnesium(mg)": 0,
-      "Total Sodium(mg)": 0,
-      "Total Potassium(mg)": 0,
-      "Total Saturated Fatty Acids(mg)": 0,
-      "Total Monounsaturated Fatty Acids(mg)": 0,
-      "Total Polyunsaturated Fatty Acids(mg)": 0,
-      "Total Free sugar(g)": 0,
-      "Total Starch(g)": 0,
+      "Total Carbohydrates(g)": totalCarbohydrates,
+      "Total Magnesium(mg)": totalMagnesium,
+      "Total Sodium(mg)": totalSodium,
+      "Total Potassium(mg)": totalPotassium,
+      "Total Saturated Fatty Acids(mg)": totalSaturatedFattyAcids,
+      "Total Monounsaturated Fatty Acids(mg)": totalMonounsaturatedFattyAcids,
+      "Total Polyunsaturated Fatty Acids(mg)": totalPolyunsaturatedFattyAcids,
+      "Total Free sugar(g)": totalFreeSugar,
+      "Total Starch(g)": totalStarch,
       index: 0,
     };
 
@@ -230,6 +332,46 @@ const MealPlanForm = ({ params }: Props) => {
               required
             />
             <FormTextField
+              label="Breakfast Probability"
+              name="Breakfast_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter breakfast probability"
+            />
+            <FormTextField
+              label="Lunch Probability"
+              name="Lunch_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter lunch probability"
+            />
+            <FormTextField
+              label="Dinner Probability"
+              name="Dinner_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter dinner probability"
+            />
+            <FormTextField
+              label="Combined Meal"
+              name="Combined_Meal"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter combined meal count"
+            />
+            <FormTextField
+              label="Ingredients"
+              name="Ingredients"
+              onChange={handleInputChange}
+              placeholder="Enter ingredients"
+            />
+            <FormTextField
+              label="Quantities"
+              name="Quantities"
+              onChange={handleInputChange}
+              placeholder="Enter quantities"
+            />
+            <FormTextField
               label="Energy (Kcal)"
               name="Breakfast_Energy(Kcal)"
               type="number"
@@ -243,7 +385,132 @@ const MealPlanForm = ({ params }: Props) => {
               onChange={handleInputChange}
               placeholder="Enter protein amount"
             />
-            {/* Add other nutrient fields here for Breakfast */}
+            <FormTextField
+              label="Total Fat (g)"
+              name="Breakfast_Total_fat(g)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter total fat amount"
+            />
+            <FormTextField
+              label="Carbohydrates (g)"
+              name="Breakfast_Carbohydrates(g)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter carbohydrates amount"
+            />
+            <FormTextField
+              label="Total Dietary Fibre (g)"
+              name="Breakfast_Total_Dietary_Fibre(g)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter dietary fiber amount"
+            />
+            <FormTextField
+              label="Vitamin A (µg)"
+              name="Breakfast_Vitamin_A(µg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter Vitamin A amount"
+            />
+            <FormTextField
+              label="Vitamin D (µg)"
+              name="Breakfast_Vitamin_D(µg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter Vitamin D amount"
+            />
+            <FormTextField
+              label="Vitamin K (µg)"
+              name="Breakfast_Vitamin_K(µg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter Vitamin K amount"
+            />
+            <FormTextField
+              label="Vitamin E (mg)"
+              name="Breakfast_Vitamin_E(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter Vitamin E amount"
+            />
+            <FormTextField
+              label="Calcium (mg)"
+              name="Breakfast_Calcium(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter calcium amount"
+            />
+            <FormTextField
+              label="Phosphorus (mg)"
+              name="Breakfast_Phosphorus(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter phosphorus amount"
+            />
+            <FormTextField
+              label="Magnesium (mg)"
+              name="Breakfast_Magnesium(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter magnesium amount"
+            />
+            <FormTextField
+              label="Sodium (mg)"
+              name="Breakfast_Sodium(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter sodium amount"
+            />
+            <FormTextField
+              label="Potassium (mg)"
+              name="Breakfast_Potassium(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter potassium amount"
+            />
+            <FormTextField
+              label="Saturated Fatty Acids (mg)"
+              name="Breakfast_Saturated_Fatty_Acids(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter saturated fatty acids amount"
+            />
+            <FormTextField
+              label="Monounsaturated Fatty Acids (mg)"
+              name="Breakfast_Monounsaturated_Fatty_Acids(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter monounsaturated fatty acids amount"
+            />
+            <FormTextField
+              label="Polyunsaturated Fatty Acids (mg)"
+              name="Breakfast_Polyunsaturated_Fatty_Acids(mg)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter polyunsaturated fatty acids amount"
+            />
+            <FormTextField
+              label="Free Sugar (g)"
+              name="Breakfast_Free_sugar(g)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter free sugar amount"
+            />
+            <FormTextField
+              label="Starch (g)"
+              name="Breakfast_Starch(g)"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter starch amount"
+            />
+            <FormTextField
+              label="Price"
+              name="Breakfast_Price"
+              type="number"
+              placeholder="Enter price"
+              onChange={handleInputChange}
+            />
           </Grid>
           <button
             type="button"
@@ -295,7 +562,132 @@ const MealPlanForm = ({ params }: Props) => {
               placeholder="Enter protein amount"
               onChange={handleInputChange}
             />
-            {/* Add other nutrient fields here for Lunch */}
+            <FormTextField
+              label="Total fat (g)"
+              name="Lunch_Total_fat(g)"
+              type="number"
+              placeholder="Enter total fat amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Carbohydrates (g)"
+              name="Lunch_Carbohydrates(g)"
+              type="number"
+              placeholder="Enter carbohydrates amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Total Dietary Fibre (g)"
+              name="Lunch_Total_Dietary_Fibre(g)"
+              type="number"
+              placeholder="Enter dietary fibre amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin A (µg)"
+              name="Lunch_Vitamin_A(µg)"
+              type="number"
+              placeholder="Enter vitamin A amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin D (µg)"
+              name="Lunch_Vitamin_D(µg)"
+              type="number"
+              placeholder="Enter vitamin D amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin K (µg)"
+              name="Lunch_Vitamin_K(µg)"
+              type="number"
+              placeholder="Enter vitamin K amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin E (mg)"
+              name="Lunch_Vitamin_E(mg)"
+              type="number"
+              placeholder="Enter vitamin E amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Calcium (mg)"
+              name="Lunch_Calcium(mg)"
+              type="number"
+              placeholder="Enter calcium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Phosphorus (mg)"
+              name="Lunch_Phosphorus(mg)"
+              type="number"
+              placeholder="Enter phosphorus amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Magnesium (mg)"
+              name="Lunch_Magnesium(mg)"
+              type="number"
+              placeholder="Enter magnesium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Sodium (mg)"
+              name="Lunch_Sodium(mg)"
+              type="number"
+              placeholder="Enter sodium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Potassium (mg)"
+              name="Lunch_Potassium(mg)"
+              type="number"
+              placeholder="Enter potassium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Saturated Fatty Acids (mg)"
+              name="Lunch_Saturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter saturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Monounsaturated Fatty Acids (mg)"
+              name="Lunch_Monounsaturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter monounsaturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Polyunsaturated Fatty Acids (mg)"
+              name="Lunch_Polyunsaturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter polyunsaturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Free sugar (g)"
+              name="Lunch_Free_sugar(g)"
+              type="number"
+              placeholder="Enter free sugar amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Starch (g)"
+              name="Lunch_Starch(g)"
+              type="number"
+              placeholder="Enter starch amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Price"
+              name="Lunch_Price"
+              type="number"
+              placeholder="Enter price"
+              onChange={handleInputChange}
+            />
           </Grid>
           <button
             type="button"
@@ -347,12 +739,137 @@ const MealPlanForm = ({ params }: Props) => {
               placeholder="Enter protein amount"
               onChange={handleInputChange}
             />
-            {/* Add other nutrient fields here for Dinner */}
+            <FormTextField
+              label="Total fat (g)"
+              name="Dinner_Total_fat(g)"
+              type="number"
+              placeholder="Enter total fat amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Carbohydrates (g)"
+              name="Dinner_Carbohydrates(g)"
+              type="number"
+              placeholder="Enter carbohydrates amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Total Dietary Fibre (g)"
+              name="Dinner_Total_Dietary_Fibre(g)"
+              type="number"
+              placeholder="Enter dietary fibre amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin A (µg)"
+              name="Dinner_Vitamin_A(µg)"
+              type="number"
+              placeholder="Enter vitamin A amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin D (µg)"
+              name="Dinner_Vitamin_D(µg)"
+              type="number"
+              placeholder="Enter vitamin D amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin K (µg)"
+              name="Dinner_Vitamin_K(µg)"
+              type="number"
+              placeholder="Enter vitamin K amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Vitamin E (mg)"
+              name="Dinner_Vitamin_E(mg)"
+              type="number"
+              placeholder="Enter vitamin E amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Calcium (mg)"
+              name="Dinner_Calcium(mg)"
+              type="number"
+              placeholder="Enter calcium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Phosphorus (mg)"
+              name="Dinner_Phosphorus(mg)"
+              type="number"
+              placeholder="Enter phosphorus amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Magnesium (mg)"
+              name="Dinner_Magnesium(mg)"
+              type="number"
+              placeholder="Enter magnesium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Sodium (mg)"
+              name="Dinner_Sodium(mg)"
+              type="number"
+              placeholder="Enter sodium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Potassium (mg)"
+              name="Dinner_Potassium(mg)"
+              type="number"
+              placeholder="Enter potassium amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Saturated Fatty Acids (mg)"
+              name="Dinner_Saturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter saturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Monounsaturated Fatty Acids (mg)"
+              name="Dinner_Monounsaturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter monounsaturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Polyunsaturated Fatty Acids (mg)"
+              name="Dinner_Polyunsaturated_Fatty_Acids(mg)"
+              type="number"
+              placeholder="Enter polyunsaturated fatty acids amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Free sugar (g)"
+              name="Dinner_Free_sugar(g)"
+              type="number"
+              placeholder="Enter free sugar amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Starch (g)"
+              name="Dinner_Starch(g)"
+              type="number"
+              placeholder="Enter starch amount"
+              onChange={handleInputChange}
+            />
+            <FormTextField
+              label="Price"
+              name="Dinner_Price"
+              type="number"
+              placeholder="Enter price"
+              onChange={handleInputChange}
+            />
           </Grid>
           <button
-            type="button" // <--- Change this from "submit" to "button"
+            type="button"
             className="mt-4 inline-flex h-[35px] items-center justify-center rounded bg-blue-500 text-white px-4"
-            onClick={handleSave} // <--- Trigger the save function when clicked
+            onClick={handleSave}
           >
             Save Dinner
           </button>
