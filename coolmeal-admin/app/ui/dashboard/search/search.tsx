@@ -22,10 +22,10 @@ const Search = ({ placeholder }: Props) => {
     replace(`${pathname}?${params}`);
   };
   return (
-    <Box maxWidth="250px">
+    <Box maxWidth="650px">
       <TextField.Root placeholder={placeholder} onChange={handleSearch}>
         <TextField.Slot>
-          <IoIosSearch height="16" width="16" />
+          <IoIosSearch height="24" width="24" />
         </TextField.Slot>
       </TextField.Root>
     </Box>

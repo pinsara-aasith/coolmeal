@@ -88,7 +88,7 @@ export async function PATCH(req: NextRequest, { params }: Props) {
       starchG?: string;
       vitaminAUg?: string;
       vitaminDUg?: string;
-      viatminKUg?: string;
+      vitaminKUg?: string;
       vitaminEMg?: string;
       calciumMg?: string;
       phosphorusMg?: string;

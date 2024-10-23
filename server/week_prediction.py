@@ -6,7 +6,7 @@ import pandas as pd
 def calculate_difference(net_result, output):
     differences = {}
     differences["protein"] = net_result["protein"] - output["Total Protein(g)"]
-    differences["fat"] = net_result["fat"] - output["Total Total fat(g)"]
+    differences["fat"] = net_result["fat"] - output["Total fat(g)"]
     differences["carbohydrates"] = (
         net_result["carbohydrates"] - output["Total Carbohydrates(g)"]
     )

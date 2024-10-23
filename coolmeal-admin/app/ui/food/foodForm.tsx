@@ -17,7 +17,7 @@ interface Foods {
   totalDietaryFibreG: string;
   freeSugarG: number;
   starchG: number;
-  viatminKUg: string;
+  vitaminKUg: string;
   vitaminDUg: string;
   vitaminAUg: string;
   vitaminEMg: string;
@@ -257,8 +257,8 @@ export const nutritions = [
       {
         title: "Vitamin K",
         placeholder: "add vitamin K in µg",
-        key: "viatminKUg",
-        name: "viatminKUg",
+        key: "vitaminKUg",
+        name: "vitaminKUg",
       },
       {
         title: "Vitamin E",
