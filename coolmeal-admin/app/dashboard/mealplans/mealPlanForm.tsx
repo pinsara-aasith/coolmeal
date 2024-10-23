@@ -114,7 +114,7 @@ const MealPlanForm = ({ params }: Props) => {
     if (params?.id) {
       const fetchMealPlan = async () => {
         try {
-          const response = await axios.get(`/api/mealplans/`);
+          const response = await axios.get(`/api/mealplans/index`);
           setMealIndex(response.data);
         } catch (error) {
           console.error("Error fetching meal item details: ", error);
