@@ -33,7 +33,7 @@ def apply_weights(X, columns=[]):
 
 
 def train_knn_model(
-    n_neighbors=1,
+    n_neighbors=8,
     metric="cosine",
     algorithm="brute",
     model_filename="ml_model.pkl",

@@ -40,6 +40,9 @@ def calculateNewNetResult(net_result, difference):
 
 
 def week_prediction(df, price, net_result, total_calories, output, meal_plans):
+    selected_meal_indices = []
+    selected_meal_indices.append(output["index"])
+
     for i in range(6):
         differences = calculate_difference(net_result, output)
         net_result = calculateNewNetResult(net_result, differences)
@@ -68,7 +71,21 @@ def week_prediction(df, price, net_result, total_calories, output, meal_plans):
 
         prediction = predict_knn("ml_model.pkl", input_data)
 
-        output = df.iloc[prediction[0]].to_dict(orient="records")
-        output = output[0]
+        print("Prediction -----------", prediction)
+
+        # Try to find a meal that has not been selected yet
+        selected = False
+        for pred_index in prediction[0]:
+            if pred_index not in selected_meal_indices:
+                output = df.iloc[pred_index].to_dict()
+                selected_meal_indices.append(pred_index)
+                selected = True
+                break
+
+        # If all meals in prediction are duplicates, pick a random unselected meal
+        if not selected:
+            output = df.iloc[prediction[0][0]].to_dict()
+
         meal_plans.append(output)
+
     return meal_plans
