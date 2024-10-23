@@ -130,5 +130,15 @@ async def upload_pdf(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
 
 
+# create method for reading all pdf file names only  that include in UPLOAD_DIRECTORY directory
+@app.get("/read-pdf/")
+async def read_pdf():
+    # Get all PDF files in the directory
+    pdf_files = [
+        f.name for f in UPLOAD_DIRECTORY.iterdir() if f.is_file() and f.suffix == ".pdf"
+    ]
+    return {"pdf_files": pdf_files}
+
+
 # mention running port
 print("app is running on port 8000")
