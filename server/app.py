@@ -376,7 +376,7 @@ def read_meal_item(id: str):
 # Insert a new meal_item
 @app.post("/mealitems", response_model=MealItem)
 def create_meal_item(meal_item: MealItem):
-    if read_one(meal_item.Food_Code):
+    if read_one_meal(meal_item.Food_Code):
         raise HTTPException(
             status_code=400, detail="Meal item with this Food_Code already exists"
         )
