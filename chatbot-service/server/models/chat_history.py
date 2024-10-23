@@ -48,12 +48,12 @@ def convert_to_chat_dict(chat_list):
             print()
             print()
             structured_chats.append(
-                [{"User": user_message, "Assistant": assistant_message}]
+                {"User": user_message, "Assistant": assistant_message}
             )
             # Reset for the next pair
             user_message = None
             assistant_message = None
 
-    chat_summery = "summarize_chat(structured_chats)"
+    chat_summery = summarize_chat(structured_chats)
 
     return structured_chats, chat_summery
