@@ -57,9 +57,7 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=404, detail="Session not found.")
 
     if session_id not in memory_helper.memory_store:
-        memory_helper.memory_store[session_id] = [
-            "'User: Hi ', Assistant: Hi! I am a specialized AI assistant for food data."
-        ]
+        memory_helper.memory_store[session_id] = []
 
     memory_helper.memory_store[session_id] = memory_helper.update_memory_stack(
         question=request.query,
@@ -89,6 +87,7 @@ async def end_session(session_id: str):
     if session_id not in memory_helper.memory_store:
         raise HTTPException(status_code=404, detail="Session not found.")
     chat_history = memory_helper.memory_store[session_id]
+
     chat_history_data = {
         "session_id": session_id,
         "data": chat_history,

@@ -241,7 +241,26 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                   // Optionally, you can add a subtitle for additional information
                   // subtitle: Text('Subtitle here', style: TextStyle(fontSize: 14)),
                   onTap: () {
-                    // Optional: Handle tap events
+                    // When tapped, update the messages and responses in the chat view
+                    setState(() {
+                      _messages.clear(); // Clear current messages
+                      _responses.clear(); // Clear current responses
+
+                      // Assuming `historyMessages[index]` contains a list of messages and responses
+                      List history = historyMessages[index];
+
+                      // Loop through each item in the history and add them to the chat
+                      for (var chat in history) {
+                        if (chat[0]['type'] == 'user') {
+                          _messages.add(chat['message']); // Add user message
+                        } else if (chat[0]['type'] == 'bot') {
+                          _responses.add(chat['message']); // Add bot response
+                        }
+                      }
+                    });
+
+                    // Close the drawer after selecting
+                    Navigator.of(context).pop();
                   },
                 ),
               );
