@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from fastapi import HTTPException
 from pymongo.errors import ConnectionFailure, OperationFailure
 from dotenv import load_dotenv
+from bson.objectid import ObjectId
 from typing import List, Optional
 import os
 
@@ -206,16 +207,16 @@ def read_all_meal_items():
     return [convert_to_dict(meal) for meal in meals]
 
 def read_one_meal_item(meal_id: str):
-    return meal_items_collection.find_one({"_id": meal_id})
+    return meal_items_collection.find_one({"_id": ObjectId(meal_id)})
 
 def insert_one_meal_item(meal_data: dict):
     return meal_items_collection.insert_one(meal_data)
 
 def update_one_meal_item(meal_id: str, update_data: dict):
-    return meal_items_collection.update_one({"_id": meal_id}, {"$set": update_data})
+    return meal_items_collection.update_one({"_id": ObjectId(meal_id)}, {"$set": update_data})
 
 def delete_one_meal_item(meal_id: str):
-    return meal_items_collection.delete_one({"_id": meal_id})
+    return meal_items_collection.delete_one({"_id": ObjectId(meal_id)})
 
 
 
@@ -227,16 +228,16 @@ def read_all_meals():
     return [convert_to_dict(meal) for meal in meals]
 
 def read_one_meal(meal_id: str):
-    return meals_collection.find_one({"_id": meal_id})
+    return meals_collection.find_one({"_id": ObjectId(meal_id)})
 
 def insert_one_meal(meal_data: dict):
     return meals_collection.insert_one(meal_data)
 
 def update_one_meal(meal_id: str, update_data: dict):
-    return meals_collection.update_one({"_id": meal_id}, {"$set": update_data})
+    return meals_collection.update_one({"_id": ObjectId(meal_id)}, {"$set": update_data})
 
 def delete_one_meal(meal_id: str):
-    return meals_collection.delete_one({"_id": meal_id})
+    return meals_collection.delete_one({"_id": ObjectId(meal_id)})
 
 
 
@@ -248,16 +249,16 @@ def read_all_meal_plans():
     return [convert_to_dict(m) for m in ms]
 
 def read_one_meal_plan(id: str):
-    return meal_plan_collection.find_one({"_id": id})
+    return meal_plan_collection.find_one({"_id": ObjectId(id)})
 
 def insert_one_meal_plan(meal_data: dict):
     return meal_plan_collection.insert_one(meal_data)
 
 def update_one_meal_plan(id: str, update_data: dict):
-    return meal_plan_collection.update_one({"_id": id}, {"$set": update_data})
+    return meal_plan_collection.update_one({"_id": ObjectId(id)}, {"$set": update_data})
 
 def delete_one_meal_plan(id: str):
-    return meal_plan_collection.delete_one({"_id": id})
+    return meal_plan_collection.delete_one({"_id": ObjectId(id)})
 
 
 

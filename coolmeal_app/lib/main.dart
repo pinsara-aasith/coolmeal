@@ -15,6 +15,7 @@ import 'routing/app_router.dart';
 import 'routing/routes.dart';
 import 'theming/colors.dart';
 
+String ServerIP = 'http://16.171.196.136';
 String initialRoute = Routes.loginScreen;
 
 Future<void> main() async {
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
           providers: [
             RepositoryProvider(
                 create: (context) =>
-                    MealRepository(firestore: FirebaseFirestore.instance)),
+                    MealRepository()),
             RepositoryProvider(
                 create: (context) =>
                     UserProfileRepository(firestore: FirebaseFirestore.instance)),

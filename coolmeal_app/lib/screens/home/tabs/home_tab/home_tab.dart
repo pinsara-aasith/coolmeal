@@ -37,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
               stretchTriggerOffset: 200.0,
               expandedHeight: 300.0,
               flexibleSpace: Image.asset(
-                "assets/images/home_image.png",
+                "assets/images/Logo.png",
                 fit: BoxFit.cover,
               ),
             ),
@@ -234,7 +234,7 @@ class MealListItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            meal.mealTime,
+                            meal.sideMeal,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -250,7 +250,7 @@ class MealListItem extends StatelessWidget {
                               ),
                               const SizedBox(width: 4.0),
                               Text(
-                                meal.generatedTimes.toString(),
+                                meal.mainMeal.toString(),
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14,

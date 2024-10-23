@@ -3,30 +3,33 @@ class Meal {
   final String mainMeal;
   final String sideMeal;
   final String completeMeal;
-  final String ingredients;
-  final String quantities;
-  final String mealIngredientIds;
-  final double energyKcal;
-  final double proteinG;
-  final double totalFatG;
-  final double carbohydratesG;
-  final double totalDietaryFibreG;
-  final double vitaminAUg;
-  final double vitaminDUg;
-  final double vitaminKUg;
-  final double vitaminEMg;
-  final double calciumMg;
-  final double phosphorusMg;
-  final double magnesiumMg;
-  final double sodiumMg;
-  final double potassiumMg;
-  final double saturatedFattyAcidsMg;
-  final double monounsaturatedFattyAcidsMg;
-  final double polyunsaturatedFattyAcidsMg;
-  final double freeSugarG;
-  final double starchG;
-  final String mealTime;
-  final double generatedTimes;
+  final String? ingredients;
+  final String? quantities;
+  final String? mealIngredientIds;
+  final double? energyKcal;
+  final double? proteinG;
+  final double? totalFatG;
+  final double? carbohydratesG;
+  final double? totalDietaryFibreG;
+  final double? vitaminAUg;
+  final double? vitaminDUg;
+  final double? vitaminEUg;
+  final double? calciumMg;
+  final double? phosphorusMg;
+  final double? magnesiumMg;
+  final double? sodiumMg;
+  final double? potassiumMg;
+  final double? saturatedFattyAcidsMg;
+  final double? monounsaturatedFattyAcidsMg;
+  final double? polyunsaturatedFattyAcidsMg;
+  final double? freeSugarG;
+  final double? starchG;
+  final double? vitaminKUg;
+  final double? breakfastProbability;
+  final double? lunchProbability;
+  final double? dinnerProbability;
+  final int combinedMeal;
+  final double? price;
 
   Meal({
     required this.id,
@@ -43,8 +46,7 @@ class Meal {
     required this.totalDietaryFibreG,
     required this.vitaminAUg,
     required this.vitaminDUg,
-    required this.vitaminKUg,
-    required this.vitaminEMg,
+    required this.vitaminEUg,
     required this.calciumMg,
     required this.phosphorusMg,
     required this.magnesiumMg,
@@ -55,72 +57,83 @@ class Meal {
     required this.polyunsaturatedFattyAcidsMg,
     required this.freeSugarG,
     required this.starchG,
-    required this.mealTime,
-    required this.generatedTimes,
+    required this.vitaminKUg,
+    required this.breakfastProbability,
+    required this.lunchProbability,
+    required this.dinnerProbability,
+    required this.combinedMeal,
+    required this.price,
   });
 
-  factory Meal.fromJson(String id, Map<String, dynamic> json) {
+  factory Meal.fromJson(Map<String?, dynamic> json) {
     return Meal(
-      id: id,
-      mainMeal: json['mainMeal'],
-      sideMeal: json['sideMeal'],
-      completeMeal: json['completeMeal'],
-      ingredients: json['ingredients'],
-      quantities: json['quantities'],
-      mealIngredientIds: json['mealIngredientIds'],
-      energyKcal: json['energyKcal'],
-      proteinG: json['proteinG'],
-      totalFatG: json['totalFatG'],
-      carbohydratesG: json['carbohydratesG'],
-      totalDietaryFibreG: json['totalDietaryFibreG'],
-      vitaminAUg: json['vitaminAUg'],
-      vitaminDUg: json['vitaminDUg'],
-      vitaminKUg: json['vitaminKUg'], // Note: Check for the correct key name here
-      vitaminEMg: json['vitaminEMg'],
-      calciumMg: json['calciumMg'],
-      phosphorusMg: json['phosphorusMg'],
-      magnesiumMg: json['magnesiumMg'],
-      sodiumMg: json['sodiumMg'],
-      potassiumMg: json['potassiumMg'],
-      saturatedFattyAcidsMg: json['saturatedFattyAcidsMg'],
-      monounsaturatedFattyAcidsMg: json['monounsaturatedFattyAcidsMg'],
-      polyunsaturatedFattyAcidsMg: json['polyunsaturatedFattyAcidsMg'],
-      freeSugarG: json['freeSugarG'],
-      starchG: json['starchG'],
-      mealTime: json['mealTime'],
-      generatedTimes: json['generatedTimes'],
+      id: json['_id'],
+      mainMeal: json['Main Meal'],
+      sideMeal: json['Side Meal'],
+      completeMeal: json['Complete Meal'],
+      ingredients: json['Ingredients'],
+      quantities: json['Quantities'],
+      mealIngredientIds: json['Meal_Ingredient_Ids'],
+      energyKcal: json['Energy(Kcal)'],
+      proteinG: json['Protein(g)'],
+      totalFatG: json['Total fat(g)'],
+      carbohydratesG: json['Carbohydrates(g)'],
+      totalDietaryFibreG: json['Total Dietary Fibre(g)'],
+      vitaminAUg: json['Vitamin A(µg)'],
+      vitaminDUg: json['Vitamin D(µg)'],
+      vitaminEUg: json['Vitamin E(mg)'],
+      calciumMg: json['Calcium(mg)'],
+      phosphorusMg: json['Phosphorus(mg)'],
+      magnesiumMg: json['Magnesium(mg)'],
+      sodiumMg: json['Sodium(mg)'],
+      potassiumMg: json['Potassium(mg)'],
+      saturatedFattyAcidsMg: json['Saturated Fatty Acids(mg)'],
+      monounsaturatedFattyAcidsMg: json['Monounsaturated Fatty Acids(mg)'],
+      polyunsaturatedFattyAcidsMg: json['Polyunsaturated Fatty Acids(mg)'],
+      freeSugarG: json['Free sugar(g)'],
+      starchG: json['Starch(g)'],
+      vitaminKUg: json['Vitamin K(µg)'],
+      breakfastProbability: json['Breakfast_Probability'],
+      lunchProbability: json['Lunch_Probability'],
+      dinnerProbability: json['Dinner_Probability'],
+      combinedMeal: json['Combined_Meal'],
+      price: json['Price'],
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String?, dynamic> toJson() {
     return {
-      'mainMeal': mainMeal,
-      'sideMeal': sideMeal,
-      'completeMeal': completeMeal,
-      'ingredients': ingredients,
-      'quantities': quantities,
-      'mealIngredientIds': mealIngredientIds,
-      'energyKcal': energyKcal,
-      'proteinG': proteinG,
-      'totalFatG': totalFatG,
-      'carbohydratesG': carbohydratesG,
-      'totalDietaryFibreG': totalDietaryFibreG,
-      'vitaminAUg': vitaminAUg,
-      'vitaminDUg': vitaminDUg,
-      'vitaminKUg': vitaminKUg, // Note: Ensure this matches the correct key
-      'vitaminEMg': vitaminEMg,
-      'calciumMg': calciumMg,
-      'phosphorusMg': phosphorusMg,
-      'magnesiumMg': magnesiumMg,
-      'sodiumMg': sodiumMg,
-      'potassiumMg': potassiumMg,
-      'saturatedFattyAcidsMg': saturatedFattyAcidsMg,
-      'monounsaturatedFattyAcidsMg': monounsaturatedFattyAcidsMg,
-      'polyunsaturatedFattyAcidsMg': polyunsaturatedFattyAcidsMg,
-      'freeSugarG': freeSugarG,
-      'starchG': starchG,
-      'mealTime': mealTime,
-      'generatedTimes': generatedTimes,
+      '_id': id,
+      'Main Meal': mainMeal,
+      'Side Meal': sideMeal,
+      'Complete Meal': completeMeal,
+      'Ingredients': ingredients,
+      'Quantities': quantities,
+      'Meal_Ingredient_Ids': mealIngredientIds,
+      'Energy(Kcal)': energyKcal,
+      'Protein(g)': proteinG,
+      'Total fat(g)': totalFatG,
+      'Carbohydrates(g)': carbohydratesG,
+      'Total Dietary Fibre(g)': totalDietaryFibreG,
+      'Vitamin A(µg)': vitaminAUg,
+      'Vitamin D(µg)': vitaminDUg,
+      'Vitamin E(mg)': vitaminEUg,
+      'Calcium(mg)': calciumMg,
+      'Phosphorus(mg)': phosphorusMg,
+      'Magnesium(mg)': magnesiumMg,
+      'Sodium(mg)': sodiumMg,
+      'Potassium(mg)': potassiumMg,
+      'Saturated Fatty Acids(mg)': saturatedFattyAcidsMg,
+      'Monounsaturated Fatty Acids(mg)': monounsaturatedFattyAcidsMg,
+      'Polyunsaturated Fatty Acids(mg)': polyunsaturatedFattyAcidsMg,
+      'Free sugar(g)': freeSugarG,
+      'Starch(g)': starchG,
+      'Vitamin K(µg)': vitaminKUg,
+      'Breakfast_Probability': breakfastProbability,
+      'Lunch_Probability': lunchProbability,
+      'Dinner_Probability': dinnerProbability,
+      'Combined_Meal': combinedMeal,
+      'Price': price,
     };
   }
 }

@@ -1,47 +1,48 @@
+import 'dart:convert';
 import 'package:bloc/bloc.dart';
+import 'package:coolmeal/main.dart';
 import 'package:coolmeal/models/meal.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:http/http.dart' as http;
 
 class PopularMealBloc extends Bloc<PopularMealEvent, PopularMealState> {
-  final FirebaseFirestore firestore;
 
-  PopularMealBloc({required this.firestore}) : super(PopularMealInitial()) {
+  PopularMealBloc()
+      : super(PopularMealInitial()) {
     on<FetchPopularMeals>(_onFetchPopularMeals);
   }
 
   Future<void> _onFetchPopularMeals(
       FetchPopularMeals event, Emitter<PopularMealState> emit) async {
     emit(PopularMealLoading());
-    try {
-      Query<Map<String, dynamic>> q = firestore.collection('meals');
-
+    // try {
+      String url = '$ServerIP/meals/${event.mealTime?.toLowerCase() ?? 'breakfast'}/top50';
+      // Adding filters if mealTime or searchQuery are provided
+      Map<String, String> queryParams = {};
       if (event.mealTime != null) {
-        q = q.where('mealTime', isEqualTo: event.mealTime);
+        queryParams['mealTime'] = event.mealTime!;
       }
-
       if (event.searchQuery != null) {
-        q = q
-            .where('completeMeal', isGreaterThanOrEqualTo: event.mealTime)
-            .where('completeMeal',
-                isLessThanOrEqualTo: '${event.mealTime ?? ''}\uf8ff');
+        queryParams['searchQuery'] = event.searchQuery!;
       }
+      Uri uri = Uri.parse(url).replace(queryParameters: queryParams);
 
-      QuerySnapshot querySnapshot =
-          await q.orderBy('generatedTimes', descending: true).limit(20).get();
+      final response = await http.get(uri);
 
-      List<Meal> meals = querySnapshot.docs
-          .map((doc) =>
-              Meal.fromJson(doc.id, doc.data() as Map<String, dynamic>))
-          .toList();
-
-      emit(PopularMealLoaded(meals));
-    } catch (e) {
-      emit(PopularMealError("Failed to fetch meals ${e.toString()}"));
-    }
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        List<Meal> meals = data["meals"].map<Meal>((md) => Meal.fromJson(md)).toList();
+        emit(PopularMealLoaded(meals));
+      } else {
+        emit(PopularMealError("Failed to fetch meals: ${response.statusCode}"));
+      }
+    // } catch (e) {
+    //   emit(PopularMealError("Failed to fetch meals: ${e.toString()}"));
+    // }
   }
 }
 
+// Abstract PopularMealState class and its variants
 abstract class PopularMealState extends Equatable {
   const PopularMealState();
 
@@ -71,6 +72,7 @@ class PopularMealError extends PopularMealState {
   List<Object?> get props => [message];
 }
 
+// Abstract PopularMealEvent class and its variants
 abstract class PopularMealEvent extends Equatable {
   const PopularMealEvent();
 }

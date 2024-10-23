@@ -77,8 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }
                             },
                             child: BlocProvider(
-                                create: (context) => PopularMealBloc(
-                                    firestore: FirebaseFirestore.instance),
+                                create: (context) => PopularMealBloc(),
                                 child: const HomeBody())));
                   },
                 )

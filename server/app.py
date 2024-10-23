@@ -123,7 +123,6 @@ def read_prediction(request: UserRequest):
         ]
     ]
 
-    print(input_data)
     prediction = predict_knn("ml_model.pkl", input_data)
     print(prediction)
     output = df.iloc[prediction[0]].to_dict(orient="records")

@@ -49,22 +49,17 @@ class MealDetailsPage extends StatelessWidget {
                           label: 'Side Meal',
                           value: meal.sideMeal,
                         ),
-                        _buildMealInfoCard(
-                          icon: Icons.access_time,
-                          label: 'Meal Time',
-                          value: meal.mealTime,
-                        ),
                         const Divider(),
 
                         _buildMealInfoCard(
                           icon: Icons.local_dining,
                           label: 'Ingredients',
-                          value: meal.ingredients,
+                          value: meal.ingredients ?? '',
                         ),
                         _buildMealInfoCard(
                           icon: Icons.scale,
                           label: 'Ingredient Quantities',
-                          value: meal.quantities,
+                          value: meal.quantities ?? '',
                         ),
                         const SizedBox(height: 16),
 
@@ -94,7 +89,7 @@ class MealDetailsPage extends StatelessWidget {
                         _buildNutrientProgress(
                             'Vitamin K', meal.vitaminKUg, 20000, 'µg'),
                         _buildNutrientProgress(
-                            'Vitamin E', meal.vitaminEMg, 15, 'mg'),
+                            'Vitamin E', meal.vitaminEUg, 15, 'mg'),
                         _buildNutrientProgress(
                             'Calcium', meal.calciumMg, 1000, 'mg'),
                         _buildNutrientProgress(
@@ -151,8 +146,8 @@ class MealDetailsPage extends StatelessWidget {
 
   // Helper method to build progress bars for nutritional values
   Widget _buildNutrientProgress(
-      String label, double value, double dailyValue, String unit) {
-    double progress = value / dailyValue;
+      String label, double? value, double dailyValue, String unit) {
+    double progress = (value ?? 0) / dailyValue;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +159,7 @@ class MealDetailsPage extends StatelessWidget {
             style: const TextStyle(fontSize: 16, color: Colors.black),
             children: [
               TextSpan(
-                text: '${value.toStringAsFixed(2)} $unit',
+                text: '${(value ?? 0).toStringAsFixed(2)} $unit',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],

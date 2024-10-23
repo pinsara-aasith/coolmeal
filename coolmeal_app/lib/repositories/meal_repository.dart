@@ -1,17 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:coolmeal/main.dart';
+import 'package:http/http.dart' as http;
 import 'package:coolmeal/models/meal.dart';
 import 'package:coolmeal/models/meal_plan.dart';
 
 class MealRepository {
-  final FirebaseFirestore firestore;
 
-  MealRepository({required this.firestore});
+  MealRepository();
 
   Future<Meal> getMealById(String mealId) async {
+    final url = Uri.parse('$ServerIP/meals/$mealId');
     try {
-      DocumentSnapshot doc =
-          await firestore.collection('meals').doc(mealId).get();
-      return Meal.fromJson(doc.id, doc.data() as Map<String, dynamic>);
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        return Meal.fromJson(data);
+      } else {
+        throw Exception('Failed to load meal. Status code: ${response.statusCode}');
+      }
     } catch (e) {
       throw Exception('Error fetching meal: $e');
     }
@@ -19,21 +25,17 @@ class MealRepository {
 
   Future<MealPlan?> getMealPlanByMealNames(
       String breakfast, String lunch, String dinner) async {
+    final url = Uri.parse('$ServerIP/mealplan?breakfast=$breakfast&lunch=$lunch&dinner=$dinner');
     try {
-      QuerySnapshot query = await firestore
-          .collection('meals')
-          .where(breakfast, isEqualTo: breakfast)
-          .where(breakfast, isEqualTo: breakfast)
-          .where(breakfast, isEqualTo: breakfast)
-          .get();
-
-      if (query.docs.isNotEmpty) {
-        return MealPlan.fromJson(
-            query.docs.first.data() as Map<String, dynamic>);
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        return MealPlan.fromJson(data);
+      } else {
+        throw Exception('Failed to load meal plan. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Error fetching meal: $e');
+      throw Exception('Error fetching meal plan: $e');
     }
-    return null;
   }
 }
