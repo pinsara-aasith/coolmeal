@@ -13,7 +13,7 @@ class Meal {
   final double totalDietaryFibreG;
   final double vitaminAUg;
   final double vitaminDUg;
-  final double viatminKUg; // Note: This should probably be 'vitaminKug' 
+  final double vitaminKUg;
   final double vitaminEMg;
   final double calciumMg;
   final double phosphorusMg;
@@ -43,7 +43,7 @@ class Meal {
     required this.totalDietaryFibreG,
     required this.vitaminAUg,
     required this.vitaminDUg,
-    required this.viatminKUg,
+    required this.vitaminKUg,
     required this.vitaminEMg,
     required this.calciumMg,
     required this.phosphorusMg,
@@ -75,7 +75,7 @@ class Meal {
       totalDietaryFibreG: json['totalDietaryFibreG'],
       vitaminAUg: json['vitaminAUg'],
       vitaminDUg: json['vitaminDUg'],
-      viatminKUg: json['viatminKUg'], // Note: Check for the correct key name here
+      vitaminKUg: json['vitaminKUg'], // Note: Check for the correct key name here
       vitaminEMg: json['vitaminEMg'],
       calciumMg: json['calciumMg'],
       phosphorusMg: json['phosphorusMg'],
@@ -107,7 +107,7 @@ class Meal {
       'totalDietaryFibreG': totalDietaryFibreG,
       'vitaminAUg': vitaminAUg,
       'vitaminDUg': vitaminDUg,
-      'viatminKUg': viatminKUg, // Note: Ensure this matches the correct key
+      'vitaminKUg': vitaminKUg, // Note: Ensure this matches the correct key
       'vitaminEMg': vitaminEMg,
       'calciumMg': calciumMg,
       'phosphorusMg': phosphorusMg,
