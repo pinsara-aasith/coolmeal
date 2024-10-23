@@ -9,6 +9,8 @@ import os
 load_dotenv()
 # Replace the following with your MongoDB Atlas connection string
 MONGODB_URI = os.getenv("MONGO_URI")
+print("MONGO_URI ---------------------------- ", MONGODB_URI)
+
 
 # Initialize the MongoDB client
 try:
