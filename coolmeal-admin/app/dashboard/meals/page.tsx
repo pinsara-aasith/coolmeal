@@ -1,11 +1,20 @@
-import React from "react";
-import MealTable from "./mealTable";
+import CustomButton from "@/component/CustomButton";
+import Link from "next/link";
+import { Suspense } from 'react'
+import MealsTable from "./mealTable";
+import { MealDialogWithTriggerButton } from "./mealDialog";
 
 const Meals = () => {
   return (
-    <div data-testid="meal-table">
-      <MealTable />
-    </div>
+    <Suspense>
+      <div>
+          <div className="m-5">
+            <MealDialogWithTriggerButton triggerLabel="Add New Meal "/>
+          </div>
+
+        <MealsTable />
+      </div>
+    </Suspense>
   );
 };
 
