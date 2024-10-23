@@ -11,7 +11,6 @@ import { Badge, Card, Text } from "@radix-ui/themes";
 
 // Define columns for the Table component
 const columns = [
-  { header: "Meal ID", accessor: "_id", className: "font-bold" },
   { header: "Breakfast", accessor: "Breakfast", className: "font-bold" },
   { header: "Lunch", accessor: "Lunch", className: "font-bold" },
   { header: "Dinner", accessor: "Dinner", className: "font-bold" },
@@ -23,13 +22,21 @@ const columns = [
   { header: "Total Magnesium (mg)", accessor: "Total Magnesium(mg)" },
   { header: "Total Sodium (mg)", accessor: "Total Sodium(mg)" },
   { header: "Total Potassium (mg)", accessor: "Total Potassium(mg)" },
-  { header: "Total Saturated Fatty Acids (mg)", accessor: "Total Saturated Fatty Acids(mg)" },
-  { header: "Total Monounsaturated Fatty Acids (mg)", accessor: "Total Monounsaturated Fatty Acids(mg)" },
-  { header: "Total Polyunsaturated Fatty Acids (mg)", accessor: "Total Polyunsaturated Fatty Acids(mg)" },
+  {
+    header: "Total Saturated Fatty Acids (mg)",
+    accessor: "Total Saturated Fatty Acids(mg)",
+  },
+  {
+    header: "Total Monounsaturated Fatty Acids (mg)",
+    accessor: "Total Monounsaturated Fatty Acids(mg)",
+  },
+  {
+    header: "Total Polyunsaturated Fatty Acids (mg)",
+    accessor: "Total Polyunsaturated Fatty Acids(mg)",
+  },
   { header: "Total Free Sugar (g)", accessor: "Total Free sugar(g)" },
   { header: "Total Starch (g)", accessor: "Total Starch(g)" },
 ];
-
 
 const MealPlansTable = () => {
   const [mealplans, setMealPlans] = useState<any[]>([]);
@@ -60,7 +67,7 @@ const MealPlansTable = () => {
   useEffect(() => {
     const query = searchParams.get("q") || "";
     const filtered = mealplans.filter((mealplan) =>
-      (JSON.stringify(mealplan))?.toLowerCase().includes(query.toLowerCase())
+      JSON.stringify(mealplan)?.toLowerCase().includes(query.toLowerCase())
     );
     console.log(filtered, mealplans, "filtered");
     setFilteredMealPlans(filtered);
@@ -68,16 +75,11 @@ const MealPlansTable = () => {
 
   const tableData = filteredMealPlans.map((mi) => ({
     ...mi,
-    _id: (
-      <Text className="text-blue-600 hover:underline font-bold">
-        {mi._id.toUpperCase()}
-      </Text>
-    ),
+    _id: <Text className="text-blue-600 hover:underline font-bold"></Text>,
   }));
 
-
   return (
-    <Card className="ml-5 mt-5">
+    <Card className="ml-5 mt-5  text-white">
       <Search placeholder="Search for meal plans" />
       <div className="overflow-x-auto mt-5">
         <div className="overflow-y-auto">
@@ -85,10 +87,7 @@ const MealPlansTable = () => {
             {loading ? (
               <LoadingSkeleton />
             ) : (
-              <Table
-                columns={columns}
-                data={tableData}
-              />
+              <Table columns={columns} data={tableData} />
             )}
           </div>
         </div>

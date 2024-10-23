@@ -57,9 +57,7 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=404, detail="Session not found.")
 
     if session_id not in memory_helper.memory_store:
-        memory_helper.memory_store[session_id] = [
-            "'User: Hi ', Assistant: Hi! I am a specialized AI assistant for food data."
-        ]
+        memory_helper.memory_store[session_id] = []
 
     memory_helper.memory_store[session_id] = memory_helper.update_memory_stack(
         question=request.query,
@@ -89,6 +87,7 @@ async def end_session(session_id: str):
     if session_id not in memory_helper.memory_store:
         raise HTTPException(status_code=404, detail="Session not found.")
     chat_history = memory_helper.memory_store[session_id]
+
     chat_history_data = {
         "session_id": session_id,
         "data": chat_history,
@@ -129,6 +128,16 @@ async def upload_pdf(file: UploadFile = File(...)):
         return {"filename": file.filename, "message": "File uploaded successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to upload file: {e}")
+
+
+# create method for reading all pdf file names only  that include in UPLOAD_DIRECTORY directory
+@app.get("/read-pdf/")
+async def read_pdf():
+    # Get all PDF files in the directory
+    pdf_files = [
+        f.name for f in UPLOAD_DIRECTORY.iterdir() if f.is_file() and f.suffix == ".pdf"
+    ]
+    return {"pdf_files": pdf_files}
 
 
 # mention running port

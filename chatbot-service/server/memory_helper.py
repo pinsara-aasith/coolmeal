@@ -21,13 +21,7 @@ def update_memory_stack(
     # Add the new question and response to the stack
     memory_stack.append(f"User: {question}")
     memory_stack.append(f"Assistant: {response}")
-
-    # Ensure the stack doesn't exceed the limit
-    if len(memory_stack) > 2 * limit:
-        memory_stack = memory_stack[
-            -2 * limit :
-        ]  # Keep only the last limit interactions
-
+    print(memory_stack)
     return memory_stack
 
 
