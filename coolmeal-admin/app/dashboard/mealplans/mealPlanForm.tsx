@@ -289,22 +289,25 @@ const MealPlanForm = ({ params }: Props) => {
   };
 
   // / Handle form data submission and save to appropriate meal section
-  const handleSave = async (formData: any) => {
+  const handleSave = async () => {
     const updatedNotifications = [...notifications];
 
     if (currentSection === 0 && !notifications.includes("Breakfast")) {
       console.log("Breakfast data: ", mealsData.Breakfast);
-      // await saveMealData(mealsData.Breakfast);
+      const BreakfastBody = mapBreakfastMealDataToRequestBody(mealsData);
+      await saveMealData(BreakfastBody);
       updatedNotifications.push("Breakfast");
 
       console.log("Breakfast data: ", mealsData.Breakfast);
     } else if (currentSection === 1 && !notifications.includes("Lunch")) {
       console.log("Lunch -- ", mealsData.Lunch);
-      // await saveMealData(mealsData.Breakfast)
+      const LunchBody = mapLunchMealDataToRequestBody(mealsData);
+      await saveMealData(LunchBody);
       updatedNotifications.push("Lunch");
     } else if (currentSection === 2 && !notifications.includes("Dinner")) {
       console.log("Dinner data ", mealsData.Dinner);
-      // await saveMealData(mealsData.Breakfast)
+      const DinnerBody = mapDinnerMealDataToRequestBody(mealsData);
+      await saveMealData(DinnerBody);
       updatedNotifications.push("Dinner");
     }
 
@@ -416,10 +419,19 @@ const MealPlanForm = ({ params }: Props) => {
       console.log("Lunch data: ", mealsData.Lunch["Lunch_Complete_Meal"]);
       console.log("Dinner data: ", mealsData.Dinner["Dinner_Complete_Meal"]);
       console.log("Model data: ", modelData);
-
+      await trainModel(modelData);
       // router.push("/dashboard/meal-items");
     } catch (error) {
       console.error("Error submitting form: ", error);
+    }
+  };
+
+  const trainModel = async (data: any) => {
+    try {
+      const response = await axios.post(`/api/mealplans`, data);
+      console.log("Response: ", response.data);
+    } catch (error) {
+      console.error("Error saving meal data: ", error);
     }
   };
 
