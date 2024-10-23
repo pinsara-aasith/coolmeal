@@ -61,6 +61,7 @@ const MealPlanForm = ({ params }: Props) => {
       Lunch_Complete_Meal: "",
       Lunch_Ingredients: "",
       Lunch_Quantities: "",
+      Lunch_Combined_Meal: 0,
       "Lunch_Energy(Kcal)": 0,
       "Lunch_Protein(g)": 0,
       "Lunch_Total_fat(g)": 0,
@@ -87,6 +88,7 @@ const MealPlanForm = ({ params }: Props) => {
       Dinner_Complete_Meal: "",
       Dinner_Ingredients: "",
       Dinner_Quantities: "",
+      Dinner_Combined_Meal: 0,
       "Dinner_Energy(Kcal)": 0,
       "Dinner_Protein(g)": 0,
       "Dinner_Total_fat(g)": 0,
@@ -302,6 +304,7 @@ const MealPlanForm = ({ params }: Props) => {
     } else if (currentSection === 1 && !notifications.includes("Lunch")) {
       console.log("Lunch -- ", mealsData.Lunch);
       const LunchBody = mapLunchMealDataToRequestBody(mealsData);
+      console.log("Lunch data: ", LunchBody);
       await saveMealData(LunchBody);
       updatedNotifications.push("Lunch");
     } else if (currentSection === 2 && !notifications.includes("Dinner")) {
@@ -420,6 +423,7 @@ const MealPlanForm = ({ params }: Props) => {
       console.log("Dinner data: ", mealsData.Dinner["Dinner_Complete_Meal"]);
       console.log("Model data: ", modelData);
       await trainModel(modelData);
+      alert("Train Model Sucessfully ------------------");
       // router.push("/dashboard/meal-items");
     } catch (error) {
       console.error("Error submitting form: ", error);
@@ -713,6 +717,25 @@ const MealPlanForm = ({ params }: Props) => {
               placeholder="Enter dinner probability"
             />
             <FormTextField
+              label="Ingredients"
+              name="BLunch_Ingredients"
+              onChange={handleInputChange}
+              placeholder="Enter ingredients"
+            />
+            <FormTextField
+              label="Quantities"
+              name="Lunch_Quantities"
+              onChange={handleInputChange}
+              placeholder="Enter quantities"
+            />
+            <FormTextField
+              label="Combined Meal"
+              name="Lunch_Combined_Meal"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter combined meal count"
+            />
+            <FormTextField
               label="Energy (Kcal)"
               name="Lunch_Energy(Kcal)"
               type="number"
@@ -909,6 +932,25 @@ const MealPlanForm = ({ params }: Props) => {
               type="number"
               onChange={handleInputChange}
               placeholder="Enter dinner probability"
+            />
+            <FormTextField
+              label="Ingredients"
+              name="Dinner_Ingredients"
+              onChange={handleInputChange}
+              placeholder="Enter ingredients"
+            />
+            <FormTextField
+              label="Quantities"
+              name="Dinner_Quantities"
+              onChange={handleInputChange}
+              placeholder="Enter quantities"
+            />
+            <FormTextField
+              label="Combined Meal"
+              name="Dinner_Combined_Meal"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter combined meal count"
             />
             <FormTextField
               label="Energy (Kcal)"
