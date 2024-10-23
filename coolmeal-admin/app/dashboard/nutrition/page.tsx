@@ -1,4 +1,4 @@
-import NutritionTable from "@/app/ui/food/nutritionTable";
+import NutritionTable from "@/app/dashboard/nutrition/nutritionTable";
 import CustomButton from "@/component/CustomButton";
 import Link from "next/link";
 import { Suspense } from 'react'

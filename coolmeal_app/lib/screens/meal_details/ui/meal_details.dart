@@ -92,7 +92,7 @@ class MealDetailsPage extends StatelessWidget {
                         _buildNutrientProgress(
                             'Vitamin D', meal.vitaminDUg, 10000, 'µg'),
                         _buildNutrientProgress(
-                            'Vitamin K', meal.viatminKUg, 20000, 'µg'),
+                            'Vitamin K', meal.vitaminKUg, 20000, 'µg'),
                         _buildNutrientProgress(
                             'Vitamin E', meal.vitaminEMg, 15, 'mg'),
                         _buildNutrientProgress(

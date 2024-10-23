@@ -179,7 +179,7 @@ export const nutritions = [
     list: [
       { title: "Vitamin A", key: "vitaminAUg" },
       { title: "Vitamin D", key: "vitaminDUg" },
-      { title: "Vitamin K", key: "viatminKUg" },
+      { title: "Vitamin K", key: "vitaminKUg" },
       { title: "Vitamin E", key: "vitaminEMg" },
     ],
   },

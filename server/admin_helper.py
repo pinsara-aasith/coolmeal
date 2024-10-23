@@ -1,7 +1,7 @@
 from helpers.convert_dict import convert_meal_plan_dict
 from helpers.add_data_to_final_csv import add_meal_plan_to_csv
 from model import train_knn_model
-from mongodbHelper import insert_new_meal_plan
+from mongodb_helper import insert_new_meal_plan
 
 
 async def add_new_meal_plan(meal_plan):

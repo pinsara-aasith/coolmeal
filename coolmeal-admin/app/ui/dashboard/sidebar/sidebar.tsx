@@ -1,10 +1,10 @@
 "use client";
 import { Avatar, Button, Flex, Text } from "@radix-ui/themes";
-import { FaNutritionix, FaUserAlt } from "react-icons/fa";
-import { FaArrowTrendUp } from "react-icons/fa6";
-import { GiArtificialIntelligence } from "react-icons/gi";
+import { FaNutritionix, FaRobot, FaUser, FaUserAlt } from "react-icons/fa";
+import { FaArrowTrendUp, FaUserTag } from "react-icons/fa6";
+import { GiArtificialIntelligence, GiFoodChain } from "react-icons/gi";
 import { IoIosSettings } from "react-icons/io";
-import { MdDashboard, MdNoMeals } from "react-icons/md";
+import { MdDashboard, MdNoMeals, MdFoodBank, MdLibraryBooks } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import Menulink from "./menulink/menulink";
 import useToast from "@/hooks/use-snackbar";
@@ -24,7 +24,11 @@ const Sidebar = (props: any) => {
           url: "/dashboard/nutrition",
           icon: <FaNutritionix />,
         },
+        { title: "Meal Items", url: "/dashboard/mealitems", icon: <MdFoodBank /> },
         { title: "Meals", url: "/dashboard/meals", icon: <MdNoMeals /> },
+        { title: "Meal Plans", url: "/dashboard/mealplans", icon: <FaUserTag /> },
+        { title: "Chatbot", url: "/dashboard/chatbot", icon: <FaRobot /> },
+        
       ],
     },
     {

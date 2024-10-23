@@ -11,7 +11,7 @@ weights = {
     "Price": 0.5,
     "Total Energy(Kcal)": 2,
     "Total Protein(g)": 2.2,
-    "Total Total fat(g)": 0.5,
+    "Total fat(g)": 0.5,
     "Total Carbohydrates(g)": 0.5,
     "Total Magnesium(mg)": 0.05,
     "Total Sodium(mg)": 0.05,
