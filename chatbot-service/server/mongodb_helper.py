@@ -100,6 +100,7 @@ async def getAllChatsForUser(user_id: str):
         chat_history_list = []
         for session_id in session_id_list:
             chat_history = await get_chat_history_by_session_id(session_id)
+            print("chat history --- ", chat_history)
             if chat_history:
                 chat_history_dict = convert_to_chat_dict(chat_history["data"])
                 chat_history_list.append(chat_history_dict)

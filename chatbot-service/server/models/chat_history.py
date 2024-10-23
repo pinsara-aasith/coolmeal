@@ -18,22 +18,42 @@ class ChatHistory(BaseModel):
 
 # Function to convert the list into a list of dicts
 def convert_to_chat_dict(chat_list):
-    chat_history = []
 
-    for i in range(0, len(chat_list), 2):  # Step 2 to get pairs of User and Assistant
-        user_message = chat_list[i + 1] if i + 1 < len(chat_list) else None
-        assistant_message = chat_list[i]
+    structured_chats = []
 
-        if user_message:
-            # Extract 'User' and 'Assistant' messages
-            user_msg_content = user_message.split(": ", 1)[
-                1
-            ]  # Split at the first colon to separate the message
-            assistant_msg_content = assistant_message.split(": ", 1)[1]
+    print("Chat List : ", chat_list)
 
-            # Append a dict with 'User' and 'Assistant' as keys
-            chat_history.append(
-                {"User": user_msg_content, "Assistant": assistant_msg_content}
+    for message in chat_list:
+
+        isAppend = False
+        if message.startswith("User:"):
+            user_message = message.split("User:")[1].strip()  # Extract the User message
+            print("User Message : ", user_message)
+            print()
+            print()
+        elif message.startswith("Assistant:"):
+            assistant_message = message.split("Assistant:")[1].strip()
+            print("Assistant Message : ", assistant_message)
+            print()
+            print()
+            isAppend = True
+
+        # Once we have a user and assistant message, add them to the structure
+        if isAppend:
+            print()
+            print(
+                "-------------------------------------------------------------------------------------------",
+                {"User": user_message, "Assistant": assistant_message},
             )
-    chat_summery = summarize_chat(chat_history)
-    return chat_history, chat_summery
+            print()
+            print()
+            structured_chats.append(
+                {"User": user_message, "Assistant": assistant_message}
+            )
+            # Reset for the next pair
+            user_message = None
+            assistant_message = None
+
+    chat_summery = summarize_chat(structured_chats)
+
+    return structured_chats, chat_summery
