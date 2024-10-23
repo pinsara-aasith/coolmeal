@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 
 # Pydantic model for data validation
 class MealPlan(BaseModel):
+    Id: str = Field(..., alias='_id')
     Breakfast: str = Field(..., description="Meal for breakfast")
     Lunch: str = Field(..., description="Meal for lunch")
     Dinner: str = Field(..., description="Meal for dinner")
@@ -14,7 +15,7 @@ class MealPlan(BaseModel):
         ..., ge=0, alias="Total Protein(g)", description="Total protein in grams"
     )
     Total_Fat_g: float = Field(
-        ..., ge=0, alias="Total Fat(g)", description="Total fat in grams"
+        ..., ge=0, alias="Total fat(g)", description="Total fat in grams"
     )
     Total_Carbohydrates_g: float = Field(
         ...,
@@ -50,7 +51,7 @@ class MealPlan(BaseModel):
         description="Total polyunsaturated fatty acids in mg",
     )
     Total_Free_Sugar_g: float = Field(
-        ..., ge=0, alias="Total Free Sugar(g)", description="Total free sugar in grams"
+        ..., ge=0, alias="Total Free sugar(g)", description="Total free sugar in grams"
     )
     Total_Starch_g: float = Field(
         ..., ge=0, alias="Total Starch(g)", description="Total starch in grams"

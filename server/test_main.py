@@ -13,9 +13,7 @@ def test_check_root():
     assert response.json() == {"Hello": "World"}
 
 
-# Test case for the /prediction endpoint
 def test_read_prediction():
-    # Prepare the input data
     request_data = {
         "weight": 70.0,
         "height": 175.0,
@@ -25,7 +23,6 @@ def test_read_prediction():
         "price": 10000.00,
     }
 
-    # Send a POST request to the /prediction endpoint
     response = client.post("/prediction", json=request_data)
 
     # Check if the response status code is 200 (OK)

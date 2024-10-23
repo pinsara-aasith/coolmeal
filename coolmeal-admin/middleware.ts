@@ -12,10 +12,7 @@ export const PUBLIC_ROUTES = [
   "/register",
   "/api/auth/callback/google",
   "/api/auth/callback/github",
-  "/dashboard",
 ];
-
-export const PROTECTED_SUB_ROUTES = [""];
 
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
@@ -23,9 +20,7 @@ export async function middleware(request: NextRequest) {
   const isAuthenticated = !!session?.user;
 
   const isPublicRoute =
-    PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) &&
-    !PROTECTED_SUB_ROUTES.find((route) => nextUrl.pathname.startsWith(route)) &&
-    nextUrl.pathname != ROOT;
+    PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route))
 
   if (!isAuthenticated && !isPublicRoute)
     return Response.redirect(new URL(LOGIN, nextUrl));
