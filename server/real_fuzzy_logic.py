@@ -3,12 +3,33 @@ import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
 
-def fuzzy_recommend_nutrients(age_input, weight_input, height_input):
+def fuzzy_recommend_nutrients(
+    age_input, weight_input, height_input, diabetes_input, pressure_input, chol_input
+):
 
     # Define the fuzzy variables and their ranges
     age = ctrl.Antecedent(np.arange(0, 101, 1), "age")
     weight = ctrl.Antecedent(np.arange(20, 201, 1), "weight")
     height = ctrl.Antecedent(np.arange(100, 251, 1), "height")
+
+    # Define fuzzy variables for common diseases
+    diabetes = ctrl.Antecedent(np.arange(0, 11, 1), "diabetes")
+    hypertension = ctrl.Antecedent(np.arange(0, 11, 1), "hypertension")
+    cholesterol = ctrl.Antecedent(np.arange(0, 11, 1), "cholesterol")
+
+    # Membership functions for diseases (severity)
+    diabetes["none"] = fuzz.trapmf(diabetes.universe, [0, 0, 0, 3])
+    diabetes["mild"] = fuzz.trapmf(diabetes.universe, [2, 3, 5, 6])
+    diabetes["severe"] = fuzz.trapmf(diabetes.universe, [5, 7, 10, 10])
+
+    hypertension["normal"] = fuzz.trapmf(hypertension.universe, [0, 0, 0, 3])
+    hypertension["elevated"] = fuzz.trapmf(hypertension.universe, [2, 3, 5, 6])
+    hypertension["high"] = fuzz.trapmf(hypertension.universe, [5, 7, 10, 10])
+
+    # Membership functions for cholesterol (severity)
+    cholesterol["normal"] = fuzz.trapmf(cholesterol.universe, [0, 0, 0, 3])
+    cholesterol["borderline"] = fuzz.trapmf(cholesterol.universe, [2, 3, 5, 6])
+    cholesterol["high"] = fuzz.trapmf(cholesterol.universe, [5, 7, 10, 10])
 
     # Define fuzzy output variables for nutrients
     protein = ctrl.Consequent(np.arange(0, 201, 1), "protein")
@@ -682,7 +703,128 @@ def fuzzy_recommend_nutrients(age_input, weight_input, height_input):
         ),
     )
 
-    # Define more rules here...
+    rule37 = ctrl.Rule(
+        diabetes["mild"] & age["middle_aged"] & weight["normal"],
+        (
+            protein["medium"],
+            fat["medium"],
+            carbohydrates["medium"],  # Lower carbs for mild diabetes
+            magnesium["medium"],
+            sodium["medium"],
+            potassium["medium"],
+            saturated_fat["low"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["low"],  # Lower sugar for mild diabetes
+            starch["medium"],
+        ),
+    )
+
+    rule38 = ctrl.Rule(
+        diabetes["severe"] & age["senior"] & weight["overweight"],
+        (
+            protein["medium"],
+            fat["low"],
+            carbohydrates["low"],  # Much lower carbs for severe diabetes
+            magnesium["medium"],
+            sodium["medium"],
+            potassium["medium"],
+            saturated_fat["low"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["low"],  # Much lower sugar for severe diabetes
+            starch["low"],
+        ),
+    )
+
+    # Rule for someone with hypertension (reduce sodium intake)
+    rule39 = ctrl.Rule(
+        hypertension["elevated"] & weight["overweight"] & height["average"],
+        (
+            protein["medium"],
+            fat["medium"],
+            carbohydrates["medium"],
+            magnesium["medium"],
+            sodium["low"],  # Lower sodium for hypertension
+            potassium["high"],
+            saturated_fat["medium"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["medium"],
+            starch["medium"],
+        ),
+    )
+    # Rule for someone with high hypertension (drastically reduce sodium intake)
+    rule40 = ctrl.Rule(
+        hypertension["high"] & age["senior"] & weight["obese"],
+        (
+            protein["medium"],
+            fat["low"],
+            carbohydrates["low"],
+            magnesium["high"],
+            sodium["low"],  # Severely lower sodium for high hypertension
+            potassium["high"],
+            saturated_fat["low"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["low"],
+            starch["low"],
+        ),
+    )
+
+    # Rule for someone with high cholesterol (reduce saturated fat)
+    rule41 = ctrl.Rule(
+        cholesterol["high"] & weight["overweight"] & height["average"],
+        (
+            protein["medium"],
+            fat["low"],
+            carbohydrates["medium"],
+            magnesium["medium"],
+            sodium["medium"],
+            potassium["high"],
+            saturated_fat["low"],  # Lower saturated fat intake
+            monounsaturated_fat["high"],  # Encourage healthy fats
+            polyunsaturated_fat["high"],
+            free_sugar["low"],  # Reduce free sugar intake
+            starch["medium"],
+        ),
+    )
+
+    # Rule for someone with borderline cholesterol
+    rule42 = ctrl.Rule(
+        cholesterol["borderline"] & weight["normal"] & height["tall"],
+        (
+            protein["medium"],
+            fat["medium"],
+            carbohydrates["medium"],
+            magnesium["medium"],
+            sodium["medium"],
+            potassium["medium"],
+            saturated_fat["medium"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["medium"],
+            starch["medium"],
+        ),
+    )
+
+    # Rule for someone with normal cholesterol and no other severe diseases
+    rule43 = ctrl.Rule(
+        cholesterol["normal"] & hypertension["normal"] & weight["normal"],
+        (
+            protein["medium"],
+            fat["medium"],
+            carbohydrates["medium"],
+            magnesium["medium"],
+            sodium["medium"],
+            potassium["medium"],
+            saturated_fat["medium"],
+            monounsaturated_fat["medium"],
+            polyunsaturated_fat["medium"],
+            free_sugar["medium"],
+            starch["medium"],
+        ),
+    )
 
     # Create the control system and simulation
     food_ctrl = ctrl.ControlSystem(
@@ -723,6 +865,13 @@ def fuzzy_recommend_nutrients(age_input, weight_input, height_input):
             rule34,
             rule35,
             rule36,
+            rule37,
+            rule38,
+            rule39,
+            rule40,
+            rule41,
+            rule42,
+            rule43,
         ]
     )
     food_simulation = ctrl.ControlSystemSimulation(food_ctrl)
@@ -731,6 +880,9 @@ def fuzzy_recommend_nutrients(age_input, weight_input, height_input):
     food_simulation.input["age"] = age_input
     food_simulation.input["weight"] = weight_input
     food_simulation.input["height"] = height_input
+    food_simulation.input["diabetes"] = diabetes_input
+    food_simulation.input["hypertension"] = pressure_input
+    food_simulation.input["cholesterol"] = chol_input
 
     try:
         # Perform the simulation

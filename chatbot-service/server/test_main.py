@@ -8,7 +8,7 @@ client = TestClient(app)
 
 
 def test_check_root():
-    response = client.get("/")
+    response = client.get("/read")
     assert response.status_code == 200
     assert response.json() == {"Hello": "Food chat bot Service"}
 
