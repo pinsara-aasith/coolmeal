@@ -70,7 +70,14 @@ def read_root():
 @app.post("/prediction")
 def read_prediction(request: UserRequest):
     meal_plans = []
-    nut_result = fuzzy_recommend_nutrients(request.age, request.weight, request.height)
+    nut_result = fuzzy_recommend_nutrients(
+        request.age,
+        request.weight,
+        request.height,
+        request.diabetes_input,
+        request.pressure_input,
+        request.chol_input,
+    )
     tot_bmr = calculate_bmr(request.weight, request.height, request.age, request.gender)
     tot_kalories = calculate_daily_calories(tot_bmr, request.activity_level)
 
