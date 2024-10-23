@@ -29,100 +29,217 @@ const MealPlanForm = ({ params }: Props) => {
       Breakfast_Main_Meal: "",
       Breakfast_Side_Meal: "",
       Breakfast_Complete_Meal: "",
-      Ingredients: "",
-      Quantities: "",
+      Breakfast_Breakfast_Probability: 0,
+      Breakfast_Lunch_Probability: 0,
+      Breakfast_Dinner_Probability: 0,
+      Breakfast_Ingredients: "",
+      Breakfast_Quantities: "",
+      Breakfast_Combined_Meal: 0,
       "Breakfast_Energy(Kcal)": 0,
       "Breakfast_Protein(g)": 0,
-      "Total fat(g)": 0,
-      "Carbohydrates(g)": 0,
-      "Total Dietary Fibre(g)": null,
-      "Vitamin A(µg)": null,
-      "Vitamin D(µg)": null,
-      "Vitamin K(µg)": null,
-      "Vitamin E(mg)": null,
-      "Calcium(mg)": null,
-      "Phosphorus(mg)": null,
-      "Magnesium(mg)": null,
-      "Sodium(mg)": null,
-      "Potassium(mg)": null,
-      "Saturated Fatty Acids(mg)": null,
-      "Monounsaturated Fatty Acids(mg)": null,
-      "Polyunsaturated Fatty Acids(mg)": null,
-      "Free sugar(g)": null,
-      "Starch(g)": null,
+      "Breakfast_Total_fat(g)": 0,
+      "Breakfast_Carbohydrates(g)": 0,
+      "Breakfast_Total_Dietary_Fibre(g)": 0,
+      "Breakfast_Vitamin_A(µg)": 0,
+      "Breakfast_Vitamin_D(µg)": 0,
+      "Breakfast_Vitamin_K(µg)": 0,
+      "Breakfast_Vitamin_E(mg)": 0,
+      "Breakfast_Calcium(mg)": 0,
+      "Breakfast_Phosphorus(mg)": 0,
+      "Breakfast_Magnesium(mg)": 0,
+      "Breakfast_Sodium(mg)": 0,
+      "Breakfast_Potassium(mg)": 0,
+      "Breakfast_Saturated_Fatty_Acids(mg)": 0,
+      "Breakfast_Monounsaturated_Fatty_Acids(mg)": 0,
+      "Breakfast_Polyunsaturated_Fatty_Acids(mg)": 0,
+      "Breakfast_Free_sugar(g)": 0,
+      "Breakfast_Starch(g)": 0,
     },
     Lunch: {
       Lunch_Main_Meal: "",
       Lunch_Side_Meal: "",
       Lunch_Complete_Meal: "",
-      Ingredients: "",
-      Quantities: "",
+      Lunch_Ingredients: "",
+      Lunch_Quantities: "",
       "Lunch_Energy(Kcal)": 0,
       "Lunch_Protein(g)": 0,
-      "Total fat(g)": 0,
-      "Carbohydrates(g)": 0,
-      "Total Dietary Fibre(g)": null,
-      "Vitamin A(µg)": null,
-      "Vitamin D(µg)": null,
-      "Vitamin K(µg)": null,
-      "Vitamin E(mg)": null,
-      "Calcium(mg)": null,
-      "Phosphorus(mg)": null,
-      "Magnesium(mg)": null,
-      "Sodium(mg)": null,
-      "Potassium(mg)": null,
-      "Saturated Fatty Acids(mg)": null,
-      "Monounsaturated Fatty Acids(mg)": null,
-      "Polyunsaturated Fatty Acids(mg)": null,
-      "Free sugar(g)": null,
-      "Starch(g)": null,
+      "Lunch_Total_fat(g)": 0,
+      "Lunch_Carbohydrates(g)": 0,
+      "Lunch_Total_Dietary_Fibre(g)": 0,
+      "Lunch_Vitamin_A(µg)": 0,
+      "Lunch_Vitamin_D(µg)": 0,
+      "Lunch_Vitamin_K(µg)": 0,
+      "Lunch_Vitamin_E(mg)": 0,
+      "Lunch_Calcium(mg)": 0,
+      "Lunch_Phosphorus(mg)": 0,
+      "Lunch_Magnesium(mg)": 0,
+      "Lunch_Sodium(mg)": 0,
+      "Lunch_Potassium(mg)": 0,
+      "Lunch_Saturated_Fatty_Acids(mg)": 0,
+      "Lunch_Monounsaturated_Fatty_Acids(mg)": 0,
+      "Lunch_Polyunsaturated_Fatty_Acids(mg)": 0,
+      "Lunch_Free_sugar(g)": 0,
+      "Lunch_Starch(g)": 0,
     },
     Dinner: {
       Dinner_Main_Meal: "",
       Dinner_Side_Meal: "",
       Dinner_Complete_Meal: "",
-      Ingredients: "",
-      Quantities: "",
+      Dinner_Ingredients: "",
+      Dinner_Quantities: "",
       "Dinner_Energy(Kcal)": 0,
       "Dinner_Protein(g)": 0,
-      "Total fat(g)": 0,
-      "Carbohydrates(g)": 0,
-      "Total Dietary Fibre(g)": null,
-      "Vitamin A(µg)": null,
-      "Vitamin D(µg)": null,
-      "Vitamin K(µg)": null,
-      "Vitamin E(mg)": null,
-      "Calcium(mg)": null,
-      "Phosphorus(mg)": null,
-      "Magnesium(mg)": null,
-      "Sodium(mg)": null,
-      "Potassium(mg)": null,
-      "Saturated Fatty Acids(mg)": null,
-      "Monounsaturated Fatty Acids(mg)": null,
-      "Polyunsaturated Fatty Acids(mg)": null,
-      "Free sugar(g)": null,
-      "Starch(g)": null,
+      "Dinner_Total_fat(g)": 0,
+      "Dinner_Carbohydrates(g)": 0,
+      "Dinner_Total_Dietary_Fibre(g)": 0,
+      "Dinner_Vitamin_A(µg)": 0,
+      "Dinner_Vitamin_D(µg)": 0,
+      "Dinner_Vitamin_K(µg)": 0,
+      "Dinner_Vitamin_E(mg)": 0,
+      "Dinner_Calcium(mg)": 0,
+      "Dinner_Phosphorus(mg)": 0,
+      "Dinner_Magnesium(mg)": 0,
+      "Dinner_Sodium(mg)": 0,
+      "Dinner_Potassium(mg)": 0,
+      "Dinner_Saturated_Fatty_Acids(mg)": 0,
+      "Dinner_Monounsaturated_Fatty_Acids(mg)": 0,
+      "Dinner_Polyunsaturated_Fatty_Acids(mg)": 0,
+      "Dinner_Free_sugar(g)": 0,
+      "Dinner_Starch(g)": 0,
     },
     price: {
-      Breakfast_Price: null,
-      Lunch_Price: null,
-      Dinner_Price: null,
+      Breakfast_Price: 0,
+      Lunch_Price: 0,
+      Dinner_Price: 0,
     },
   });
 
+  const mapBreakfastMealDataToRequestBody = (mealData: any) => {
+    return {
+      "Main Meal": mealData.Breakfast.Breakfast_Main_Meal,
+      "Side Meal": mealData.Breakfast.Breakfast_Side_Meal,
+      "Complete Meal": mealData.Breakfast.Breakfast_Complete_Meal,
+      Breakfast_Probability: mealData.Breakfast.Breakfast_Breakfast_Probability,
+      Lunch_Probability: mealData.Breakfast.Breakfast_Lunch_Probability,
+      Dinner_Probability: mealData.Breakfast.Breakfast_Dinner_Probability,
+      Combined_Meal: mealData.Breakfast.Breakfast_Combined_Meal,
+      Ingredients: mealData.Breakfast.Breakfast_Ingredients,
+      Quantities: mealData.Breakfast.Breakfast_Quantities,
+      "Energy(Kcal)": mealData.Breakfast["Breakfast_Energy(Kcal)"],
+      "Protein(g)": mealData.Breakfast["Breakfast_Protein(g)"],
+      "Total fat(g)": mealData.Breakfast["Breakfast_Total_fat(g)"],
+      "Carbohydrates(g)": mealData.Breakfast["Breakfast_Carbohydrates(g)"],
+      "Total Dietary Fibre(g)":
+        mealData.Breakfast["Breakfast_Total_Dietary_Fibre(g)"],
+      "Vitamin A(µg)": mealData.Breakfast["Breakfast_Vitamin_A(µg)"],
+      "Vitamin D(µg)": mealData.Breakfast["Breakfast_Vitamin_D(µg)"],
+      "Vitamin K(µg)": mealData.Breakfast["Breakfast_Vitamin_K(µg)"],
+      "Vitamin E(mg)": mealData.Breakfast["Breakfast_Vitamin_E(mg)"],
+      "Calcium(mg)": mealData.Breakfast["Breakfast_Calcium(mg)"],
+      "Phosphorus(mg)": mealData.Breakfast["Breakfast_Phosphorus(mg)"],
+      "Magnesium(mg)": mealData.Breakfast["Breakfast_Magnesium(mg)"],
+      "Sodium(mg)": mealData.Breakfast["Breakfast_Sodium(mg)"],
+      "Potassium(mg)": mealData.Breakfast["Breakfast_Potassium(mg)"],
+      "Saturated Fatty Acids(mg)":
+        mealData.Breakfast["Breakfast_Saturated_Fatty_Acids(mg)"],
+      "Monounsaturated Fatty Acids(mg)":
+        mealData.Breakfast["Breakfast_Monounsaturated_Fatty_Acids(mg)"],
+      "Polyunsaturated Fatty Acids(mg)":
+        mealData.Breakfast["Breakfast_Polyunsaturated_Fatty_Acids(mg)"],
+      "Free sugar(g)": mealData.Breakfast["Breakfast_Free_sugar(g)"],
+      "Starch(g)": mealData.Breakfast["Breakfast_Starch(g)"],
+    };
+  };
+
+  const mapLunchMealDataToRequestBody = (mealData: any) => {
+    return {
+      "Main Meal": mealData.Lunch.Lunch_Main_Meal,
+      "Side Meal": mealData.Lunch.Lunch_Side_Meal,
+      "Complete Meal": mealData.Lunch.Lunch_Complete_Meal,
+      Breakfast_Probability: mealData.Lunch.Lunch_Breakfast_Probability, // Assuming this is meant to map the Breakfast probability for lunch
+      Lunch_Probability: mealData.Lunch.Lunch_Lunch_Probability, // Add probability if required
+      Dinner_Probability: mealData.Lunch.Lunch_Dinner_Probability, // Add probability if required
+      Combined_Meal: mealData.Lunch.Lunch_Combined_Meal, // If there's a Combined_Meal field for lunch
+      Ingredients: mealData.Lunch.Lunch_Ingredients,
+      Quantities: mealData.Lunch.Lunch_Quantities,
+      "Energy(Kcal)": mealData.Lunch["Lunch_Energy(Kcal)"],
+      "Protein(g)": mealData.Lunch["Lunch_Protein(g)"],
+      "Total fat(g)": mealData.Lunch["Lunch_Total_fat(g)"],
+      "Carbohydrates(g)": mealData.Lunch["Lunch_Carbohydrates(g)"],
+      "Total Dietary Fibre(g)": mealData.Lunch["Lunch_Total_Dietary_Fibre(g)"],
+      "Vitamin A(µg)": mealData.Lunch["Lunch_Vitamin_A(µg)"],
+      "Vitamin D(µg)": mealData.Lunch["Lunch_Vitamin_D(µg)"],
+      "Vitamin K(µg)": mealData.Lunch["Lunch_Vitamin_K(µg)"],
+      "Vitamin E(mg)": mealData.Lunch["Lunch_Vitamin_E(mg)"],
+      "Calcium(mg)": mealData.Lunch["Lunch_Calcium(mg)"],
+      "Phosphorus(mg)": mealData.Lunch["Lunch_Phosphorus(mg)"],
+      "Magnesium(mg)": mealData.Lunch["Lunch_Magnesium(mg)"],
+      "Sodium(mg)": mealData.Lunch["Lunch_Sodium(mg)"],
+      "Potassium(mg)": mealData.Lunch["Lunch_Potassium(mg)"],
+      "Saturated Fatty Acids(mg)":
+        mealData.Lunch["Lunch_Saturated_Fatty_Acids(mg)"],
+      "Monounsaturated Fatty Acids(mg)":
+        mealData.Lunch["Lunch_Monounsaturated_Fatty_Acids(mg)"],
+      "Polyunsaturated Fatty Acids(mg)":
+        mealData.Lunch["Lunch_Polyunsaturated_Fatty_Acids(mg)"],
+      "Free sugar(g)": mealData.Lunch["Lunch_Free_sugar(g)"],
+      "Starch(g)": mealData.Lunch["Lunch_Starch(g)"],
+    };
+  };
+
+  const mapDinnerMealDataToRequestBody = (mealData: any) => {
+    return {
+      "Main Meal": mealData.Dinner.Dinner_Main_Meal,
+      "Side Meal": mealData.Dinner.Dinner_Side_Meal,
+      "Complete Meal": mealData.Dinner.Dinner_Complete_Meal,
+      Breakfast_Probability: mealData.Dinner.Dinner_Breakfast_Probability, // Assuming probability fields for dinner exist
+      Lunch_Probability: mealData.Dinner.Dinner_Lunch_Probability, // Assuming probability fields for dinner exist
+      Dinner_Probability: mealData.Dinner.Dinner_Dinner_Probability, // Assuming probability fields for dinner exist
+      Combined_Meal: mealData.Dinner.Dinner_Combined_Meal, // Assuming Combined_Meal field for dinner
+      Ingredients: mealData.Dinner.Dinner_Ingredients,
+      Quantities: mealData.Dinner.Dinner_Quantities,
+      "Energy(Kcal)": mealData.Dinner["Dinner_Energy(Kcal)"],
+      "Protein(g)": mealData.Dinner["Dinner_Protein(g)"],
+      "Total fat(g)": mealData.Dinner["Dinner_Total_fat(g)"],
+      "Carbohydrates(g)": mealData.Dinner["Dinner_Carbohydrates(g)"],
+      "Total Dietary Fibre(g)":
+        mealData.Dinner["Dinner_Total_Dietary_Fibre(g)"],
+      "Vitamin A(µg)": mealData.Dinner["Dinner_Vitamin_A(µg)"],
+      "Vitamin D(µg)": mealData.Dinner["Dinner_Vitamin_D(µg)"],
+      "Vitamin K(µg)": mealData.Dinner["Dinner_Vitamin_K(µg)"],
+      "Vitamin E(mg)": mealData.Dinner["Dinner_Vitamin_E(mg)"],
+      "Calcium(mg)": mealData.Dinner["Dinner_Calcium(mg)"],
+      "Phosphorus(mg)": mealData.Dinner["Dinner_Phosphorus(mg)"],
+      "Magnesium(mg)": mealData.Dinner["Dinner_Magnesium(mg)"],
+      "Sodium(mg)": mealData.Dinner["Dinner_Sodium(mg)"],
+      "Potassium(mg)": mealData.Dinner["Dinner_Potassium(mg)"],
+      "Saturated Fatty Acids(mg)":
+        mealData.Dinner["Dinner_Saturated_Fatty_Acids(mg)"],
+      "Monounsaturated Fatty Acids(mg)":
+        mealData.Dinner["Dinner_Monounsaturated_Fatty_Acids(mg)"],
+      "Polyunsaturated Fatty Acids(mg)":
+        mealData.Dinner["Dinner_Polyunsaturated_Fatty_Acids(mg)"],
+      "Free sugar(g)": mealData.Dinner["Dinner_Free_sugar(g)"],
+      "Starch(g)": mealData.Dinner["Dinner_Starch(g)"],
+    };
+  };
+
   useEffect(() => {
-    if (params?.id) {
-      const fetchMealPlan = async () => {
-        try {
-          const response = await axios.get(`/api/mealplans/index`);
-          setMealIndex(response.data);
-        } catch (error) {
-          console.error("Error fetching meal item details: ", error);
-        }
-      };
-      fetchMealPlan();
-    }
-  }, [params?.id]);
+    console.log("Load Component ------------------------------------------+ ");
+
+    const fetchMealPlan = async () => {
+      console.log("GET Component ------------------------------------------+ ");
+      try {
+        const response = await axios.get(`/api/mealplans/index`);
+
+        setMealIndex(response.data.last_index);
+      } catch (error) {
+        console.error("Error fetching meal item details: ", error);
+      }
+    };
+    fetchMealPlan();
+    console.log("GET Component ------------------------------------------+ ");
+  }, []);
 
   // Handle real-time input changes
   const handleInputChange = (
@@ -161,20 +278,34 @@ const MealPlanForm = ({ params }: Props) => {
     }));
   };
 
+  // create async api method to save meal data
+  const saveMealData = async (mealData: any) => {
+    try {
+      const response = await axios.post(`/api/mealplans/add`, mealData);
+      console.log("Response: ", response.data);
+    } catch (error) {
+      console.error("Error saving meal data: ", error);
+    }
+  };
+
   // / Handle form data submission and save to appropriate meal section
-  const handleSave = (formData: any) => {
+  const handleSave = async (formData: any) => {
     const updatedNotifications = [...notifications];
 
     if (currentSection === 0 && !notifications.includes("Breakfast")) {
+      console.log("Breakfast data: ", mealsData.Breakfast);
+      // await saveMealData(mealsData.Breakfast);
       updatedNotifications.push("Breakfast");
 
       console.log("Breakfast data: ", mealsData.Breakfast);
     } else if (currentSection === 1 && !notifications.includes("Lunch")) {
+      console.log("Lunch -- ", mealsData.Lunch);
+      // await saveMealData(mealsData.Breakfast)
       updatedNotifications.push("Lunch");
-      console.log("Lunch Data --");
     } else if (currentSection === 2 && !notifications.includes("Dinner")) {
-      updatedNotifications.push("Dinner");
       console.log("Dinner data ", mealsData.Dinner);
+      // await saveMealData(mealsData.Breakfast)
+      updatedNotifications.push("Dinner");
     }
 
     setNotifications(updatedNotifications);
@@ -203,54 +334,54 @@ const MealPlanForm = ({ params }: Props) => {
       Number(mealsData.Dinner["Dinner_Protein(g)"]);
 
     const totalFat =
-      Number(mealsData.Breakfast["Total fat(g)"]) +
-      Number(mealsData.Lunch["Total fat(g)"]) +
-      Number(mealsData.Dinner["Total fat(g)"]);
+      Number(mealsData.Breakfast["Breakfast_Total_fat(g)"]) +
+      Number(mealsData.Lunch["Lunch_Total_fat(g)"]) +
+      Number(mealsData.Dinner["Dinner_Total_fat(g)"]);
 
     const totalCarbohydrates =
-      Number(mealsData.Breakfast["Carbohydrates(g)"]) +
-      Number(mealsData.Lunch["Carbohydrates(g)"]) +
-      Number(mealsData.Dinner["Carbohydrates(g)"]);
+      Number(mealsData.Breakfast["Breakfast_Carbohydrates(g)"]) +
+      Number(mealsData.Lunch["Lunch_Carbohydrates(g)"]) +
+      Number(mealsData.Dinner["Dinner_Carbohydrates(g)"]);
 
     const totalMagnesium =
-      Number(mealsData.Breakfast["Magnesium(mg)"]) +
-      Number(mealsData.Lunch["Magnesium(mg)"]) +
-      Number(mealsData.Dinner["Magnesium(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Magnesium(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Magnesium(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Magnesium(mg)"]);
 
     const totalSodium =
-      Number(mealsData.Breakfast["Sodium(mg)"]) +
-      Number(mealsData.Lunch["Sodium(mg)"]) +
-      Number(mealsData.Dinner["Sodium(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Sodium(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Sodium(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Sodium(mg)"]);
 
     const totalPotassium =
-      Number(mealsData.Breakfast["Potassium(mg)"]) +
-      Number(mealsData.Lunch["Potassium(mg)"]) +
-      Number(mealsData.Dinner["Potassium(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Potassium(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Potassium(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Potassium(mg)"]);
 
     const totalSaturatedFattyAcids =
-      Number(mealsData.Breakfast["Saturated Fatty Acids(mg)"]) +
-      Number(mealsData.Lunch["Saturated Fatty Acids(mg)"]) +
-      Number(mealsData.Dinner["Saturated Fatty Acids(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Saturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Saturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Saturated_Fatty_Acids(mg)"]);
 
     const totalMonounsaturatedFattyAcids =
-      Number(mealsData.Breakfast["Monounsaturated Fatty Acids(mg)"]) +
-      Number(mealsData.Lunch["Monounsaturated Fatty Acids(mg)"]) +
-      Number(mealsData.Dinner["Monounsaturated Fatty Acids(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Monounsaturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Monounsaturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Monounsaturated_Fatty_Acids(mg)"]);
 
     const totalPolyunsaturatedFattyAcids =
-      Number(mealsData.Breakfast["Polyunsaturated Fatty Acids(mg)"]) +
-      Number(mealsData.Lunch["Polyunsaturated Fatty Acids(mg)"]) +
-      Number(mealsData.Dinner["Polyunsaturated Fatty Acids(mg)"]);
+      Number(mealsData.Breakfast["Breakfast_Polyunsaturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Lunch["Lunch_Polyunsaturated_Fatty_Acids(mg)"]) +
+      Number(mealsData.Dinner["Dinner_Polyunsaturated_Fatty_Acids(mg)"]);
 
     const totalFreeSugar =
-      Number(mealsData.Breakfast["Free sugar(g)"]) +
-      Number(mealsData.Lunch["Free sugar(g)"]) +
-      Number(mealsData.Dinner["Free sugar(g)"]);
+      Number(mealsData.Breakfast["Breakfast_Free_sugar(g)"]) +
+      Number(mealsData.Lunch["Lunch_Free_sugar(g)"]) +
+      Number(mealsData.Dinner["Dinner_Free_sugar(g)"]);
 
     const totalStarch =
-      Number(mealsData.Breakfast["Starch(g)"]) +
-      Number(mealsData.Lunch["Starch(g)"]) +
-      Number(mealsData.Dinner["Starch(g)"]);
+      Number(mealsData.Breakfast["Breakfast_Starch(g)"]) +
+      Number(mealsData.Lunch["Lunch_Starch(g)"]) +
+      Number(mealsData.Dinner["Dinner_Starch(g)"]);
 
     const total_price =
       Number(mealsData.price["Breakfast_Price"]) +
@@ -274,7 +405,7 @@ const MealPlanForm = ({ params }: Props) => {
       "Total Polyunsaturated Fatty Acids(mg)": totalPolyunsaturatedFattyAcids,
       "Total Free sugar(g)": totalFreeSugar,
       "Total Starch(g)": totalStarch,
-      index: 0,
+      index: mealIndex + 1,
     };
 
     try {
@@ -333,41 +464,41 @@ const MealPlanForm = ({ params }: Props) => {
             />
             <FormTextField
               label="Breakfast Probability"
-              name="Breakfast_Probability"
+              name="Breakfast_Breakfast_Probability"
               type="number"
               onChange={handleInputChange}
               placeholder="Enter breakfast probability"
             />
             <FormTextField
               label="Lunch Probability"
-              name="Lunch_Probability"
+              name="Breakfast_Lunch_Probability"
               type="number"
               onChange={handleInputChange}
               placeholder="Enter lunch probability"
             />
             <FormTextField
               label="Dinner Probability"
-              name="Dinner_Probability"
+              name="Breakfast_Dinner_Probability"
               type="number"
               onChange={handleInputChange}
               placeholder="Enter dinner probability"
             />
             <FormTextField
               label="Combined Meal"
-              name="Combined_Meal"
+              name="Breakfast_Combined_Meal"
               type="number"
               onChange={handleInputChange}
               placeholder="Enter combined meal count"
             />
             <FormTextField
               label="Ingredients"
-              name="Ingredients"
+              name="Breakfast_Ingredients"
               onChange={handleInputChange}
               placeholder="Enter ingredients"
             />
             <FormTextField
               label="Quantities"
-              name="Quantities"
+              name="Breakfast_Quantities"
               onChange={handleInputChange}
               placeholder="Enter quantities"
             />
@@ -549,6 +680,27 @@ const MealPlanForm = ({ params }: Props) => {
               required
             />
             <FormTextField
+              label="Breakfast Probability"
+              name="Lunch_Breakfast_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter breakfast probability"
+            />
+            <FormTextField
+              label="Lunch Probability"
+              name="Lunch_Lunch_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter lunch probability"
+            />
+            <FormTextField
+              label="Dinner Probability"
+              name="Lunch_Dinner_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter dinner probability"
+            />
+            <FormTextField
               label="Energy (Kcal)"
               name="Lunch_Energy(Kcal)"
               type="number"
@@ -724,6 +876,27 @@ const MealPlanForm = ({ params }: Props) => {
               placeholder="Enter dinner complete meal"
               onChange={handleInputChange}
               required
+            />
+            <FormTextField
+              label="Breakfast Probability"
+              name="Dinner_Breakfast_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter breakfast probability"
+            />
+            <FormTextField
+              label="Lunch Probability"
+              name="Dinner_Lunch_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter lunch probability"
+            />
+            <FormTextField
+              label="Dinner Probability"
+              name="Dinner_Dinner_Probability"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Enter dinner probability"
             />
             <FormTextField
               label="Energy (Kcal)"
