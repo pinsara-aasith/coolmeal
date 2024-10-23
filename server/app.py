@@ -326,7 +326,7 @@ def read_ingredient(food_code: str):
 # Insert a new ingredient
 @app.post("/ingredients", response_model=Ingredient)
 def create_ingredient(ingredient: Ingredient):
-    if read_one(ingredient.Food_Code):
+    if read_one_ingredient(ingredient.Food_Code):
         raise HTTPException(
             status_code=400, detail="Ingredient with this Food_Code already exists"
         )
@@ -339,7 +339,7 @@ def create_ingredient(ingredient: Ingredient):
 # Update an ingredient by Food_Code
 @app.put("/ingredients/{food_code}", response_model=Ingredient)
 def update_ingredient(food_code: str, updated_ingredient: Ingredient):
-    if not read_one(food_code):
+    if not read_one_ingredient(food_code):
         raise HTTPException(status_code=404, detail="Ingredient not found")
 
     update_data = updated_ingredient.dict(by_alias=True)
@@ -376,7 +376,7 @@ def read_meal_item(id: str):
 # Insert a new meal_item
 @app.post("/mealitems", response_model=MealItem)
 def create_meal_item(meal_item: MealItem):
-    if read_one(meal_item.Food_Code):
+    if read_one_meal(meal_item.Food_Code):
         raise HTTPException(
             status_code=400, detail="Meal item with this Food_Code already exists"
         )
@@ -389,7 +389,7 @@ def create_meal_item(meal_item: MealItem):
 # Update an mealitems by Food_Code
 @app.put("/mealitems/{id}", response_model=MealItem)
 def update_meal_item(id: str, updated_meal_item: MealItem):
-    if not read_one(id):
+    if not read_one_meal(id):
         raise HTTPException(status_code=404, detail="Meal item not found")
 
     update_data = updated_meal_item.dict(by_alias=True)
@@ -438,7 +438,7 @@ async def add_meal(meal: Meal):
 # Update an meals by Food_Code
 @app.put("/meals/{id}", response_model=Meal)
 def update_meal_item(id: str, updated_meal: Meal):
-    if not read_one(id):
+    if not read_one_meal(id):
         raise HTTPException(status_code=404, detail="Meal not found")
 
     update_data = updated_meal.dict(by_alias=True)
@@ -487,13 +487,13 @@ async def add_meal(mealPlan: MealPlan):
 # Update an meals by Food_Code
 @app.put("/mealplans/{id}", response_model=Meal)
 def update_meal_plan(id: str, updated_meal_plan: Meal):
-    if not read_one(id):
+    if not read_one_meal(id):
         raise HTTPException(status_code=404, detail="Meal plan not found")
 
     update_data = updated_meal_plan.dict(by_alias=True)
     update_one_meal_plan(id, update_data)
     updated_meal_plan = read_one_meal_plan(id)
-    return convert_to_dict(updated_meal)
+    return convert_to_dict(updated_meal_plan)
 
 
 # Delete an meals

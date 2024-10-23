@@ -71,8 +71,6 @@ def week_prediction(df, price, net_result, total_calories, output, meal_plans):
 
         prediction = predict_knn("ml_model.pkl", input_data)
 
-        print("Prediction -----------", prediction)
-
         # Try to find a meal that has not been selected yet
         selected = False
         for pred_index in prediction[0]:
