@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coolmeal/models/meal.dart';
 import 'package:coolmeal/routing/routes.dart';
 import 'package:coolmeal/screens/home/tabs/home_tab/popular_meals_bloc.dart';
@@ -212,8 +213,8 @@ class MealListItem extends StatelessWidget {
                     // Gate Image
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.asset(
-                        "assets/images/food_item.jpg",
+                      child: CachedNetworkImage(
+                        imageUrl: "https://cdn.jsdelivr.net/gh/pinsara-aasith/coolmeal@main/food_images/${meal.mainMeal}.jpg",
                         width: 60,
                         height: 60,
                         fit: BoxFit.cover,

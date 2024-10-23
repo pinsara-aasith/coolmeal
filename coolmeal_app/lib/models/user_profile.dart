@@ -8,6 +8,9 @@ class UserProfile {
   final String? allergies;
   final String? fitnessGoals;
   final String? exerciseLevel;
+  final String? cholestrolLevel;
+  final String? diabetesLevel;
+  final String? pressureLevel;
 
   UserProfile({
     required this.name,
@@ -19,6 +22,9 @@ class UserProfile {
     required this.allergies,
     required this.fitnessGoals,
     required this.exerciseLevel,
+    required this.cholestrolLevel,
+    required this.diabetesLevel,
+    required this.pressureLevel,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,10 +34,12 @@ class UserProfile {
       'weight': weight,
       'age': age,
       'gender': gender,
-      'healthConcerns': healthConcerns,
       'allergies': allergies,
       'fitnessGoals': fitnessGoals,
       'exerciseLevel': exerciseLevel,
+      'cholestrolLevel': cholestrolLevel,
+      'diabetesLevel': diabetesLevel,
+      'pressureLevel': pressureLevel,
     };
   }
 
@@ -46,6 +54,9 @@ class UserProfile {
       allergies: map['allergies'],
       fitnessGoals: map['fitnessGoals'],
       exerciseLevel: map['exerciseLevel'],
+      cholestrolLevel: map['cholestrolLevel'],
+      diabetesLevel: map['diabetesLevel'],
+      pressureLevel: map['pressureLevel'],
     );
   }
 }

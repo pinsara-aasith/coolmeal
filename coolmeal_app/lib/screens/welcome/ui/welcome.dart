@@ -35,7 +35,7 @@ class _WelcomepageState extends State<WelcomePage> {
                 children: [
                   const SizedBox(height: 60),
                   Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/Logo.png',
                     height: 140,
                   ),
                   const SizedBox(height: 20),

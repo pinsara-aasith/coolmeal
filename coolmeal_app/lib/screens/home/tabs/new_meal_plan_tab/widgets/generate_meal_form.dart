@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:coolmeal/core/widgets/form_field_wrapper.dart';
 import 'package:coolmeal/core/widgets/loading_screen.dart';
 import 'package:coolmeal/core/widgets/toggle_buttons.dart';
+import 'package:coolmeal/main.dart';
 import 'package:coolmeal/models/meal_plan.dart';
 import 'package:coolmeal/models/meal_plan_collection.dart';
 import 'package:coolmeal/repositories/user_profile_repository.dart';
@@ -58,31 +59,57 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
     super.initState();
     var userProfile =
         RepositoryProvider.of<UserProfileRepository>(context).userProfile;
-    print(userProfile);
+
     _weightController.text = userProfile?.weight?.toString() ?? '';
     _heightController.text = userProfile?.height?.toString() ?? '';
     _ageController.text = userProfile?.age?.toString() ?? '';
   }
 
+  int _getNumberFromLevel(String? level) {
+    if (level == 'none') {
+      return 0;
+    }
+    if (level == 'medium') {
+      return 4;
+    }
+    if (level == 'high') {
+      return 7;
+    }
+    if (level == 'very high') {
+      return 10;
+    }
+
+    return 0;
+  }
+
   void _generatePrediction() async {
+    var userProfile =
+        RepositoryProvider.of<UserProfileRepository>(context).userProfile;
+
     LoadingScreen.instance().show(
         context: context,
         text: "We are generating a meal plan tailored to your needs...");
     final weight = double.parse(_weightController.text);
     final height = double.parse(_heightController.text);
     final age = double.parse(_ageController.text);
+    final price = double.parse(_budgetController.text);
 
     final response = await http.post(
-      Uri.parse('http://51.20.109.154/prediction'),
+      Uri.parse('$ServerIP/prediction'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'weight': weight,
         'height': height,
         'age': age,
         'gender': _selectedGender,
+        'price': price,
         'activity_level': _selectedActivityLevel,
+        'chol_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
+        'diabetes_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
+        'pressure_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
       }),
     );
+
     LoadingScreen.instance().hide();
     if (response.statusCode == 200) {
       final prediction = jsonDecode(response.body);
@@ -94,9 +121,13 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
           mealPlans: (prediction["prediction"] as List)
               .map<MealPlan>((m) => MealPlan.fromJson(m))
               .toList());
+
       Navigator.pushNamed(context, Routes.mealPlanPerWeek, arguments: [mpc]);
+
     } else {
       // Handle error
+      print(response.body);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to generate prediction')),
       );
@@ -121,33 +152,6 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                     assetImagePath:
                         "assets/images/tell_me_more_about_you_2.png"),
 
-                // Row(
-                //   children: [
-                //     Expanded(
-                //         child: FormFieldWrapper(
-                //       label: "No of meals per day",
-                //       textField: TextFormField(
-                //           controller: ageController,
-                //           decoration:
-                //               TextDecorations.getLabellessTextFieldDecoration(
-                //                   placeholder: "No of meals", context: context),
-                //           keyboardType: TextInputType.number),
-                //     )),
-                //     Gap(10.w),
-                //     Expanded(
-                //         child: FormFieldWrapper(
-                //       label: "Curries need with rice",
-                //       textField: TextFormField(
-                //           controller: ageController,
-                //           decoration:
-                //               TextDecorations.getLabellessTextFieldDecoration(
-                //                   placeholder: "Curries with rice",
-                //                   context: context),
-                //           keyboardType: TextInputType.number),
-                //     )),
-                //   ],
-                // ),
-
                 Gap(8.h),
                 const Text(
                   "Personal Details",
@@ -163,6 +167,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                 FormFieldWrapper(
                   label: "Age (years)",
                   textField: TextFormField(
+                      style: const TextStyle(fontWeight: FontWeight.w700),
                       controller: _ageController,
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
@@ -177,6 +182,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                         child: FormFieldWrapper(
                       label: "Height(cm)",
                       textField: TextFormField(
+                          style: const TextStyle(fontWeight: FontWeight.w700),
                           controller: _heightController,
                           decoration:
                               TextDecorations.getLabellessTextFieldDecoration(
@@ -189,6 +195,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                       label: "Weight(kg)",
                       textField: TextFormField(
                           controller: _weightController,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
                           decoration:
                               TextDecorations.getLabellessTextFieldDecoration(
                                   placeholder: "Weight", context: context),
@@ -217,6 +224,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                   label: "Your budget for this week (Rs.)",
                   textField: TextFormField(
                       controller: _budgetController,
+                      style: const TextStyle(fontWeight: FontWeight.w500),
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
                               placeholder: "Budget for this week",
@@ -282,7 +290,7 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
               ),
               backgroundColor: Theme.of(context).primaryColor),
           child: const Text(
-            'Get Your Meal',
+            'Get Your Meal Plan For Week',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,

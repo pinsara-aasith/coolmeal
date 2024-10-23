@@ -9,6 +9,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     color: ColorsManager.mainGreen,
   );
+  
+  static TextStyle font18Blue700Weight = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w700,
+    color: ColorsManager.mainGreen,
+  );
 
   static TextStyle font14Blue400Weight = TextStyle(
     fontSize: 14.sp,
@@ -88,6 +94,7 @@ class TextDecorations {
       floatingLabelBehavior: FloatingLabelBehavior.always,
       fillColor: ColorsManager.textFieldFillColor,
       filled: true,
+      
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 0.5),
         borderRadius: BorderRadius.circular(10),

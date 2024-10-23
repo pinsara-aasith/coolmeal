@@ -24,6 +24,7 @@ class FetchMealPlanDetails extends MealPlanDetailsEvent {
 abstract class MealPlanDetailsState extends Equatable {
   @override
   List<Object?> get props => [];
+
 }
 
 class MealPlanDetailsInitial extends MealPlanDetailsState {}

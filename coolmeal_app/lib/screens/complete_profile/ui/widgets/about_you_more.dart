@@ -23,6 +23,10 @@ class _AboutYouMoreState extends State<AboutYouMore> {
 
   String _selectedActivityLevel = 'very active';
   String _selectedFitnessGoals = 'Cutting';
+  String _selectedDiabetesLevel = 'none';
+  String _selectedPressureLevel = 'none';
+  String _selectedCholestrolLevel = 'none';
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +55,9 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         'anyAllergies': anyAllerigesController.text,
         'fitnessGoals': _selectedFitnessGoals,
         'exerciseLevel': _selectedActivityLevel,
+        'cholestrolLevel': _selectedCholestrolLevel,
+        'diabetesLevel': _selectedDiabetesLevel,
+        'pressureLevel': _selectedPressureLevel,
       });
     } else {
       FirebaseFirestore.instance.collection('user_profiles').add({
@@ -59,6 +66,9 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         'anyAllergies': anyAllerigesController.text,
         'fitnessGoals': _selectedFitnessGoals,
         'exerciseLevel': _selectedActivityLevel,
+        'cholestrolLevel': _selectedCholestrolLevel,
+        'diabetesLevel': _selectedDiabetesLevel,
+        'pressureLevel': _selectedPressureLevel,
       });
     }
   }
@@ -79,6 +89,9 @@ class _AboutYouMoreState extends State<AboutYouMore> {
         anyAllerigesController.text = userDoc['anyAllergies'] ?? '';
         _selectedFitnessGoals = userDoc['fitnessGoals'] ?? '';
         _selectedActivityLevel = userDoc['exerciseLevel'] ?? '';
+        _selectedCholestrolLevel = userDoc['cholestrolLevel'] ?? '';
+        _selectedDiabetesLevel = userDoc['diabetesLevel'] ?? '';
+        _selectedPressureLevel = userDoc['pressureLevel'] ?? '';
 
         loading = false;
       });
@@ -118,15 +131,51 @@ class _AboutYouMoreState extends State<AboutYouMore> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                
                 FormFieldWrapper(
-                    label: "Health Concerns (eg. Diebetes, Cholesterol)",
-                    textField: TextField(
-                        controller: healthConcernsController,
-                        decoration:
-                            TextDecorations.getLabellessTextFieldDecoration(
-                                placeholder:
-                                    "Please list any health issues or conditions.",
-                                context: context))),
+                    label: "Diabetes Level",
+                    textField: CMToggleButtons(
+                      selectedKey: _selectedDiabetesLevel,
+                      hideIcon: true,
+                      onSelected: (key) =>
+                          setState(() => _selectedDiabetesLevel = key),
+                      keyValueMap: const {
+                        'none': ["None", Icons.no_cell],
+                        'medium': ["Meduim", Icons.no_cell],
+                        'high': ["High", Icons.no_cell],
+                        'very high': ["Very High", Icons.no_cell],
+                      },
+                    )),
+                Gap(16.h),
+                FormFieldWrapper(
+                    label: "Pressure Level",
+                    textField: CMToggleButtons(
+                      selectedKey: _selectedPressureLevel,
+                      hideIcon: true,
+                      onSelected: (key) =>
+                          setState(() => _selectedPressureLevel = key),
+                      keyValueMap: const {
+                        'none': ["None", Icons.no_cell],
+                        'medium': ["Meduim", Icons.no_cell],
+                        'high': ["High", Icons.no_cell],
+                        'very high': ["Very High", Icons.no_cell],
+                      },
+                    )),
+                Gap(16.h),
+                FormFieldWrapper(
+                    label: "Cholestrol Level",
+                    textField: CMToggleButtons(
+                      selectedKey: _selectedCholestrolLevel,
+                      hideIcon: true,
+                      onSelected: (key) =>
+                          setState(() => _selectedCholestrolLevel = key),
+                      keyValueMap: const {
+                        'none': ["None", Icons.no_cell],
+                        'medium': ["Meduim", Icons.no_cell],
+                        'high': ["High", Icons.no_cell],
+                        'very high': ["Very High", Icons.no_cell],
+                      },
+                    )),
                 Gap(16.h),
                 FormFieldWrapper(
                     label: "Any allergies?",

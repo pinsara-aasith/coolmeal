@@ -134,8 +134,9 @@ class _MealPlanPerWeekPageState extends State<MealPlanPerWeekPage> {
                 child: ListView.builder(
                   itemCount: widget.mealPlanCollection.mealPlans.length,
                   itemBuilder: (context, index) {
-                    final meal = widget.mealPlanCollection.mealPlans[index];
+                    final mealPlan = widget.mealPlanCollection.mealPlans[index];
                     return InkWell(
+                      onTap: () {},
                         child: Card(
                       shadowColor:
                           Theme.of(context).primaryColor.withOpacity(0.8),
@@ -143,29 +144,35 @@ class _MealPlanPerWeekPageState extends State<MealPlanPerWeekPage> {
                       child: ListTile(
                         title: Text(
                           WeekDays[index % WeekDays.length],
-                          style: TextStyles.font15DarkBlue500Weight,
+                          style: TextStyles.font18Blue700Weight,
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Gap(10.h),
                             Text(
-                              'Breakfast: ${meal.breakfast}',
+                              'Breakfast: ${mealPlan.breakfast}',
                               style: TextStyles.font12Grey400Weight,
                             ),
                             const Divider(),
                             Text(
-                              'Lunch: ${meal.lunch}',
+                              'Lunch: ${mealPlan.lunch}',
                               style: TextStyles.font12Grey400Weight,
                             ),
                             const Divider(),
                             Text(
-                              'Dinner: ${meal.dinner}',
+                              'Dinner: ${mealPlan.dinner}',
                               style: TextStyles.font12Grey400Weight,
                             ),
                             const Divider(),
                             Text(
-                              'Total Energy (Kcal): ${meal.totalEnergy}',
+                              'Total Energy (Kcal): ${mealPlan.totalEnergy}',
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w900),
+                            ),
+                            Gap(3.h),
+                            Text(
+                              'Price (Kcal): ${mealPlan.price}',
                               style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w900),
                             ),

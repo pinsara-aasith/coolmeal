@@ -30,8 +30,10 @@ class CMToggleButtons extends StatelessWidget {
         if (!hideIcon) icon = entry.value[1] as IconData;
 
         return Expanded(
+            child: Padding(
+          padding: EdgeInsets.only(left: 5),
           child: buildToggleButton(context, key, label, icon),
-        );
+        ));
       }).toList(),
     );
   }

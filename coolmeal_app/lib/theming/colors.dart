@@ -11,7 +11,7 @@ class ColorsManager {
   static const Color lightShadeOfGray = Color(0xFFFDFDFF);
   static const Color mediumLightShadeOfGray = Color(0xFF9E9E9E);
   static const Color coralRed = Color(0xFFFF4C5E);
-  static const Color textFieldFillColor = Color.fromRGBO(242, 244, 245, 1);
+  static const Color textFieldFillColor = Color.fromRGBO(255, 255, 255, 1);
 }
 
 LinearGradient welcomeGradient = LinearGradient(

@@ -1,6 +1,8 @@
 // meal_details_page.dart
 
-import 'package:coolmeal/screens/meal_plan_details/ui/meal_plan_details_bloc.dart';
+import 'package:coolmeal/repositories/meal_repository.dart';
+import 'package:coolmeal/screens/meal_details/bloc/meal_details_bloc.dart';
+import 'package:coolmeal/screens/meal_plan_per_day/ui/meal_plan_details_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class MealPlanDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MealPlanDetailsBloc(RepositoryProvider.of(context))
+      create: (context) => MealPlanDetailsBloc(RepositoryProvider.of<MealRepository>(context))
         ..add(FetchMealPlanDetails(breakfast, lunch, dinner)),
       child: Scaffold(
           appBar: AppBar(
@@ -41,7 +43,7 @@ class MealPlanDetailsPage extends StatelessWidget {
                     child: ListView(
                       children: [
                         Text(
-                          mealPlan.breakfast,
+                          mealPlan.breakfast ?? '',
                           style: TextStyles.font13Grey400Weight,
                         ),
                         const SizedBox(height: 16),
@@ -49,12 +51,12 @@ class MealPlanDetailsPage extends StatelessWidget {
                         _buildMealInfoCard(
                           icon: Icons.restaurant,
                           label: 'Breakfast',
-                          value: mealPlan.lunch,
+                          value: mealPlan.lunch ?? '',
                         ),
                         _buildMealInfoCard(
                           icon: Icons.emoji_food_beverage,
                           label: 'Side Meal',
-                          value: mealPlan.dinner,
+                          value: mealPlan.dinner ?? '',
                         ),
                         const Divider(),
                         const SizedBox(height: 16),
@@ -100,8 +102,8 @@ class MealPlanDetailsPage extends StatelessWidget {
                       ],
                     ),
                   );
-                } else if (state is MealPlanDetailsError) {
-                  return Center(child: Text('Error: ${state.error}'));
+                } else if (state is MealDetailsError) {
+                  return Center(child: Text('Error: ${(state as MealDetailsError).error}'));
                 }
                 return Container();
               },
@@ -133,8 +135,8 @@ class MealPlanDetailsPage extends StatelessWidget {
 
   // Helper method to build progress bars for nutritional values
   Widget _buildNutrientProgress(
-      String label, double value, double dailyValue, String unit) {
-    double progress = value / dailyValue;
+      String label, double? value, double dailyValue, String unit) {
+    double progress = (value ?? 0) / dailyValue;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +148,7 @@ class MealPlanDetailsPage extends StatelessWidget {
             style: const TextStyle(fontSize: 16, color: Colors.black),
             children: [
               TextSpan(
-                text: '${value.toStringAsFixed(2)} $unit',
+                text: '${value?.toStringAsFixed(2)} $unit',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],

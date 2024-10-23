@@ -38,4 +38,20 @@ class MealRepository {
       throw Exception('Error fetching meal plan: $e');
     }
   }
+
+  Future<MealPlan?> getMealPlanByIndex(
+      int index) async {
+    final url = Uri.parse('$ServerIP/get-mealplan-index?index=$index');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        return MealPlan.fromJson(data);
+      } else {
+        throw Exception('Failed to load meal plan. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching meal plan: $e');
+    }
+  }
 }
