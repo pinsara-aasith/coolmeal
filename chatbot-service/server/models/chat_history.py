@@ -28,25 +28,15 @@ def convert_to_chat_dict(chat_list):
         isAppend = False
         if message.startswith("User:"):
             user_message = message.split("User:")[1].strip()  # Extract the User message
-            print("User Message : ", user_message)
-            print()
-            print()
+
         elif message.startswith("Assistant:"):
             assistant_message = message.split("Assistant:")[1].strip()
-            print("Assistant Message : ", assistant_message)
-            print()
-            print()
+
             isAppend = True
 
         # Once we have a user and assistant message, add them to the structure
         if isAppend:
-            print()
-            print(
-                "-------------------------------------------------------------------------------------------",
-                {"User": user_message, "Assistant": assistant_message},
-            )
-            print()
-            print()
+
             structured_chats.append(
                 {"User": user_message, "Assistant": assistant_message}
             )
