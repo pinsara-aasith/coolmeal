@@ -3,6 +3,7 @@ from typing import List, Optional
 
 # Pydantic model for ingredient data
 class Ingredient(BaseModel):
+    Id: str = Field(..., alias='_id')
     Food_Code: str = Field(..., example="SLA001")
     Price_Code: str = Field(..., example="P1069")
     Food_Name: str = Field(..., alias="Food_Name", example="Barley (Hordeum vulgare)")

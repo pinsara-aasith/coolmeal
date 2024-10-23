@@ -3,6 +3,7 @@ from typing import List, Optional
 
 # Pydantic model for meal item
 class MealItem(BaseModel):
+    Id: str = Field(..., alias='_id')
     Meal_Id: int = Field(..., alias='Meal_Id')  # ID now matches the alias
     Name: str = Field(..., alias='Name')
     Meal_Ingredient_Ids: str = Field(..., alias='Meal_Ingredient_Ids')
