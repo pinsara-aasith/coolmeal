@@ -8,6 +8,7 @@ from schema.meal_plan import MealPlan
 from schema.meal import Meal
 from schema.ingredient import Ingredient
 from schema.meal_item import MealItem
+from schema.meal_name import MealName
 from fastapi import FastAPI, HTTPException
 from real_fuzzy_logic import fuzzy_recommend_nutrients
 from bmr import calculate_bmr, calculate_daily_calories
@@ -162,10 +163,10 @@ async def getMealPlanByIndex(index: int):
         )
 
 
-@app.get("/meals/byname")
-async def get_meal_by_name_api(name: str):
+@app.post("/meals/byname")
+async def get_meal_by_name_api(mealName: MealName):
     try:
-        meal = await get_meal_by_name(name)
+        meal = await get_meal_by_name(mealName.name)
 
         if not meal:
             raise HTTPException(status_code=404, detail="Meal plan not found")
