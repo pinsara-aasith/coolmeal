@@ -10,6 +10,7 @@ interface FormTextFieldProps {
   placeholder?: string;
   defaultValue?: string;
   required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // onChange prop
 }
 
 export const FormTextField: React.FC<FormTextFieldProps> = ({
@@ -17,8 +18,9 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   name,
   type = "text",
   placeholder = "",
-  defaultValue = '',
+  defaultValue = "",
   required = false,
+  onChange, // destructuring onChange prop
 }) => (
   <Form.Field className="mb-2 mt-2" name={name}>
     <div className="flex items-baseline justify-between">
@@ -26,18 +28,12 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
         {label}
       </Form.Label>
       {required && (
-        <Form.Message
-          className="text-[13px] opacity-80"
-          match="valueMissing"
-        >
+        <Form.Message className="text-[13px] opacity-80" match="valueMissing">
           Please enter your {label.toLowerCase()}
         </Form.Message>
       )}
       {type === "email" && (
-        <Form.Message
-          className="text-[13px] opacity-80"
-          match="typeMismatch"
-        >
+        <Form.Message className="text-[13px] opacity-80" match="typeMismatch">
           Please provide a valid email
         </Form.Message>
       )}
@@ -48,6 +44,8 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
         className="block w-full p-2 text-gray-900 border border-gray-300 rounded-md bg-white text-base focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
         defaultValue={defaultValue}
         placeholder={placeholder}
+        required={required}
+        onChange={onChange} // onChange event
       />
     </Form.Control>
   </Form.Field>
@@ -58,6 +56,7 @@ interface FormTextAreaFieldProps {
   name: string;
   placeholder?: string;
   required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void; // onChange prop
 }
 
 export const FormTextAreaField: React.FC<FormTextAreaFieldProps> = ({
@@ -65,6 +64,7 @@ export const FormTextAreaField: React.FC<FormTextAreaFieldProps> = ({
   name,
   placeholder = "",
   required = false,
+  onChange, // destructuring onChange prop
 }) => (
   <Form.Field className="mb-2.5 mt-5 grid" name={name}>
     <div className="flex items-baseline justify-between">
@@ -86,11 +86,11 @@ export const FormTextAreaField: React.FC<FormTextAreaFieldProps> = ({
         className="block w-full p-2 text-gray-900 border border-gray-300 rounded-md bg-white text-base focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
         placeholder={placeholder}
         required={required}
+        onChange={onChange} // onChange event
       />
     </Form.Control>
   </Form.Field>
 );
-
 
 import * as Select from "@radix-ui/react-select";
 
@@ -100,6 +100,7 @@ interface FormSelectFieldProps {
   options: { value: string; label: string; disabled?: boolean }[];
   placeholder?: string;
   required?: boolean;
+  onChange?: (value: string) => void; // onChange prop
 }
 
 export const FormSelectField: React.FC<FormSelectFieldProps> = ({
@@ -108,6 +109,7 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   options,
   placeholder = "Select an option",
   required = false,
+  onChange, // destructuring onChange prop
 }) => (
   <div className="mb-2.5 mt-5 grid">
     <div className="flex items-baseline justify-between">
@@ -124,7 +126,9 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
       )}
     </div>
 
-    <Select.Root>
+    <Select.Root onValueChange={onChange}>
+      {" "}
+      {/* onValueChange event */}
       <Select.Trigger
         className="inline-flex items-center justify-between w-full p-2 border border-gray-300 rounded-md bg-white text-base text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-green-500 dark:focus:ring-green-500 dark:focus:border-green-500"
         aria-label={label}
@@ -132,7 +136,6 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
         <Select.Value placeholder={placeholder} />
         <Select.Icon className="ml-2">▼</Select.Icon>
       </Select.Trigger>
-
       <Select.Portal>
         <Select.Content className="bg-white dark:bg-gray-700 rounded-md shadow-lg overflow-hidden">
           <Select.Viewport className="p-2">
@@ -141,8 +144,9 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
                 key={index}
                 value={group.value}
                 disabled={group.disabled}
-                className={`p-2 rounded-md cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 ${group.disabled ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                className={`p-2 rounded-md cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 ${
+                  group.disabled ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 <Select.ItemText>{group.label}</Select.ItemText>
               </Select.Item>
@@ -154,12 +158,12 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   </div>
 );
 
-
 interface FormCheckboxFieldProps {
   label: string;
   name: string;
   defaultChecked?: boolean;
   required?: boolean;
+  onChange?: (checked: boolean) => void; // onChange prop
 }
 
 export const FormCheckboxField: FC<FormCheckboxFieldProps> = ({
@@ -167,6 +171,7 @@ export const FormCheckboxField: FC<FormCheckboxFieldProps> = ({
   name,
   defaultChecked = false,
   required = false,
+  onChange, // destructuring onChange prop
 }) => (
   <div className="mb-4 mt-4">
     <label className="flex items-center gap-2 text-[15px] font-medium">
@@ -175,6 +180,7 @@ export const FormCheckboxField: FC<FormCheckboxFieldProps> = ({
         defaultChecked={defaultChecked}
         required={required}
         className="w-6 h-6 border-2 border-gray-300 rounded-md bg-white dark:bg-gray-700 dark:border-gray-600 focus:ring-green-500 focus:outline-none focus:border-green-500"
+        onCheckedChange={onChange} // onCheckedChange event
       >
         <Checkbox.Indicator className="flex items-center justify-center">
           <CheckIcon className="w-5 h-5 text-green-500" />
@@ -184,4 +190,3 @@ export const FormCheckboxField: FC<FormCheckboxFieldProps> = ({
     </label>
   </div>
 );
-

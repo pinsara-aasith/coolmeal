@@ -7,11 +7,14 @@ import { Button, Card, Flex, Grid, Text, TextField } from "@radix-ui/themes";
 import CustomButton from "@/component/CustomButton";
 import * as Dialog from "@radix-ui/react-dialog";
 import { MdClose } from "react-icons/md";
-import { FormCheckboxField, FormSelectField, FormTextAreaField, FormTextField } from "@/component/Forms";
+import {
+  FormCheckboxField,
+  FormSelectField,
+  FormTextAreaField,
+  FormTextField,
+} from "@/component/Forms";
 import * as Form from "@radix-ui/react-form";
 import MealPlanForm from "./mealPlanForm";
-
-
 
 interface Props {
   params?: {
@@ -19,14 +22,14 @@ interface Props {
   };
 }
 
-export const MealPlanDialogWithTriggerButton = (props: { triggerLabel: string }) => (
+export const MealPlanDialogWithTriggerButton = (props: {
+  triggerLabel: string;
+}) => (
   <Dialog.Root>
     <Dialog.Trigger asChild>
-
-      <Button className="hover:cursor-pointer" color={'green'} type={'button'}>
+      <Button className="hover:cursor-pointer" color={"green"} type={"button"}>
         {props.triggerLabel}
       </Button>
-
     </Dialog.Trigger>
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
@@ -38,7 +41,7 @@ export const MealPlanDialogWithTriggerButton = (props: { triggerLabel: string })
           Submit a new meal for inclusion in the meal planning database.
         </Dialog.Description>
 
-        <div className="overflow-scroll max-h-[53vh] p-4">
+        <div className="overflow-scroll max-h-[85vh] p-4">
           <MealPlanForm />
         </div>
 
@@ -54,4 +57,3 @@ export const MealPlanDialogWithTriggerButton = (props: { triggerLabel: string })
     </Dialog.Portal>
   </Dialog.Root>
 );
-

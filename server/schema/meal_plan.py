@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 # Pydantic model for data validation
 class MealPlan(BaseModel):
-    Id: str = Field(..., alias='_id')
+
     Breakfast: str = Field(..., description="Meal for breakfast")
     Lunch: str = Field(..., description="Meal for lunch")
     Dinner: str = Field(..., description="Meal for dinner")

@@ -11,10 +11,13 @@ import { Badge, Card, Text } from "@radix-ui/themes";
 
 // Define columns for the Table component
 const columns = [
-  { header: "Meal ID", accessor: "_id", className: "font-bold" },
   { header: "Main Meal", accessor: "Main Meal", className: "font-bold" },
   { header: "Side Meal", accessor: "Side Meal", className: "font-bold" },
-  { header: "Complete Meal", accessor: "Complete Meal", className: "font-bold" },
+  {
+    header: "Complete Meal",
+    accessor: "Complete Meal",
+    className: "font-bold",
+  },
   { header: "Combined Meal", accessor: "Combined_Meal" },
   { header: "Complete Meal", accessor: "Complete Meal" },
   { header: "Ingredients", accessor: "Ingredients" },
@@ -33,9 +36,18 @@ const columns = [
   { header: "Magnesium (mg)", accessor: "Magnesium(mg)" },
   { header: "Sodium (mg)", accessor: "Sodium(mg)" },
   { header: "Potassium (mg)", accessor: "Potassium(mg)" },
-  { header: "Saturated Fatty Acids (mg)", accessor: "Saturated Fatty Acids(mg)" },
-  { header: "Monounsaturated Fatty Acids (mg)", accessor: "Monounsaturated Fatty Acids(mg)" },
-  { header: "Polyunsaturated Fatty Acids (mg)", accessor: "Polyunsaturated Fatty Acids(mg)" },
+  {
+    header: "Saturated Fatty Acids (mg)",
+    accessor: "Saturated Fatty Acids(mg)",
+  },
+  {
+    header: "Monounsaturated Fatty Acids (mg)",
+    accessor: "Monounsaturated Fatty Acids(mg)",
+  },
+  {
+    header: "Polyunsaturated Fatty Acids (mg)",
+    accessor: "Polyunsaturated Fatty Acids(mg)",
+  },
   { header: "Free Sugar (g)", accessor: "Free sugar(g)" },
   { header: "Starch (g)", accessor: "Starch(g)" },
   { header: "Price", accessor: "Price" },
@@ -80,15 +92,12 @@ const MealsTable = () => {
   const tableData = filteredMeals.map((mi) => ({
     ...mi,
     _id: (
-      <Text className="text-blue-600 hover:underline font-bold">
-        {mi._id.toUpperCase()}
-      </Text>
+      <Text className="text-blue-600 hover:underline font-bold">{mi._id}</Text>
     ),
   }));
 
-
   return (
-    <Card className="ml-5 mt-5">
+    <Card className="ml-5 mt-5 text-white">
       <Search placeholder="Search for meals" />
       <div className="overflow-x-auto mt-5">
         <div className="overflow-y-auto">
@@ -96,10 +105,7 @@ const MealsTable = () => {
             {loading ? (
               <LoadingSkeleton />
             ) : (
-              <Table
-                columns={columns}
-                data={tableData}
-              />
+              <Table columns={columns} data={tableData} />
             )}
           </div>
         </div>
