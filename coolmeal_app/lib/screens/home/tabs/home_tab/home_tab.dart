@@ -203,7 +203,7 @@ class MealListItem extends StatelessWidget {
         child: InkWell(
             onTap: () {
               Navigator.pushNamed(context, Routes.mealItem,
-                  arguments: [meal.id]);
+                  arguments: [meal.completeMeal]);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

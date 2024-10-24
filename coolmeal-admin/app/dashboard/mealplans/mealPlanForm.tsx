@@ -232,7 +232,7 @@ const MealPlanForm = ({ params }: Props) => {
     const fetchMealPlan = async () => {
       console.log("GET Component ------------------------------------------+ ");
       try {
-        const response = await axios.get(`/api/mealplans/index`);
+        const response = await axios.get(`/api/mealplans/last`);
 
         setMealIndex(response.data.last_index);
       } catch (error) {
