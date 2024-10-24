@@ -51,7 +51,11 @@ class LoadingScreen {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
+                child: 
+                
+                
+                
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Image(

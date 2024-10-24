@@ -83,51 +83,58 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
   }
 
   void _generatePrediction() async {
-    var userProfile =
-        RepositoryProvider.of<UserProfileRepository>(context).userProfile;
+    try {
+      var userProfile =
+          RepositoryProvider.of<UserProfileRepository>(context).userProfile;
 
-    LoadingScreen.instance().show(
-        context: context,
-        text: "We are generating a meal plan tailored to your needs...");
-    final weight = double.parse(_weightController.text);
-    final height = double.parse(_heightController.text);
-    final age = double.parse(_ageController.text);
-    final price = double.parse(_budgetController.text);
+      LoadingScreen.instance().show(
+          context: context,
+          text: "We are generating a meal plan tailored to your needs...");
+      final weight = double.parse(_weightController.text);
+      final height = double.parse(_heightController.text);
+      final age = double.parse(_ageController.text);
+      final price = double.parse(_budgetController.text);
 
-    final response = await http.post(
-      Uri.parse('$ServerIP/prediction'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'weight': weight,
-        'height': height,
-        'age': age,
-        'gender': _selectedGender,
-        'price': price,
-        'activity_level': _selectedActivityLevel,
-        'chol_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
-        'diabetes_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
-        'pressure_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
-      }),
-    );
+      final response = await http.post(
+        Uri.parse('$ServerIP/prediction'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'weight': weight,
+          'height': height,
+          'age': age,
+          'gender': _selectedGender,
+          'price': price,
+          'activity_level': _selectedActivityLevel,
+          'chol_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
+          'diabetes_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
+          'pressure_input': _getNumberFromLevel(userProfile?.cholestrolLevel),
+        }),
+      );
 
-    LoadingScreen.instance().hide();
-    if (response.statusCode == 200) {
-      final prediction = jsonDecode(response.body);
+      LoadingScreen.instance().hide();
+      if (response.statusCode == 200) {
+        final prediction = jsonDecode(response.body);
 
-      var mpc = MealPlanCollection(
-          name: "Meal plan on ${DateTime.now().toString()}",
-          description: '',
-          generatedTime: DateTime.now().toString(),
-          mealPlans: (prediction["prediction"] as List)
-              .map<MealPlan>((m) => MealPlan.fromJson(m))
-              .toList());
+        var mpc = MealPlanCollection(
+            name: "Meal plan on ${DateTime.now().toString()}",
+            description: '',
+            generatedTime: DateTime.now().toString(),
+            mealPlans: (prediction["prediction"] as List)
+                .map<MealPlan>((m) => MealPlan.fromJson(m))
+                .toList());
 
-      Navigator.pushNamed(context, Routes.mealPlanPerWeek, arguments: [mpc]);
+        Navigator.pushNamed(context, Routes.mealPlanPerWeek, arguments: [mpc]);
+      } else {
+        // Handle error
+        print(response.body);
 
-    } else {
-      // Handle error
-      print(response.body);
-
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to generate prediction')),
+        );
+      }
+    } catch (e) {
+      print(e);
+      LoadingScreen.instance().hide();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to generate prediction')),
       );

@@ -15,7 +15,7 @@ import 'routing/app_router.dart';
 import 'routing/routes.dart';
 import 'theming/colors.dart';
 
-String ServerIP = 'http://16.171.196.136';
+String ServerIP = 'http://13.60.223.110';
 String initialRoute = Routes.loginScreen;
 
 Future<void> main() async {

@@ -12,12 +12,12 @@ abstract class MealDetailsEvent extends Equatable {
 }
 
 class FetchMealDetails extends MealDetailsEvent {
-  final String mealId;
+  final String mealName;
 
-  FetchMealDetails(this.mealId);
+  FetchMealDetails(this.mealName);
 
   @override
-  List<Object?> get props => [mealId];
+  List<Object?> get props => [mealName];
 }
 
 // States
@@ -60,7 +60,7 @@ class MealDetailsBloc extends Bloc<MealDetailsEvent, MealDetailsState> {
       FetchMealDetails event, Emitter<MealDetailsState> emit) async {
     emit(MealDetailsLoading());
     try {
-      final meal = await mealRepository.getMealById(event.mealId);
+      final meal = await mealRepository.getMealByName(event.mealName);
       emit(MealDetailsLoaded(meal));
     } catch (e) {
       emit(MealDetailsError(e.toString()));

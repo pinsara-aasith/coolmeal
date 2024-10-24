@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coolmeal/models/meal_plan_collection.dart';
+import 'package:coolmeal/routing/routes.dart';
+import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -127,83 +129,124 @@ class _MealPlanPerWeekPageState extends State<MealPlanPerWeekPage> {
         appBar: AppBar(
           title: const Text('Meal plan for the week'),
         ),
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: widget.mealPlanCollection.mealPlans.length,
-                  itemBuilder: (context, index) {
-                    final mealPlan = widget.mealPlanCollection.mealPlans[index];
-                    return InkWell(
-                      onTap: () {},
-                        child: Card(
-                      shadowColor:
-                          Theme.of(context).primaryColor.withOpacity(0.8),
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        title: Text(
-                          WeekDays[index % WeekDays.length],
-                          style: TextStyles.font18Blue700Weight,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Gap(10.h),
-                            Text(
-                              'Breakfast: ${mealPlan.breakfast}',
-                              style: TextStyles.font12Grey400Weight,
-                            ),
-                            const Divider(),
-                            Text(
-                              'Lunch: ${mealPlan.lunch}',
-                              style: TextStyles.font12Grey400Weight,
-                            ),
-                            const Divider(),
-                            Text(
-                              'Dinner: ${mealPlan.dinner}',
-                              style: TextStyles.font12Grey400Weight,
-                            ),
-                            const Divider(),
-                            Text(
-                              'Total Energy (Kcal): ${mealPlan.totalEnergy}',
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w900),
-                            ),
-                            Gap(3.h),
-                            Text(
-                              'Price (Kcal): ${mealPlan.price}',
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w900),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ));
-                  },
-                ),
-              ),
-              if (isLoading) const CircularProgressIndicator(),
-              Row(children: [
-                Expanded(
-                    child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      backgroundColor: Theme.of(context).primaryColor),
-                  onPressed: isLoading ? null : promptForNameAndDescription,
-                  child: const Text(
-                    'Save Meal Plan',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
+        body: Container(
+            decoration: BoxDecoration(
+              gradient: welcomeGradient,
+            ),
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: widget.mealPlanCollection.mealPlans.length,
+                      itemBuilder: (context, index) {
+                        final mealPlan =
+                            widget.mealPlanCollection.mealPlans[index];
+
+                        return Card(
+                            elevation: 4,
+                            shadowColor:
+                                Theme.of(context).primaryColor.withOpacity(0.9),
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Stack(children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, Routes.mealPlan,
+                                      arguments: [mealPlan.index]);
+                                },
+                                child: ListTile(
+                                  title: Text(
+                                    WeekDays[index % WeekDays.length],
+                                    style: TextStyles.font18Blue700Weight,
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Gap(10.h),
+                                      Text(
+                                        'Breakfast: ${mealPlan.breakfast}',
+                                        style: TextStyles.font12Grey400Weight,
+                                      ),
+                                      const Divider(),
+                                      Text(
+                                        'Lunch: ${mealPlan.lunch}',
+                                        style: TextStyles.font12Grey400Weight,
+                                      ),
+                                      const Divider(),
+                                      Text(
+                                        'Dinner: ${mealPlan.dinner}',
+                                        style: TextStyles.font12Grey400Weight,
+                                      ),
+                                      const Divider(),
+                                      Text(
+                                        'Total Energy (Kcal): ${mealPlan.totalEnergy}',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                      Gap(5.h),
+                                      Text(
+                                        'Price (Rs): ${mealPlan.price?.toStringAsFixed(2)}',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                  bottom: 3,
+                                  right: 3,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.mealPlan,
+                                          arguments: [mealPlan.index]);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.all(14),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor),
+                                    child: const Text(
+                                      'View Details',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ))
+                            ]));
+                      },
                     ),
                   ),
-                ))
-              ]),
-            ])));
+                  if (isLoading) const CircularProgressIndicator(),
+                  Row(children: [
+                    Expanded(
+                        child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          backgroundColor: Theme.of(context).primaryColor),
+                      onPressed: isLoading ? null : promptForNameAndDescription,
+                      child: const Text(
+                        'Save Meal Plan',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ))
+                  ]),
+                ]))));
   }
 }

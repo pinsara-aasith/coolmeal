@@ -2,6 +2,7 @@ import 'package:coolmeal/repositories/authentication_repository.dart';
 import 'package:coolmeal/screens/lets_start/ui/lets_Start.dart';
 import 'package:coolmeal/screens/complete_profile/ui/complete_profile.dart';
 import 'package:coolmeal/screens/meal_details/ui/meal_details.dart';
+import 'package:coolmeal/screens/meal_plan_per_day/ui/meal_plan_details.dart';
 import 'package:coolmeal/screens/meal_plan_per_week/meal_plan_per_week.dart';
 import 'package:coolmeal/screens/splash_screen/splash_screen.dart';
 import 'package:coolmeal/screens/verify_please/verify_please.dart';
@@ -97,11 +98,21 @@ class AppRouter {
         if (arguments is List) {
           return MaterialPageRoute(
             builder: (_) => MealDetailsPage(
-              mealId: arguments[0],
+              mealName: arguments[0],
             ),
           );
         }
 
+      case Routes.mealPlan:
+        final arguments = settings.arguments;
+        if (arguments is List) {
+          return MaterialPageRoute(
+            builder: (_) => MealPlanDetailsPage(
+              index: arguments[0],
+            ),
+          );
+        }
+      
       case Routes.mealPlanPerWeek:
         final arguments = settings.arguments;
         if (arguments is List) {

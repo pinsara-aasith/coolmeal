@@ -9,6 +9,7 @@ class Routes {
   static const String letsStart = "/letsStart";
   static const String profileCompletion = "/profileCompletion";
   static const String mealItem = "/mealItem";
+  static const String mealPlan = "/mealPlan";
   static const String verifyPlease = "/verifyPlease";
   static const String mealPlanPerWeek = "/mealPlanPerWeek";
 }

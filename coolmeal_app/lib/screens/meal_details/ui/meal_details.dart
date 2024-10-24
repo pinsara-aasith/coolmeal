@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MealDetailsPage extends StatelessWidget {
-  final String mealId;
+  final String mealName;
 
-  const MealDetailsPage({Key? key, required this.mealId}) : super(key: key);
+  const MealDetailsPage({Key? key, required this.mealName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MealDetailsBloc(RepositoryProvider.of(context))
-        ..add(FetchMealDetails(mealId)),
+        ..add(FetchMealDetails(mealName)),
       child: Scaffold(
           appBar: AppBar(
             title: const Text('Meal Details'),

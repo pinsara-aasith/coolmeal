@@ -10,14 +10,12 @@ abstract class MealPlanDetailsEvent extends Equatable {
 }
 
 class FetchMealPlanDetails extends MealPlanDetailsEvent {
-  final String breakfast;
-  final String lunch;
-  final String dinner;
+  final int index;
 
-  FetchMealPlanDetails(this.breakfast, this.lunch, this.dinner);
+  FetchMealPlanDetails(this.index);
 
   @override
-  List<Object?> get props => [breakfast, lunch, dinner];
+  List<Object?> get props => [index];
 }
 
 // States
@@ -62,8 +60,9 @@ class MealPlanDetailsBloc
       FetchMealPlanDetails event, Emitter<MealPlanDetailsState> emit) async {
     emit(MealPlanDetailsLoading());
     try {
-      final mealPlan = await mealRepository.getMealPlanByMealNames(
-          event.breakfast, event.lunch, event.dinner);
+      
+      final mealPlan = await mealRepository.getMealPlanByIndex(
+          event.index);
       if (mealPlan == null) {
         emit(MealPlanDetailsError("No meal plan found"));
       } else {

@@ -24,3 +24,4 @@ LinearGradient welcomeGradient = LinearGradient(
     ColorsManager.gradient,
   ],
 );
+
