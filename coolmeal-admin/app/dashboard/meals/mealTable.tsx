@@ -97,7 +97,7 @@ const MealsTable = () => {
   }));
 
   return (
-    <Card className="ml-5 mt-5 text-white">
+    <Card className="ml-5 mt-5">
       <Search placeholder="Search for meals" />
       <div className="overflow-x-auto mt-5">
         <div className="overflow-y-auto">
