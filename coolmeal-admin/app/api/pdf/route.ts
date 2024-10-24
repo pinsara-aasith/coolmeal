@@ -1,7 +1,7 @@
 "use server";
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = process.env.SERVER_SERVICE_URL;
+const API_URL = process.env.CHATBOT_SERVICE_URL;
 // Accessing the API URL from the environment variables
 
 // Fetch all meals
