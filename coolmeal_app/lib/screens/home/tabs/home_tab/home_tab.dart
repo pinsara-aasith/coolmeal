@@ -36,9 +36,9 @@ class _HomeTabState extends State<HomeTab> {
                 // Triggers when stretching
               },
               stretchTriggerOffset: 200.0,
-              expandedHeight: 300.0,
+              expandedHeight: 180.0,
               flexibleSpace: Image.asset(
-                "assets/images/Logo.png",
+                "assets/images/home_image.png",
                 fit: BoxFit.cover,
               ),
             ),

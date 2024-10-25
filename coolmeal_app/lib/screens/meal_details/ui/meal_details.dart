@@ -1,5 +1,6 @@
 // meal_details_page.dart
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coolmeal/screens/meal_details/bloc/meal_details_bloc.dart';
 import 'package:coolmeal/theming/colors.dart';
 import 'package:coolmeal/theming/styles.dart';
@@ -17,9 +18,15 @@ class MealDetailsPage extends StatelessWidget {
       create: (context) => MealDetailsBloc(RepositoryProvider.of(context))
         ..add(FetchMealDetails(mealName)),
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Meal Details'),
-          ),
+          appBar: AppBar(title: BlocBuilder<MealDetailsBloc, MealDetailsState>(
+              builder: (context, state) {
+            if (state is MealDetailsLoaded) {
+              final meal = state.meal;
+              return Text(meal.completeMeal);
+            }
+
+            return Text("Meal Details");
+          })),
           body: Container(
             decoration: BoxDecoration(gradient: welcomeGradient),
             child: BlocBuilder<MealDetailsBloc, MealDetailsState>(
@@ -33,10 +40,27 @@ class MealDetailsPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: ListView(
                       children: [
-                        Text(
-                          meal.completeMeal,
-                          style: TextStyles.font13Grey400Weight,
+                        Card(
+                          elevation: 8, // Provides the shadow effect
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          clipBehavior: Clip
+                              .antiAlias, // Ensures rounded corners for the image
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "https://cdn.jsdelivr.net/gh/pinsara-aasith/coolmeal@main/food_images/${meal.mainMeal}.jpg",
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                            height: 300,
+                            width: 300,
+                          ),
                         ),
+
                         const SizedBox(height: 16),
 
                         _buildMealInfoCard(
@@ -131,7 +155,7 @@ class MealDetailsPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
-        leading: Icon(icon, color: Colors.blueAccent, size: 30),
+        leading: Icon(icon, color: ColorsManager.mainGreen, size: 30),
         title: Text(
           label,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -169,7 +193,7 @@ class MealDetailsPage extends StatelessWidget {
         LinearProgressIndicator(
           value: progress > 1.0 ? 1.0 : progress,
           backgroundColor: Colors.grey[300],
-          color: Colors.blueAccent,
+          color: ColorsManager.mainGreen,
         ),
         const SizedBox(height: 10),
       ],

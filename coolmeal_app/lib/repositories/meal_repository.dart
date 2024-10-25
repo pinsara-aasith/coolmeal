@@ -24,20 +24,18 @@ class MealRepository {
   }
 
   Future<Meal> getMealByName(String mealName) async {
-    Map<String, String> queryParams = {'name': mealName};
-    String queryString = Uri(queryParameters: queryParams).query;
+    final url = Uri.parse('$ServerIP/meals/byname');
 
-    final url = Uri.parse('$ServerIP/meals/byname?$queryString');
-  print(url);
     try {
-      final response = await http.get(url);
+      final response = await http.post(url, 
+      headers: {'Content-Type': 'application/json'},body: jsonEncode({'name': mealName}));
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
 
         // TODO: CHANGE THIS BELOW LINE LATER
         return Meal.fromJson(data["meal_plan"]);
       } else {
-        throw Exception(
+        throw  Exception(
             'Failed to load meal. Status code: ${response.statusCode}');
       }
     } catch (e) {

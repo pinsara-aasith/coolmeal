@@ -228,13 +228,13 @@ class _GenerateMealFormState extends State<GenerateMealForm> {
                 //                 context: context))),
                 // Gap(16.h),
                 FormFieldWrapper(
-                  label: "Your budget for this week (Rs.)",
+                  label: "How much you can spend on foods per day (Rs.)",
                   textField: TextFormField(
                       controller: _budgetController,
                       style: const TextStyle(fontWeight: FontWeight.w500),
                       decoration:
                           TextDecorations.getLabellessTextFieldDecoration(
-                              placeholder: "Budget for this week",
+                              placeholder: "How much you can spend on foods",
                               context: context),
                       keyboardType: TextInputType.number),
                 ),

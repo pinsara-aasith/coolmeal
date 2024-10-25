@@ -66,7 +66,7 @@ class _MealPlanPerWeekPageState extends State<MealPlanPerWeekPage> {
   Future<void> promptForNameAndDescription() async {
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
-    nameController.text = "New Meal Plan";
+    nameController.text = "";
 
     return showDialog<void>(
       context: context,
@@ -158,7 +158,7 @@ class _MealPlanPerWeekPageState extends State<MealPlanPerWeekPage> {
                                 child: ListTile(
                                   title: Text(
                                     WeekDays[index % WeekDays.length],
-                                    style: TextStyles.font18Blue700Weight,
+                                    style: TextStyles.font14Blue700Weight,
                                   ),
                                   subtitle: Column(
                                     crossAxisAlignment:
