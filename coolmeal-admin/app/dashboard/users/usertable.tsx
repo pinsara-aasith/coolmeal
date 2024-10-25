@@ -76,7 +76,7 @@ const UserTable = () => {
       accessor: "fitnessGoals",
     },{
       header: "Exercise Level",
-      accessor: "execiseLevel",
+      accessor: "exerciseLevel",
       className: 'font-semibold'
     },
   ];
