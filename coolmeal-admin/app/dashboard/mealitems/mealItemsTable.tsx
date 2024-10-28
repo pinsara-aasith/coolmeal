@@ -9,15 +9,13 @@ import LoadingSkeleton from "@/app/ui/common/loadingSkeleton"; // Loading skelet
 import Table from "../../ui/common/table";
 import { Badge, Card, Text } from "@radix-ui/themes";
 
-
-
 // Define columns for the Table component
 const columns = [
   { header: "Meal ID", accessor: "_id", className: "font-bold" },
-  { header: "Name", accessor: "Name",  className: "font-bold" },
+  { header: "Name", accessor: "Name", className: "font-bold" },
   { header: "Ingredients", accessor: "Meal_Ingredients_Names" },
   { header: "Quantities", accessor: "Meal_Ingredient_Quantities" },
-  { header: "Category", accessor: "Category",  className: "font-bold"  },
+  { header: "Category", accessor: "Category", className: "font-bold" },
   { header: "Description", accessor: "Description" },
   { header: "Morning Probability", accessor: "Morning_Probability" },
   { header: "Lunch Probability", accessor: "Lunch_Probability" },
@@ -68,20 +66,16 @@ const MealItemsTable = () => {
     ),
   }));
 
-
   return (
     <Card className="ml-5 mt-5">
       <Search placeholder="Search for meal items" />
       <div className="overflow-x-auto mt-5">
         <div className="overflow-y-auto">
-          <div className="overflow-auto max-h-[550px] max-w-full">
+          <div className="overflow-auto max-h-[520px] max-w-full">
             {loading ? (
               <LoadingSkeleton />
             ) : (
-              <Table
-                columns={columns}
-                data={tableData}
-              />
+              <Table columns={columns} data={tableData} />
             )}
           </div>
         </div>

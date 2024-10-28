@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import axios from "axios";
-import Link from "next/link";
-import Search from "../../ui/dashboard/search/search"; // Assuming common component
 import LoadingSkeleton from "@/app/ui/common/loadingSkeleton"; // Loading skeleton
+import { Card, Text } from "@radix-ui/themes";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Table from "../../ui/common/table";
-import { Badge, Card, Text } from "@radix-ui/themes";
+import Search from "../../ui/dashboard/search/search"; // Assuming common component
 
 // Define columns for the Table component
 const columns = [
@@ -101,7 +100,7 @@ const MealsTable = () => {
       <Search placeholder="Search for meals" />
       <div className="overflow-x-auto mt-5">
         <div className="overflow-y-auto">
-          <div className="overflow-auto max-h-[550px] max-w-full">
+          <div className="overflow-auto max-h-[520px] max-w-full">
             {loading ? (
               <LoadingSkeleton />
             ) : (
