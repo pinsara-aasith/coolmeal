@@ -10,7 +10,7 @@ interface Props {
 
 const DashboardCard = ({ count, title, img, color }: Props) => {
   return (
-    <Box maxWidth="240px">
+    <Box>
       <Card className={color}>
         <Flex gap="9" align="center" className="p-2">
           <Flex className="mr-9" direction="column">

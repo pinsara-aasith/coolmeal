@@ -55,7 +55,7 @@ const data = [
   },
 ];
 
-export default class Charts extends PureComponent {
+export default class Example extends PureComponent {
   static demoUrl = "https://codesandbox.io/p/sandbox/simple-area-chart-4y9cnl";
 
   render() {

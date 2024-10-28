@@ -1,10 +1,9 @@
-import React from "react";
-import Example from "./dashboard/Charts";
-import { Flex } from "@radix-ui/themes";
-import User from "@/public/user.png";
-import DashboardCard from "./dashboard/DashboardCard";
 import Meal from "@/public/meal.png";
+import User from "@/public/user.png";
+import { Flex } from "@radix-ui/themes";
 import Charts from "./dashboard/Charts";
+import DashboardCard from "./dashboard/DashboardCard";
+import DashboardGrid from "./dashboard/DashboardGrid";
 
 const Dashboard = () => {
   return (
@@ -20,10 +19,10 @@ const Dashboard = () => {
           count={500}
           title="Meal Plans"
           img={Meal}
-          color="bg-green-800"
+          color="bg-blue-400"
         />
       </Flex>
-      <Charts />
+      <DashboardGrid />
     </div>
   );
 };

@@ -9,7 +9,9 @@ const Navbar = () => {
   const path = usePathname();
   return (
     <Flex align="center" justify="between" p="4" className="bg-slate-100">
-      <Text className="capitalize font-bold">{path.split("/").pop()?.toLowerCase()}</Text>
+      <Text className="capitalize font-bold">
+        {path.split("/").pop()?.toLowerCase()}
+      </Text>
       <Flex align="center" gap="3">
         <TextField.Root placeholder="Search">
           <TextField.Slot>
@@ -19,9 +21,11 @@ const Navbar = () => {
         <MdMessage />
         <IoIosNotifications />
 
-      <form action={logout}>
-        <Button type="submit">Logout</Button>
-      </form>
+        <form action={logout}>
+          <Button type="submit" className="hover:cursor-pointer">
+            Logout
+          </Button>
+        </form>
       </Flex>
     </Flex>
   );
