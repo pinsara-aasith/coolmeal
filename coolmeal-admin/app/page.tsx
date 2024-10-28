@@ -1,84 +1,126 @@
-"use client";
-import React, { useState } from "react";
-import * as Popover from "@radix-ui/react-popover";
+'use client'
 
-const SearchDropdown = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
-  const [showDropdown, setShowDropdown] = useState(false);
+import { useState } from "react";
+import axios from "axios";
+import * as Form from "@radix-ui/react-form";
+import FormFieldSlider, { FormTextField } from "@/component/Forms";
+import { useRouter } from "next/navigation";
+import { Card } from "@radix-ui/themes";
+import Image from "next/image";
 
-  // Options list
-  const options = [
-    "Google Meet",
-    "Fidenz Technologies",
-    "Ncinga",
-    "Javascript Online Compiler",
-    "AizenIT",
-    "1 Billion Tech",
-    "Dollar Rate",
-    "US Time",
-  ];
+import logoPng from "@/public/newlogo.png";
+import loginBgJpg from "@/public/loginbg.jpg";
 
-  // Handle input change
-  const handleInputChange = (e: { target: { value: string } }) => {
-    const value = e.target.value.toLowerCase();
-    setSearchTerm(value);
 
-    // Filter options based on input
-    const filtered = options.filter((option) =>
-      option.toLowerCase().includes(value)
-    );
-    setFilteredOptions(filtered);
+const PredictionForm = ({ params }: { params: any }) => {
+  const [predictionData, setPredictionData] = useState<any>(null);
+  const router = useRouter();
 
-    // Show dropdown if input is not empty
-    setShowDropdown(value.length > 0);
-  };
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
 
-  // Handle click on an option
-  const handleOptionClick = (option: React.SetStateAction<string>) => {
-    setSearchTerm(option);
-    setShowDropdown(false); // Close dropdown after selection
+    try {
+      if (params?.id) {
+        await axios.patch(`/api/predictions/${params.id}`, data);
+      } else {
+        await axios.post("/api/predictions", data);
+      }
+      router.push("/predictions");
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+    }
   };
 
   return (
-    <div className="relative w-64">
-      <Popover.Root open={showDropdown}>
-        <Popover.Trigger asChild>
-          <input
-            type="text"
-            className="w-full px-4 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchTerm}
-            onChange={handleInputChange}
-            placeholder="Search..."
-            onFocus={() => setShowDropdown(true)}
-          />
-        </Popover.Trigger>
+    <Form.Root onSubmit={handleSubmit} className="overflow-scroll">
+      <FormTextField
+        label="Age"
+        name="age"
+        type="number"
+        placeholder="Enter age"
+      />
 
-        <Popover.Content
-          className="w-full mt-2 bg-white rounded-md shadow-lg max-h-48 overflow-y-auto"
-          sideOffset={5}
-          align="start"
-          side="bottom"
-        >
-          {filteredOptions.length > 0 ? (
-            <ul className="divide-y divide-gray-200">
-              {filteredOptions.map((option, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleOptionClick(option)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div className="px-4 py-2 text-gray-500">No results found</div>
-          )}
-        </Popover.Content>
-      </Popover.Root>
-    </div>
+      <FormTextField
+        label="Weight (kg)"
+        name="weight"
+        type="number"
+        placeholder="Enter weight"
+      />
+
+      <FormTextField
+        label="Height (cm)"
+        name="height"
+        type="number"
+        placeholder="Enter height"
+      />
+
+      <FormFieldSlider
+        label="Diabetes Level"
+        name="diabetesLevel"
+        min={0}
+        max={10}
+        step={1}
+        defaultValue={5}
+      />
+
+      <FormFieldSlider
+        label="Pressure Level"
+        name="pressureLevel"
+        min={0}
+        max={10}
+        step={1}
+        defaultValue={5}
+      />
+
+      <FormFieldSlider
+        label="Cholesterol Level"
+        name="cholesterolLevel"
+        min={0}
+        max={10}
+        step={1}
+        defaultValue={5}
+      />
+
+      <FormFieldSlider
+        label="Activity Level"
+        name="activityLevel"
+        min={0}
+        max={10}
+        step={1}
+        defaultValue={5}
+      />
+
+      <div className="mt-[25px] flex justify-end">
+        <button className="inline-flex h-[35px] items-center justify-center rounded bg-green4 px-[15px] font-medium leading-none text-green11 hover:bg-green5 focus:shadow-[0_0_0_2px] focus:shadow-green7 focus:outline-none">
+          Get Your Customized Meal Plan
+        </button>
+      </div>
+    </Form.Root>
   );
 };
 
-export default SearchDropdown;
+const PredictionPage: React.FC<any> = ({ params }) => {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundImage: `url(${loginBgJpg.src})`, backgroundSize: 'cover' }}>
+      <div className="w-full max-w-lg bg-white shadow-lg px-16 overflow-scroll max-h-fit py-10">
+
+        <div className="flex items-center justify-between flex-col">
+          <Image
+            className="mb-8"
+            src={logoPng}
+            width={120}
+            height={120}
+            alt="Picture"
+          />
+        </div>
+
+        <PredictionForm params={params} />
+   
+      </div>
+      </div>
+  );
+};
+
+export default PredictionPage;

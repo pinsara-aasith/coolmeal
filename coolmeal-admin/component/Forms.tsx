@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import * as Form from "@radix-ui/react-form";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import * as Slider from "@radix-ui/react-slider";
 import { CheckIcon } from "@radix-ui/react-icons";
 
 interface FormTextFieldProps {
@@ -190,3 +191,60 @@ export const FormCheckboxField: FC<FormCheckboxFieldProps> = ({
     </label>
   </div>
 );
+
+interface FormFieldSliderProps {
+  label: string;
+  name: string;
+  min: number;
+  max: number;
+  step: number;
+  defaultValue?: number;
+  required?: boolean;
+  onChange?: (value: number) => void;
+}
+
+export const FormFieldSlider: React.FC<FormFieldSliderProps> = ({
+  label,
+  name,
+  min,
+  max,
+  step,
+  defaultValue = 0,
+  required = false,
+  onChange,
+}) => (
+  <Form.Field className="mb-4 mt-2" name={name}>
+    <div className="flex items-baseline justify-between">
+      <Form.Label className="text-[15px] font-medium leading-[35px] mb-2">
+        {label}
+      </Form.Label>
+      {required && (
+        <Form.Message className="text-[13px] opacity-80" match="valueMissing">
+          Please select a {label.toLowerCase()}
+        </Form.Message>
+      )}
+    </div>
+    <Form.Control asChild>
+      <Slider.Root
+        className="relative flex items-center select-none touch-none w-full h-5"
+        defaultValue={[defaultValue]}
+        min={min}
+        max={max}
+        step={step}
+        onValueChange={(value) => onChange?.(value[0])} // Passes single value
+        aria-label={label}
+      >
+        <Slider.Track className="relative bg-gray-300 rounded-full h-[3px] grow">
+          <Slider.Range className="absolute bg-green-500 rounded-full h-full" />
+        </Slider.Track>
+        <Slider.Thumb
+          className="block w-4 h-4 bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700"
+          aria-label={`${label} slider thumb`}
+        />
+      </Slider.Root>
+    </Form.Control>
+  </Form.Field>
+);
+
+export default FormFieldSlider;
+
