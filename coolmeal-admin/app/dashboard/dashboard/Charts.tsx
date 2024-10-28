@@ -1,13 +1,12 @@
 "use client";
 import React, { PureComponent } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -56,37 +55,29 @@ const data = [
   },
 ];
 
-export default class Example extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/p/sandbox/line-chart-width-xaxis-padding-8v7952";
+export default class Charts extends PureComponent {
+  static demoUrl = "https://codesandbox.io/p/sandbox/simple-area-chart-4y9cnl";
 
   render() {
     return (
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
+        <AreaChart
           width={500}
-          height={300}
+          height={400}
           data={data}
           margin={{
-            top: 5,
+            top: 10,
             right: 30,
-            left: 20,
-            bottom: 5,
+            left: 0,
+            bottom: 0,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="pv"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+        </AreaChart>
       </ResponsiveContainer>
     );
   }

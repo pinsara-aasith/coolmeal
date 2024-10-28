@@ -1,10 +1,10 @@
 import React from "react";
 import Example from "./dashboard/Charts";
 import { Flex } from "@radix-ui/themes";
-
 import User from "@/public/user.png";
 import DashboardCard from "./dashboard/DashboardCard";
 import Meal from "@/public/meal.png";
+import Charts from "./dashboard/Charts";
 
 const Dashboard = () => {
   return (
@@ -23,7 +23,7 @@ const Dashboard = () => {
           color="bg-green-800"
         />
       </Flex>
-      <Example />
+      <Charts />
     </div>
   );
 };
