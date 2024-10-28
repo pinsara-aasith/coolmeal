@@ -1,7 +1,6 @@
-import React from "react";
 import Sidebar from "@/app/ui/dashboard/sidebar/sidebar";
+import React from "react";
 import Navbar from "../ui/dashboard/navbar/navbar";
-import { Grid } from "@radix-ui/themes";
 
 import contentbg from "@/public/contentbg.png";
 
@@ -15,11 +14,16 @@ const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
         {/* Sidebar with full screen height */}
         <Sidebar />
       </div>
-      <div className="w-[80%] flex flex-col">
+      <div className="w-[80%] flex flex-col ml-2">
         {" "}
         {/* Main content container */}
         <Navbar />
-        <div className="flex-grow bg-cover" style={{ backgroundImage: `url(${contentbg.src})`}}>{children}</div>
+        <div
+          className="flex-grow bg-cover mt-2"
+          style={{ backgroundImage: `url(${contentbg.src})` }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

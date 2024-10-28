@@ -1,17 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { Button, Card, Flex, Grid, Text, TextField } from "@radix-ui/themes";
-import CustomButton from "@/component/CustomButton";
 import * as Dialog from "@radix-ui/react-dialog";
+import { Button } from "@radix-ui/themes";
 import { MdClose } from "react-icons/md";
-import { FormCheckboxField, FormSelectField, FormTextAreaField, FormTextField } from "@/component/Forms";
-import * as Form from "@radix-ui/react-form";
 import MealForm from "./mealForm";
-
-
 
 interface Props {
   params?: {
@@ -19,14 +11,14 @@ interface Props {
   };
 }
 
-export const MealDialogWithTriggerButton = (props: { triggerLabel: string }) => (
+export const MealDialogWithTriggerButton = (props: {
+  triggerLabel: string;
+}) => (
   <Dialog.Root>
     <Dialog.Trigger asChild>
-
-      <Button className="hover:cursor-pointer" color={'green'} type={'button'}>
+      <Button className="hover:cursor-pointer" color={"green"} type={"button"}>
         {props.triggerLabel}
       </Button>
-
     </Dialog.Trigger>
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
@@ -54,4 +46,3 @@ export const MealDialogWithTriggerButton = (props: { triggerLabel: string }) => 
     </Dialog.Portal>
   </Dialog.Root>
 );
-
