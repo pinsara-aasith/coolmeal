@@ -209,9 +209,20 @@ const PredictionForm = ({ params }: { params: any }) => {
           <LoadingSkeleton />
         </>}
 
+        {!loadingMealPlans &&
+          <Text as="div" align={'center'} weight={'bold'} size="2" style={{ width: '100%' }}>
+            Please share your thoughts by filling out this brief form.
 
+            <br />
+            <a className="text-blue-600" href="https://forms.gle/jPHiKF9eqJ4j8xRC9">https://forms.gle/jPHiKF9eqJ4j8xRC9</a>
 
+            <br />
+            <br />
+            <br />
+
+          </Text>}
         <MealPlanList mealPlans={mealPlans} />
+
       </Tabs.Content>
     </Tabs.Root>
   );
