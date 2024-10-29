@@ -25,7 +25,7 @@ const UserTable = () => {
     try {
       const response = await axios.get("/api/dashboard/users");
       setUsers(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user details: ", error);
     }
@@ -47,17 +47,13 @@ const UserTable = () => {
   // Define table columns
   const columns = [
     {
-      header: "User Id",
-      accessor: "id",
-    },
-    {
       header: "Name",
       accessor: "name",
     },
     {
       header: "Email",
       accessor: "email",
-      className: 'font-bold'
+      className: "font-bold",
     },
     {
       header: "Gender",
@@ -74,10 +70,11 @@ const UserTable = () => {
     {
       header: "Fitness Goals",
       accessor: "fitnessGoals",
-    },{
+    },
+    {
       header: "Exercise Level",
       accessor: "exerciseLevel",
-      className: 'font-semibold'
+      className: "font-semibold",
     },
   ];
 
@@ -85,8 +82,11 @@ const UserTable = () => {
   const tableData = filteredUsers.map((user) => ({
     ...user,
     id: (
-      <Link href={`/dashboard/users/${user.id}`} className="text-blue-600 hover:underline font-bold">
-        {user.id.substring(0,7).toUpperCase()}
+      <Link
+        href={`/dashboard/users/${user.id}`}
+        className="text-blue-600 hover:underline font-bold"
+      >
+        {user.id.substring(0, 7).toUpperCase()}
       </Link>
     ),
     gender: (

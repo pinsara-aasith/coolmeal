@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -219,9 +219,14 @@ const PredictionForm = ({ params }: { params: any }) => {
 
 const PredictionPage: React.FC<any> = ({ params }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundImage: `url(${loginBgJpg.src})`, backgroundSize: 'cover' }}>
+    <div
+      className="flex items-center justify-center min-h-screen bg-gray-100"
+      style={{
+        backgroundImage: `url(${loginBgJpg.src})`,
+        backgroundSize: "cover",
+      }}
+    >
       <div className="w-full max-w-lg bg-white shadow-lg px-16 overflow-scroll max-h-fit py-10">
-
         <div className="flex items-center justify-between flex-col">
           <Image
             className="mb-8"

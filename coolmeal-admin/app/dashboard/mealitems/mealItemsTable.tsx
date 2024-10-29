@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import axios from "axios";
-import Link from "next/link";
-import Search from "../../ui/dashboard/search/search"; // Assuming common component
 import LoadingSkeleton from "@/app/ui/common/loadingSkeleton"; // Loading skeleton
+import { Card, Text } from "@radix-ui/themes";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Table from "../../ui/common/table";
-import { Badge, Card, Text } from "@radix-ui/themes";
+import Search from "../../ui/dashboard/search/search"; // Assuming common component
 
 // Define columns for the Table component
 const columns = [
-  { header: "Meal ID", accessor: "_id", className: "font-bold" },
   { header: "Name", accessor: "Name", className: "font-bold" },
   { header: "Ingredients", accessor: "Meal_Ingredients_Names" },
   { header: "Quantities", accessor: "Meal_Ingredient_Quantities" },

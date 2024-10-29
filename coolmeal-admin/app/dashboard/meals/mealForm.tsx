@@ -58,7 +58,7 @@ const MealForm = ({ params }: Props) => {
   };
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="overflow-scroll">
+    <Form.Root onSubmit={handleSubmit}>
       <FormTextField
         label="Meal Name"
         name="Name"
