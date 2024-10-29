@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { Button, Grid } from "@radix-ui/themes";
-import CustomButton from "@/component/CustomButton";
+import { FormTextField } from "@/component/Forms";
 import * as Form from "@radix-ui/react-form";
-import { FormTextField, FormTextAreaField } from "@/component/Forms";
+import { Grid } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { HiCheckCircle } from "react-icons/hi"; // Import an icon for success notification
 
 interface Props {
@@ -442,7 +441,7 @@ const MealPlanForm = ({ params }: Props) => {
   return (
     <Form.Root
       onSubmit={handleSubmit}
-      className="overflow-scroll p-4 w-full max-w-screen-2xl mx-auto"
+      className="p-4 w-full max-w-screen-2xl mx-auto"
     >
       {/* Notifications */}
       {notifications.length > 0 && (
