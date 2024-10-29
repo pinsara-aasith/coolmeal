@@ -61,8 +61,8 @@ const PredictionForm = ({ params }: { params: any }) => {
         name="diabetesLevel"
         min={0}
         max={10}
-        step={1}
-        defaultValue={5}
+        step={2}
+        defaultValue={0}
       />
 
       <FormFieldSlider
@@ -70,8 +70,8 @@ const PredictionForm = ({ params }: { params: any }) => {
         name="pressureLevel"
         min={0}
         max={10}
-        step={1}
-        defaultValue={5}
+        step={2}
+        defaultValue={0}
       />
 
       <FormFieldSlider
@@ -79,8 +79,8 @@ const PredictionForm = ({ params }: { params: any }) => {
         name="cholesterolLevel"
         min={0}
         max={10}
-        step={1}
-        defaultValue={5}
+        step={2}
+        defaultValue={0}
       />
 
       <FormFieldSlider
@@ -88,8 +88,8 @@ const PredictionForm = ({ params }: { params: any }) => {
         name="activityLevel"
         min={0}
         max={10}
-        step={1}
-        defaultValue={5}
+        step={2}
+        defaultValue={8}
       />
 
       <div className="mt-[25px] flex justify-end">

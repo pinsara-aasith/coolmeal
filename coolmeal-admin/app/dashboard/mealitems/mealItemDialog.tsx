@@ -1,23 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { Button, Card, Flex, Grid, Text, TextField } from "@radix-ui/themes";
-import CustomButton from "@/component/CustomButton";
+import { Button } from "@radix-ui/themes";
 import * as Dialog from "@radix-ui/react-dialog";
 import { MdClose } from "react-icons/md";
-import { FormCheckboxField, FormSelectField, FormTextAreaField, FormTextField } from "@/component/Forms";
-import * as Form from "@radix-ui/react-form";
 import MealItemForm from "./mealItemForm";
 
-
-
-interface Props {
-  params?: {
-    id: string;
-  };
-}
 
 export const MealItemDialogWithTriggerButton = (props: { triggerLabel: string }) => (
   <Dialog.Root>
