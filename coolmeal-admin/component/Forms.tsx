@@ -3,11 +3,13 @@ import * as Form from "@radix-ui/react-form";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as Slider from "@radix-ui/react-slider";
 import { CheckIcon } from "@radix-ui/react-icons";
+import * as ToggleGroup from '@radix-ui/react-toggle-group';
 
 interface FormTextFieldProps {
   label: string;
   name: string;
   type?: string;
+  value?: any;
   placeholder?: string;
   defaultValue?: string;
   required?: boolean;
@@ -21,6 +23,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
   placeholder = "",
   defaultValue = "",
   required = false,
+  value,
   onChange, // destructuring onChange prop
 }) => (
   <Form.Field className="mb-2 mt-2" name={name}>
@@ -47,6 +50,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
         placeholder={placeholder}
         required={required}
         onChange={onChange} // onChange event
+        {...value ? { value } : {}}
       />
     </Form.Control>
   </Form.Field>
@@ -145,9 +149,8 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
                 key={index}
                 value={group.value}
                 disabled={group.disabled}
-                className={`p-2 rounded-md cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 ${
-                  group.disabled ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                className={`p-2 rounded-md cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 ${group.disabled ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
               >
                 <Select.ItemText>{group.label}</Select.ItemText>
               </Select.Item>
@@ -200,6 +203,7 @@ interface FormFieldSliderProps {
   step: number;
   defaultValue?: number;
   required?: boolean;
+  value: number;
   onChange?: (value: number) => void;
 }
 
@@ -212,6 +216,7 @@ export const FormFieldSlider: React.FC<FormFieldSliderProps> = ({
   defaultValue = 0,
   required = false,
   onChange,
+  value
 }) => (
   <Form.Field className="mb-4 mt-2" name={name}>
     <div className="flex items-baseline justify-between">
@@ -224,27 +229,54 @@ export const FormFieldSlider: React.FC<FormFieldSliderProps> = ({
         </Form.Message>
       )}
     </div>
-    <Form.Control asChild>
-      <Slider.Root
-        className="relative flex items-center select-none touch-none w-full h-5"
-        defaultValue={[defaultValue]}
-        min={min}
-        max={max}
-        step={step}
-        onValueChange={(value) => onChange?.(value[0])} // Passes single value
-        aria-label={label}
-      >
-        <Slider.Track className="relative bg-gray-300 rounded-full h-[3px] grow">
-          <Slider.Range className="absolute bg-green-500 rounded-full h-full" />
-        </Slider.Track>
-        <Slider.Thumb
-          className="block w-4 h-4 bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700"
-          aria-label={`${label} slider thumb`}
-        />
-      </Slider.Root>
-    </Form.Control>
+    <Slider.Root
+      className="relative flex items-center select-none touch-none w-full h-5"
+      defaultValue={[defaultValue]}
+      min={min}
+      max={max}
+      step={step}
+      onValueChange={(value) => onChange?.(value[0])} // Passes single value
+      aria-label={label}
+      name={name}
+      {...value ? { value: [value] } : {}}
+    >
+      <Slider.Track className="relative bg-gray-300 rounded-full h-[3px] grow">
+        <Slider.Range className="absolute bg-green-500 rounded-full h-full" />
+      </Slider.Track>
+      <Slider.Thumb
+        className="block w-4 h-4 bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700"
+        aria-label={`${label} slider thumb`}
+      />
+    </Slider.Root>
   </Form.Field>
 );
+
+
+interface ToggleButtonGroupProps {
+  options: { value: string; label: string }[];
+  value: any;
+  onChange: (value: string) => void;
+}
+export const ToggleButtonGroup = ({ options, value, onChange }: ToggleButtonGroupProps) => (
+  <ToggleGroup.Root
+    type="single"
+    value={value}
+    onValueChange={(val) => onChange(val)}
+    className="flex space-x-2"
+  >
+    {options.map((option) => (
+      <ToggleGroup.Item
+        key={String(option.value)}
+        value={String(option.value)}
+        className={`px-4 py-2 rounded ${value === option.value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
+          }`}
+      >
+        {option.label}
+      </ToggleGroup.Item>
+    ))}
+  </ToggleGroup.Root>
+);
+
 
 export default FormFieldSlider;
 
