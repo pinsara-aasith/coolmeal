@@ -106,11 +106,13 @@ interface FormSelectFieldProps {
   placeholder?: string;
   required?: boolean;
   onChange?: (value: string) => void; // onChange prop
+  value?:any
 }
 
 export const FormSelectField: React.FC<FormSelectFieldProps> = ({
   label,
   name,
+  value,
   options,
   placeholder = "Select an option",
   required = false,
@@ -131,7 +133,8 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({
       )}
     </div>
 
-    <Select.Root onValueChange={onChange}>
+    <Select.Root onValueChange={onChange}
+        {...value ? { value } : {}}>
       {" "}
       {/* onValueChange event */}
       <Select.Trigger

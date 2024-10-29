@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import * as Form from "@radix-ui/react-form";
-import FormFieldSlider, { FormTextField } from "@/component/Forms";
+import FormFieldSlider, { FormSelectField, FormTextField } from "@/component/Forms";
 import { useRouter } from "next/navigation";
 import { Box, Card, Flex, Grid, Text } from "@radix-ui/themes";
 import Image from "next/image";
@@ -46,6 +46,7 @@ const PredictionForm = ({ params }: { params: any }) => {
   const [step, setStep] = useState(1);
 
   const [price, setPrice] = useState<number | undefined>(0);
+  const [gender, setGender] = useState<string>('male');
   const [age, setAge] = useState<number | undefined>(0);
   const [weight, setWeight] = useState<number | undefined>(0);
   const [height, setHeight] = useState<number | undefined>(0);
@@ -68,16 +69,16 @@ const PredictionForm = ({ params }: { params: any }) => {
       } else if (activityLevel <= 4) {
         a = 'moderately active'
       } else if (activityLevel <= 7) {
-        a =  'very active'
+        a = 'very active'
       } else if (activityLevel <= 10) {
-        a =  'extra active'
+        a = 'extra active'
       }
 
       const requestData = {
         weight,
         height,
         age,
-        gender: "male",
+        gender: gender,
         activity_level: a,
         price: 1000,
         diabetes_input: diabetesLevel,
@@ -140,8 +141,20 @@ const PredictionForm = ({ params }: { params: any }) => {
             />
           </div>
 
+          <FormSelectField
+            label="Gender"
+            name="gender"
+            required={true}
+            value={gender ?? ''}
+            onChange={(e) => setGender(e)}
+            options={[
+              { value: "male", label: "Male" },
+              { value: "female", label: "Female" },
+            ]}
+          />
+
           <FormFieldSlider
-            label="Diabetes Level"
+            label="Diabetes Level (None - High)"
             name="diabetesLevel"
             min={0}
             max={10}
@@ -151,7 +164,7 @@ const PredictionForm = ({ params }: { params: any }) => {
           />
 
           <FormFieldSlider
-            label="Pressure Level"
+            label="Pressure Level (None - High)"
             name="pressureLevel"
             min={0}
             max={10}
@@ -161,7 +174,7 @@ const PredictionForm = ({ params }: { params: any }) => {
           />
 
           <FormFieldSlider
-            label="Cholesterol Level"
+            label="Cholesterol Level (None - High)"
             name="cholesterolLevel"
             min={0}
             max={10}
