@@ -21,6 +21,7 @@ export async function middleware(request: NextRequest) {
 
   const isPublicRoute =
     PUBLIC_ROUTES.find((route) => nextUrl.pathname.startsWith(route))
+    || nextUrl.pathname == '/';
 
   if (!isAuthenticated && !isPublicRoute)
     return Response.redirect(new URL(LOGIN, nextUrl));

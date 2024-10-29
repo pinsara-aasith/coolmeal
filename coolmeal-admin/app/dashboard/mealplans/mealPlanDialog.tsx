@@ -5,12 +5,6 @@ import { Button } from "@radix-ui/themes";
 import { MdClose } from "react-icons/md";
 import MealPlanForm from "./mealPlanForm";
 
-interface Props {
-  params?: {
-    id: string;
-  };
-}
-
 export const MealPlanDialogWithTriggerButton = (props: {
   triggerLabel: string;
 }) => (
