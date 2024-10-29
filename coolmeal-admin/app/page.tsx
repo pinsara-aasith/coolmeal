@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import axios from "axios";
@@ -10,7 +10,6 @@ import Image from "next/image";
 
 import logoPng from "@/public/newlogo.png";
 import loginBgJpg from "@/public/loginbg.jpg";
-
 
 const PredictionForm = ({ params }: { params: any }) => {
   const [predictionData, setPredictionData] = useState<any>(null);
@@ -34,7 +33,7 @@ const PredictionForm = ({ params }: { params: any }) => {
   };
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="overflow-scroll">
+    <Form.Root onSubmit={handleSubmit}>
       <FormTextField
         label="Age"
         name="age"
@@ -103,9 +102,14 @@ const PredictionForm = ({ params }: { params: any }) => {
 
 const PredictionPage: React.FC<any> = ({ params }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{ backgroundImage: `url(${loginBgJpg.src})`, backgroundSize: 'cover' }}>
+    <div
+      className="flex items-center justify-center min-h-screen bg-gray-100"
+      style={{
+        backgroundImage: `url(${loginBgJpg.src})`,
+        backgroundSize: "cover",
+      }}
+    >
       <div className="w-full max-w-lg bg-white shadow-lg px-16 overflow-scroll max-h-fit py-10">
-
         <div className="flex items-center justify-between flex-col">
           <Image
             className="mb-8"
@@ -117,9 +121,8 @@ const PredictionPage: React.FC<any> = ({ params }) => {
         </div>
 
         <PredictionForm params={params} />
-   
       </div>
-      </div>
+    </div>
   );
 };
 
