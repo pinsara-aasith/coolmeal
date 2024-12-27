@@ -63,4 +63,6 @@ This project aims to simplify healthy and budget-friendly meal planning for Sri 
 | **Pandas**          | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) |
 | **AWS**             | ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white) |
 
+
+![image](https://github.com/user-attachments/assets/3302e40d-1d5b-4914-9d5a-42f75dcaf863)
 ---
