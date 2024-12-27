@@ -35,3 +35,32 @@ The goal of this system is to deliver a mobile app tailored for Sri Lankan peopl
 ---
 
 This project aims to simplify healthy and budget-friendly meal planning for Sri Lankan users.
+
+
+---
+
+## Areas Covered:
+- **Feature Engineering**  
+- **Deep Learning**  
+- **Mobile App Development**  
+- **Content-Based Filtering**  
+- **Natural Language Processing**  
+
+---
+
+
+---
+
+## Technologies Stack
+| Technology          | Icon                                                                 |
+|---------------------|----------------------------------------------------------------------|
+| **Flutter**         | ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white) |
+| **Python**          | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) |
+| **Next.js**         | ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white) |
+| **FastAPI**         | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white) |
+| **LangChain**       | ![LangChain](https://img.shields.io/badge/LangChain-blue?style=for-the-badge) |
+| **Scikit-learn**    | ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white) |
+| **Pandas**          | ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) |
+| **AWS**             | ![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white) |
+
+---
