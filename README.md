@@ -80,3 +80,8 @@ The system includes an advanced chatbot to enhance user experience:
   ![image](https://github.com/user-attachments/assets/138c313e-c435-445d-9cb0-c2524ab86aa2) 
 
 This integration ensures personalized and insightful interactions for users.
+
+---
+## System Architecture
+![image](https://github.com/user-attachments/assets/02e4b823-3b46-4f9e-a795-2281919710fb)
+
