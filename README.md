@@ -66,3 +66,17 @@ This project aims to simplify healthy and budget-friendly meal planning for Sri 
 
 ![image](https://github.com/user-attachments/assets/3302e40d-1d5b-4914-9d5a-42f75dcaf863)
 ---
+## Dataset Preparation and Data Collection
+
+![image](https://github.com/user-attachments/assets/751bba33-9794-4c46-8875-78246a0407af)
+
+## Chatbot Integration
+
+The system includes an advanced chatbot to enhance user experience:  
+
+- **CoolBot**: Delivers detailed food information and meal recipes to users.  
+- **RAG Architecture**: Utilizes Retrieval-Augmented Generation (RAG) architecture to create a customized chatbot experience.  
+- **Gemini API**: Provides accurate insights on ingredients, nutrition, and meal options.
+  ![image](https://github.com/user-attachments/assets/138c313e-c435-445d-9cb0-c2524ab86aa2) 
+
+This integration ensures personalized and insightful interactions for users.
